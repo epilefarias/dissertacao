@@ -1,0 +1,216 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% instruções
+% colocamos tags "mudar" para vc ajustar para a sua dissertação.....
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% mudar (a) - inicio %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tittese}{%
+	\textsf{\bfseries\Large INSPEÇÃO AUTOMÁTICA DE TELAS DE TV E MONITORES\\
+	\vspace{0.8ex}
+        }}
+%%%%% mudar (a) - fim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\newcommand{\descrtese}{%
+\hspace{\stretch{1}}\parbox{0.51\textwidth}{%
+Dissertação apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Engenharia Elétrica da Universidade Federal do Amazonas, como requisito parcial para obten\c{c}\~ao do t\'{\i}tulo de Mestre em Engenharia Elétrica na \'area de concentra\c{c}\~ao Controle e Automação de Sistemas.
+}}
+
+
+%%%%% mudar (b) - inicio %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Inspeção Automática de Telas de TV e Monitores}
+\foreigntitle{Automatic Inspection of TV Screens and Monitors}
+\author{Felipe}{de Souza Farias}
+\advisor{Prof.}{Waldir Sabino}{da Silva Júnior}{D.Sc.}
+%\coadvisor{Prof.}{---}{--}{D.Sc.}
+%\examiner{Prof.}{Waldir Sabino da Silva Júnior}{D.Sc.}
+\examiner{Prof.}{}{D.Sc.}
+\examiner{Prof.}{}{D.Sc.}
+\department{MEE} %nao mudar---- formato para mestrado
+%\department{EE}
+\date{05}{2014}
+\keyword{Reconhecimento de Padrões}
+\keyword{Detecção de Pontos Fiduciais}
+\keyword{Máquina de Vetor Suporte}
+\keyword{\emph{Grid} de Parâmetros}
+\keyword{C-SVC}
+%%%%% mudar (b) - fim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\frontmatter
+%\doublespacing
+%\singlespacing
+\pagestyle{empty}
+
+%{centering
+\begin{center}
+\includegraphics[bb=0 0 646 638,height=2.5cm]{ufam.png}
+
+\textsf{\large%
+UNIVERSIDADE FEDERAL DO AMAZONAS\\
+FACULDADE DE TECNOLOGIA\\
+PROGRAMA DE P\'OS-GRADUA\c{C}\~AO EM ENGENHARIA ELÉTRICA}
+
+\vspace*{4cm}
+\vspace*{\stretch{1}}
+\tittese
+
+\vspace*{4cm}
+\vspace*{\stretch{1}}
+
+
+%%%%% mudar (c) - inicio %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\large Felipe de Souza Farias}
+%%%%% mudar (c) - fim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\vspace*{3cm}
+\vspace*{\stretch{1}}
+
+Manaus -- Amazonas
+
+%%%%% mudar (d) - inicio %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Janeiro de 2016
+%%%%% mudar (d) - fim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{center}
+
+%}
+%\cleardoublepage
+
+
+% -- Contracapa ---------------------------------------------------------------
+%{\singlespacing\centering
+
+
+%%%%% mudar (d) - inicio %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+{\large Felipe de Souza Farias}
+%%%%% mudar (d) - fim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\vspace*{4cm}
+\vspace*{\stretch{2}}
+\tittese
+\vspace*{2cm}
+\vspace*{\stretch{1}}
+\descrtese
+\vspace*{2cm}
+\vspace*{\stretch{1}}
+
+
+%%%%% mudar (e) - inicio %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Orientador: Prof. D.Sc. Waldir Sabino da Silva Júnior\\
+%%%%% mudar (e) - fim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\end{center}
+
+%}
+%\cleardoublepage
+
+
+%%%%% mudar (f) - inicio %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Ficha catalográfica - pegar na secr. do PPGEE
+\include{ficha.pdf}
+%%%%% mudar (f) - fim %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% -- Banca Examinadora --------------------------------------------------------
+%{\singlespacing\centering
+
+
+\begin{center}
+{\large Felipe de Souza Farias}
+
+\vspace*{3cm}
+%\vspace*{\stretch{2}}
+
+\tittese
+
+\vspace*{1cm}
+%\vspace*{\stretch{1}}
+
+%\descrtese
+
+\vspace*{1cm}
+%\vspace*{\stretch{1}}
+
+Banca Examinadora
+\vspace{2em}
+
+Prof. D.Sc. Waldir Sabino da Silva Júnior -- Presidente e Orientador\\
+Departamento de Eletrônica e Computação -- UFAM
+\vspace{2em}
+
+Prof. D.Sc. Frederico da Silva Pinagé \\
+FUCAPI
+\vspace{2em}
+
+Prof. D.Sc. João Edgar Chaves Filho \\
+Programa de Pós Graduação em Engenharia Elétrica -- UFAM
+\vspace{2em}
+
+%\vspace*{1cm}
+\vspace*{\stretch{0.5}}
+
+Manaus -- Amazonas
+
+Janeiro de 2016
+
+\end{center}
+
+%inserir linha em cima da pagina ---------
+\thispagestyle{empty}
+%-----------------------------------------
+
+%  \dedication{Dedicatória.\\
+%  ---.}
+
+  \chapter*{Agradecimentos}
+\begin{itemize}
+  \item Primeiramente .
+
+
+\end{itemize}
+
+
+\begin{abstract}
+
+Atualmente, o problema da detecção de pontos fiduciais em faces humanas
+
+\vspace*{\stretch{1}}
+\noindent \textsf{Palavras-chave:} reconhecimento de padrões, detecção de pontos fiduciais, máquina de vetores suporte, grid de parâmetros e C-SVC.
+
+\end{abstract}
+
+
+
+
+\begin{foreignabstract}
+
+Currently, the problem of facial fiducial points detection has received
+\vspace*{\stretch{1}}
+\noindent \textsf{Keywords:} pattern recognition, fiducial points detection, support vectors machine, parameters grid and C-SVC.
+
+\end{foreignabstract}
+
+
+
+%inserir linha em cima da pagina --------------------------------------------------------
+   \pagestyle{plain}
+   \lhead[\fancyplain{}{\bfseries\tiny\thepage}]{\fancyplain{}{\bfseries\tiny\rightmark}}
+   \rhead[\fancyplain{}{\bfseries\tiny\leftmark}]{}
+%----------------------------------------------------------------------------------------
+
+  \tableofcontents
+  \listoffigures
+  \listoftables
+
+%}
+\cleardoublepage
