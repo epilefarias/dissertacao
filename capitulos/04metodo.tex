@@ -1,4 +1,4 @@
-\chapter{Metodologia Proposta}
+\\chapter{Metodologia Proposta}
 
 
 O método proposto nesta dissertação para extração de conteúdo de telas de TV e monitores é dividido em quatro etapas:
@@ -164,15 +164,21 @@ Assim, o reconhecimento de lado do retângulo pode ser encarado como o seguinte 
 
 Maximizar esta probabilidade vai dar a máxima estimativa posterior de potenciais lados de retângulos na imagem de bordas. A função de energia $ E(f) $ é minimizada enquanto cada $ f_i $ é convergido para 0 ou 1. A função $ E $ consiste nos quatro termos a seguir:
 
-%\begin{equation}
-$$ E_1 = \alpha _1 {\sum_{i=1}^{n} {\sum_ {j\in N(l_i)}^{}f_if_jD(i,j)}} $$
-%\end{equation}
+\begin{equation}
+E_1 = \alpha _1 {\sum_{i=1}^{n} {\sum_ {j\in N(l_i)}^{}f_if_jD(i,j)}} \label{e1}
+\end{equation}
 
-$$ E_2 = \alpha _2 {\sum_{i=1}^{n} (\frac{f_i}{LEN_i}\times AVGLEN)} $$
+\begin{equation}
+E_2 = \alpha _2 {\sum_{i=1}^{n} (\frac{f_i}{LEN_i}\times AVGLEN)}  \label{e2}
+\end{equation}
 
-$$ E_3 = -\alpha _3 {\sum_{i=1}^{n} (f_i \ln f_i + (1-f_i)\ln(1-f_i))} $$
+\begin{equation}
+E_3 = -\alpha _3 {\sum_{i=1}^{n} (f_i \ln f_i + (1-f_i)\ln(1-f_i))} \label{e3}
+\end{equation}
 
-$$ E_4 = \alpha _4 {\sum_{i=1}^{n} {\sum_ {j\in N(l_i)}^{}f_if_j\left \{ H(i,j)\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_k} + (1-H(i,j))\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_kH(k,j)} \right \}}} $$
+\begin{equation}
+E_4 = \alpha_4 {\sum_{i=1}^{n} {\sum_ {j\in N(l_i)}^{}f_if_j\left \{ H(i,j)\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_k} + \\ 	(1-H(i,j))\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_kH(k,j)} \right \}}} \label{e4}
+\end{equation}
 
 Onde $ \alpha _1 $, $ \alpha _2 $, $ \alpha _3 $ e $ \alpha _4 $ são constantes positivas que controlam as contribuições de cada termo individual da função de energia. AVGLEN é o comprimento médio do conjunto de segmentos L:
 
@@ -207,7 +213,7 @@ A escolha do retângulo que representa a tela do monitor utiliza critérios cria
 
 O motivo para a tela estar nos limites da imagem é a foto ser composta inteiramente pela tela. Este caso é evitado porque estas condições de captura são muito exigentes e há o risco grande de que uma parte da tela seja perdida caso a distancia entre a tela e a câmera sofram uma variação. Além disso, o diferencial do método aqui explicado é conseguir capturar a tela de um monitor em um ambiente qualquer. Capturar somente a tela rende o método inútil.
 
-Monitores têm uma relação de aspecto muito específica. Superando a 4/3, desde 2009 a relação de aspecto mais comum em monitores e telas de TV é de 16/9, assim como a razão inversa 9/16 é a mais comum em celulares. Isso se deve em parte por ser o formato padrão de imagens em HDTV, Full HD e transmissão de TV digital e analógica [procura fonte disso pelamor]. Assim, a fim de evitar falsos positivos, o método descarta, dentre os objetos encontrados, os que não tiverem uma relação de aspecto próxima dos monitores que estão sendo estudados.
+Monitores têm uma relação de aspecto muito específica. Superando a 4/3, desde 2009 a relação de aspecto mais comum em monitores e telas de TV é de 16/9, assim como a razão inversa 9/16 é a mais comum em celulares. Isso se deve em parte por ser o formato padrão de imagens em HDTV, Full HD e transmissão de TV digital e analógica [fonte]. Assim, a fim de evitar falsos positivos, o método descarta, dentre os objetos encontrados, os que não tiverem uma relação de aspecto próxima dos monitores que estão sendo estudados.
 
 A fim de garantir que o objeto encontrado realmente tem formato retangular, suas diagonais são medidas e comparadas. Devido às instabilidades na captura ou próprias da câmera, é comum que as diagonais não tenham o mesmo tamanho exato, mas elas devem estar dentro de uma margem de segurança.
 
@@ -215,27 +221,29 @@ Para este trabalho é considerado que a tela, embora não possa ser a única coi
 
 O resultado da seleção deve ser apenas retângulos de tamanho considerável e com a relação de aspecto próxima à de TVs e monitores. Com isto, se faz necessário um critério de verificação para que o retângulo que mais se assemelha à tela seja o escolhido como verdadeiro. O critério é baseado no de [kastelan]. Neste trabalho, assume-se que, caso seja encontrado mais de um retângulo, os dois maiores retângulos encontrados ao final do processo representam as bordas da tela e do monitor. Portanto, o segundo maior retângulo é escolhido como tela. Caso só seja encontrado um retângulo, ele é escolhido como tela. Caso os critérios de seleção não deem como resposta um retangulo, a resposta do método é que nenhum retângulo que representa a tela foi encontrado.
 
-\subsection{Redimensionamento e Extração}
+\subsection{Redimensionamento}
 
 Encontrado o trecho da imagem que representa a tela, se faz necessário separá-lo e colocá-lo em um formato que possa ser utilizado futuramente. Para isto, este trecho da imagem é transformado em uma imagem retangular do mesmo formato da origem. A dificuldade desta transformação está no fato que a a tela na imagem pode ter as mais diversas formas, seja devido a dificuldades na captura como a características inerentes à câmera utilizada. Ela pode não ter a forma perfeitamente retangular ou ter uma orientação diferente. As imagens de referência, por outro lado, têm formato bem definido e são perfeitamente horizontais.
 A transformação se dá em duas fases: a rotação da imagem e o redimensionamento. A rotação visa transmitir o conteudo de uma imagem quadrangular qualquer $A’B’C’D’$ para um retangulo perfeitamente regular $ABCD$. O problema é encontrar a qual parte $G’(x’,y’)$ da região retangular pertence cada parte $G(x,y)$ do retângulo transformado.
 
 FIGURA MOSTRANDO O TRECHO DA IMAGEM A’B’C’D’ COM O PONTO G’ E O CORRESPONDENTE ABCD E G
 
-Dado que o retângulo transformado tem tamanho $(col_r,lin_r)$, que a região da imagem $A’B’C’D’$ é delimitada pelos pontos $A’ = (x_{a’},y_{a’})$, $B’ = (x_{b’},y_{b’})$, $C’ = (x_{c’},y_{c’})$ e $D’ = (x_{d’},y_{d’})$, podemos definir as variações dependentes de $x$ como $dx1 = (x_{b’}-x_{a’})/{col_r}$ e $dy1 = (y_{b’}-y_{a’})/{col_r}$. As variações dependentes de $y$ são $dx2 = (x_{c’}-x_{a’})/{lin_r}$ e $dy2 = (y_{c’}-y_{a’})/{lin_r}$.
+Dado que o retângulo transformado tem tamanho $(col_r,lin_r)$, que a região da imagem $A’B’C’D’$ é delimitada pelos pontos $A’ = (x_{a’},y_{a’})$, $B’ = (x_{b’},y_{b’})$, $C’ = (x_{c’},y_{c’})$ e $D’ = (x_{d’},y_{d’})$, podemos definir as variações dependentes de $x$ como $dx1 = \frac{x_{b’}-x_{a’}}{col_r}$ e $dy1 = \frac{y_{b’}-y_{a’}}{col_r}$. As variações dependentes de $y$ são $dx2 = \frac{x_{c’}-x_{a’}}{lin_r}$ e $dy2 = \frac{y_{c’}-y_{a’}}{lin_r}$.
 
 
 Assim, um ponto $G(x,y)$ no retângulo transformado tem valores iguais a um ponto $G’(x’,y’)$ na imagem, segundo as equações:
 
-$$ x = y_{a’} + dy1*(x’) + dy2*(y’) $$
+$$ x = y_{a’} + dy1(x’) + dy2(y’) $$
 
-$$ y = x_{a’} + dx1*(x’) + dx2*(y’) $$
+$$ y = x_{a’} + dx1(x’) + dx2(y’) $$
 
 O redimensionamento visa dar à imagem da tela o tamanho de uma imagem de referência, preparando-a para ser comparada com as imagens de referência. Esta é uma etapa necessária, como pode ser visto na subseção que fala das métricas de desempenho. Ele é feito através da interpolação bilinear, que é uma técnica de interpolação de funções de duas variáveis, o que a faz muito interessante para interpolar imagens.
 Ela funciona interpolando linearmente as funções em uma direção e depois em outra. Supondo que se queira saber o valor da imagem na posição $I(x,y)$ e sabidos os valores nas posições $I(x_1,y_1)$, $I(x_1,y_2)$, $I(x_2,y_1)$ e $I(x_2,y_2)$, é encontrado o valor aproximado da imagem interpolando primeiramente no eixo $x$ através das equações:
 
 $$ I(x,y_1) = \frac{x_2-x}{x_2-x_1}I(x_1,y_1) + \frac{x-x_1}{x_2-x_1}I(x_2,y_1) $$
+
 $$ I(x,y_2) = \frac{x_2-x}{x_2-x_1}I(x_1,y_2) + \frac{x-x_1}{x_2-x_1}I(x_2,y_2) $$
+
 
 E, após isso, interpolar os valores encontrados no eixo $y$, através da equação:
 
@@ -246,10 +254,11 @@ Com esta técnica, é possível obter uma aproximação do trecho da tela da TV 
 \subsection{Métricas de Desempenho}
 
 Este método utiliza três técnicas para avaliar seu desempenho em selecionar acertadamente o trecho da imagem que representa a tela. Estas técnicas comparam a imagem obtida, após rotacionada e redimensionada, com uma imagem de referência de mesmo formato e tamanho. Elas são:
-
 \begin{itemize}
 \item LAE (Least Average Error)
 \end{itemize}
+
+
 
 %LAE
 
@@ -286,7 +295,7 @@ S = \sum \sum A_n(x,y)B_n(x,y) \label{ncc2}
 Sendo uma imagem normalizada segundo a equação:
 
 \begin{equation}
-A_n = \frac {A(x,y) - \mu_A}{\sqrt {\frac{1}{N}(\sum {A(x,y)-\mu_A})^2}} \label{ncc3} 
+A_n = \frac {A(x,y) - \mu_A}{\sqrt {\frac{1}{N}(\sum \sum {A(x,y)-\mu_A})^2}} \label{ncc3} 
 \end{equation} 
 
 em que $N$ é o número de pixels da imagem $A$, podemos calcular a similaridade entre duas imagens $A$ e $B$ segundo a equação \ref{ncc4}:
@@ -295,8 +304,6 @@ em que $N$ é o número de pixels da imagem $A$, podemos calcular a similaridade
 S = \frac{\sum \sum (A(x,y)-\mu _A)(B(x,y)-\mu _B)}{\sqrt{\sum \sum (A(x,y)-\mu _A)^2}\sqrt{\sum \sum (B(x,y)-\mu _B)^2}}
 \label{ncc4}
 \end{equation}
-
-Assim, a similaridade entre imagens $S$ é computada para cada um dos três canais da imagem e depois somada, dando a pontuação total.
 
 \begin{itemize}
 \item NCC-BB (Normalized Cross-Correlation using Blocks)
@@ -307,6 +314,5 @@ A ideia deste método é dividir cada imagem em um certo número de blocos menor
 Após isto, para cada imagem de teste submetida ao método, é feito o cálculo da similaridade em cada um dos seus blocos e os valores são comparados com os encontrados em cada região e somados para compor o valor de similaridade relativa. Sendo $S_{A,B}$ a similaridade entre as imagens $A$ e $B$, a similaridade relativa pode ser calculada através da equação \ref{nccbb}
 
 \begin{equation}
-S = max_{blocos}|S_{A<B} - S_{padrao}| \label{nccbb}
+S = \max_{blocos}|S_{A,B} - S_{padrao}| \label{nccbb}
 \end{equation}
-
