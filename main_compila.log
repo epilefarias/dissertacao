@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.17)  4 JAN 2016 10:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.17)  7 JAN 2016 12:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -445,27 +445,577 @@ LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 (/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty
 Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 )
+(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
 
-! LaTeX Error: File `subfigure.sty' not found.
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen122
+\captionmargin@=\dimen123
+\captionwidth=\dimen124
+\caption@tempdima=\dimen125
+\caption@indent=\dimen126
+\caption@parindent=\dimen127
+\caption@hangindent=\dimen128
+)
+\c@ContinuedFloat=\count97
+)
+\c@KVtest=\count98
+\sf@farskip=\skip48
+\sf@captopadj=\dimen129
+\sf@capskip=\skip49
+\sf@nearskip=\skip50
+\c@subfigure=\count99
+\c@subfigure@save=\count100
+\c@lofdepth=\count101
+\c@subtable=\count102
+\c@subtable@save=\count103
+\c@lotdepth=\count104
+\sf@top=\skip51
+\sf@bottom=\skip52
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+\epsfxsize=\dimen130
+\epsfysize=\dimen131
+)
+(/usr/share/texlive/texmf-dist/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 302.
+LaTeX Info: Redefining \nocite on input line 373.
+Package: cite 2010/09/10  v 5.3
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip53
+\LTright=\skip54
+\LTpre=\skip55
+\LTpost=\skip56
+\LTchunksize=\count105
+\LTcapwidth=\dimen132
+\LT@head=\box28
+\LT@firsthead=\box29
+\LT@foot=\box30
+\LT@lastfoot=\box31
+\LT@cols=\count106
+\LT@rows=\count107
+\c@LT@tables=\count108
+\c@LT@chunks=\count109
+\LT@p@ftn=\toks21
+)
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(/usr/share/texlive/texmf-dist/tex/latex/rotating/rotating.sty
+Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+\c@r@tfl@t=\count110
+\rotFPtop=\skip57
+\rotFPbot=\skip58
+\rot@float@box=\box32
+\rot@mess@toks=\toks22
+)
+(/usr/share/texlive/texmf-dist/tex/latex/doublestroke/dsfont.sty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
+\@enLab=\toks23
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip59
 
-Enter file name: 
-! Emergency stop.
-<read *> 
-         
-l.22 \usepackage
-                {epsfig}^^M
-*** (cannot \read from terminal in nonstop modes)
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
 
- 
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks24
+\ex@=\dimen133
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen134
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count111
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count112
+\leftroot@=\count113
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count114
+\DOTSCASE@=\count115
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box33
+\strutbox@=\box34
+\big@size=\dimen135
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count116
+\c@MaxMatrixCols=\count117
+\dotsspace@=\muskip10
+\c@parentequation=\count118
+\dspbrk@lvl=\count119
+\tag@help=\toks25
+\row@=\count120
+\column@=\count121
+\maxfields@=\count122
+\andhelp@=\toks26
+\eqnshift@=\dimen136
+\alignsep@=\dimen137
+\tagshift@=\dimen138
+\tagwidth@=\dimen139
+\totwidth@=\dimen140
+\lineht@=\dimen141
+\@envbody=\toks27
+\multlinegap=\skip60
+\multlinetaggap=\skip61
+\mathdisplay@stack=\toks28
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/bbm.sty
+Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
+LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
+(Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
+(Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+\fancy@headwidth=\skip62
+\f@ncyO@elh=\skip63
+\f@ncyO@erh=\skip64
+\f@ncyO@olh=\skip65
+\f@ncyO@orh=\skip66
+\f@ncyO@elf=\skip67
+\f@ncyO@erf=\skip68
+\f@ncyO@olf=\skip69
+\f@ncyO@orf=\skip70
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count123
+\calc@Bcount=\count124
+\calc@Adimen=\dimen142
+\calc@Bdimen=\dimen143
+\calc@Askip=\skip71
+\calc@Bskip=\skip72
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count125
+\calc@Cskip=\skip73
+)
+(/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/atbegshi.sty
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
+File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
+)
+\AM@pagebox=\box35
+\AM@toc@title=\toks29
+\c@AM@survey=\count126
+\AM@templatesizebox=\box36
+)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count127
+\float@exts=\toks30
+\float@box=\box37
+\@float@everytoks=\toks31
+\@floatcapt=\box38
+)
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen144
+)
+(/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
+\everycr=\toks32
+\minrowclearance=\skip74
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/hhline.sty
+Package: hhline 1994/05/23 v2.03 Table rule package (DPC)
+) (./main_compila.aux
+(./ficha.pdf.aux))
+\openout1 = `main_compila.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+Package lastpage Info: Please have a look at the pageslts package at
+(lastpage)             https://www.ctan.org/pkg/pageslts
+(lastpage)             ! on input line 58.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count128
+\scratchdimen=\dimen145
+\scratchbox=\box39
+\nofMPsegments=\count129
+\nofMParguments=\count130
+\everyMPshowfont=\toks33
+\MPscratchCnt=\count131
+\MPscratchDim=\dimen146
+\MPnumerator=\count132
+\makeMPintoPDFobject=\count133
+\everyMPtoPDFconversion=\toks34
+)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* vratio: 1:1
+* modes: 
+* h-part:(L,W,R)=(85.35826pt, 426.79135pt, 85.35826pt)
+* v-part:(T,H,B)=(71.13188pt, 702.78308pt, 71.13188pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=426.79135pt
+* \textheight=702.78308pt
+* \oddsidemargin=13.08827pt
+* \evensidemargin=13.08827pt
+* \topmargin=-33.0119pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=38.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: float package is loaded.
+Package caption Info: longtable package is loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2013/02/03 v1.3-62 longtable captions (AR)
+)
+Package caption Info: rotating package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\AtBeginShipoutBox=\box40
+
+(./capitulos/capa.tex
+
+Package pdftex.def Warning: Option `bb' does not make sense,
+(pdftex.def)                using `viewport' instead on input line 50.
+
+<ufam.png, id=1, 655.44875pt x 646.415pt>
+File: ufam.png Graphic file (type png)
+ <use ufam.png>
+Package pdftex.def Info: ufam.png used on input line 50.
+(pdftex.def)             Requested size: 72.01945pt x 71.13188pt.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 55.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+) [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./ufam.png>]
+LaTeX Font Info:    Try loading font information for U+msa on input line 102.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 102.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [2]
+\openout2 = `ficha.pdf.aux'.
+
+
+No file ficha.pdf.tex.
+[3
+
+
+]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 177.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 177.
+ [4
+
+] [5
+
+] [6
+
+]
+(./main_compila.toc)
+\tf@toc=\write3
+\openout3 = `main_compila.toc'.
+
+ [7
+
+] (./main_compila.lof)
+\tf@lof=\write4
+\openout4 = `main_compila.lof'.
+
+ [8
+
+] (./main_compila.lot)
+\tf@lot=\write5
+\openout5 = `main_compila.lot'.
+
+ [9
+
+])
+(./capitulos/01intro.tex
+Chapter 1.
+) (./capitulos/02detectela.tex [1
+
+
+
+]
+Chapter 2.
+) (./capitulos/03trabrelac.tex [2
+
+]
+Chapter 3.
+) (./capitulos/04metodo.tex [3
+
+]
+Chapter 4.
+[4
+
+] [5] [6] [7]
+Overfull \hbox (7.08064pt too wide) in paragraph at lines 88--89
+[]\T1/cmr/m/n/12 FIGURA REP-RE-SEN-TANDO DOIS PON-TOS LIG-A-DOS À MESMA LINHA
+ []
+
+[8] [9] [10]
+Overfull \hbox (154.75018pt too wide) detected at line 181
+\OML/cmm/m/it/12 E[] \OT1/cmr/m/n/12 = \OML/cmm/m/it/12 [][]
+ []
+
+[11] [12] [13]
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 227.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 227.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 227.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 227.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 227.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 227.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 227.
+
+[14]
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 234.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 234.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 234.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 236.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 236.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 236.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 238.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 238.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 238.
+
+[15] [16]) (./capitulos/05experim.tex [17]
+Chapter 5.
+) (./capitulos/06concl.tex [18
+
+]
+Chapter 6.
+) [19
+
+]
+No file main_compila.bbl.
+(./capitulos/appenA.tex
+Appendix A.
+) 
+AED: lastpage setting LastPage
+[20
+
+
+] (./main_compila.aux (./ficha.pdf.aux)) ) 
 Here is how much of TeX's memory you used:
- 2844 strings out of 495028
- 37469 string characters out of 6181497
- 105262 words of memory out of 5000000
- 6008 multiletter control sequences out of 15000+600000
- 4702 words of font info for 16 fonts, out of 8000000 for 9000
+ 6830 strings out of 495028
+ 96750 string characters out of 6181497
+ 179777 words of memory out of 5000000
+ 9798 multiletter control sequences out of 15000+600000
+ 18296 words of font info for 45 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 42i,0n,25p,333b,38s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 44i,10n,43p,842b,281s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/felipe/.texmf-var/fonts/pk/lj
+four/jknappen/ec/ecrm0800.600pk> </home/felipe/.texmf-var/fonts/pk/ljfour/jknap
+pen/ec/ecbx1440.600pk> </home/felipe/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecb
+x1728.600pk> </home/felipe/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600p
+k> </home/felipe/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1200.600pk> </home/
+felipe/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </home/felipe/.te
+xmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/felipe/.texmf-var/fo
+nts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </home/felipe/.texmf-var/fonts/pk/ljf
+our/jknappen/ec/ecsx1728.600pk> </home/felipe/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecss1440.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on main_compila.pdf (29 pages, 290462 bytes).
+PDF statistics:
+ 497 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+

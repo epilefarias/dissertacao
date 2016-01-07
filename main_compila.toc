@@ -1,0 +1,23 @@
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{1}
+\contentsline {chapter}{\numberline {2}Detec{\c c}\~ao de telas}{2}
+\contentsline {chapter}{\numberline {3}Trabalhos Relacionados}{3}
+\contentsline {chapter}{\numberline {4}Metodologia Proposta}{4}
+\contentsline {section}{\numberline {4.1}Detec\IeC {\c c}\IeC {\~a}o de Bordas}{4}
+\contentsline {subsection}{\numberline {4.1.1}Obten\IeC {\c c}\IeC {\~a}o do Gradiente}{5}
+\contentsline {subsection}{\numberline {4.1.2}Detec\IeC {\c c}\IeC {\~a}o de Candidatos}{6}
+\contentsline {subsection}{\numberline {4.1.3}Verifica\IeC {\c c}\IeC {\~a}o de Candidatos}{6}
+\contentsline {section}{\numberline {4.2}Identifica\IeC {\c c}\IeC {\~a}o de Linhas}{7}
+\contentsline {subsection}{\numberline {4.2.1}Transformada de Hough}{7}
+\contentsline {subsection}{\numberline {4.2.2}Esquema de Mesclagem de Linhas}{8}
+\contentsline {section}{\numberline {4.3}Reconhecimento de Ret\IeC {\^a}ngulos}{9}
+\contentsline {subsection}{\numberline {4.3.1}Sistema de Vizinhan\IeC {\c c}a}{10}
+\contentsline {subsection}{\numberline {4.3.2}Marca\IeC {\c c}\IeC {\~a}o de Linhas}{11}
+\contentsline {subsection}{\numberline {4.3.3}Escolha do Ret\IeC {\^a}ngulo que Representa a Tela}{13}
+\contentsline {subsection}{\numberline {4.3.4}Redimensionamento}{14}
+\contentsline {subsection}{\numberline {4.3.5}M\IeC {\'e}tricas de Desempenho}{16}
+\contentsline {chapter}{\numberline {5}Resultados Experimentais}{18}
+\contentsline {chapter}{\numberline {6}Conclus\IeC {\~o}es}{19}
+\contentsline {chapter}{\numberline {A}Algumas Demonstra{\c c}\~oes}{20}

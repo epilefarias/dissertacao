@@ -26,7 +26,7 @@
 \usepackage{setspace}
 \usepackage{rotating}
 \usepackage{graphicx}
-\usepackage{dsfont}
+\usepackage{doublestroke}
 \usepackage{enumerate}
 \usepackage{amsmath}
 \usepackage{color}
