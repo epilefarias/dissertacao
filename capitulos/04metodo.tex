@@ -1,6 +1,6 @@
 \chapter{Metodologia Proposta}
 
-
+% esse é o texto introdutório. Ele tem que servir como um bom resumo do que o capítulo oferece, de modo que mesmo que a pessoa só leia a introdução ela já tenha uma boa noção do que se trata.
 O método proposto nesta dissertação para extração de conteúdo de telas de TV e monitores é dividido em quatro etapas:
 
 \begin{itemize}
@@ -10,14 +10,19 @@ O método proposto nesta dissertação para extração de conteúdo de telas de 
  \item escolha do retângulo que representa a tela;
 \end{itemize}
 
-O diagrama 1 ilustra os estágios do método. Cada um deles será detalhado a seguir.
+A figura \ref{diag} ilustra os estágios do método. Cada um deles será detalhado a seguir.
 
-DIAGRAMA DE BLOCOS DO MÉTODO AQUI
+%DIAGRAMA DE BLOCOS DO MÉTODO AQUI
 
- 
+\begin{figure} [h]
+\includegraphics[width = \textwidth]{figuras/diag.pdf} \label{diag} \caption{Diagrama de blocos do método}
+\end{figure} 
+
 \section{Detecção de Bordas}
 
-A detecção de bordas é uma etapa de preprocessameto importante. O correto funcionamento deste método depende de uma imagem de borda nítida. Ela é feita usando análise de gradiente multi-dimensional. Esta técnica é útil por funcionar bem em imagens coloridas e também por gerar informação de ângulo de gradiente, que vai ser útil nas próximas etapas do processamento.
+%lembrar sempre que precisa haver a DESCRIÇÃO das técnicas utilizadas, assim como sua MOTIVAÇÃO (porque usei A e não B, que autores concordam cmg)
+
+A detecção de bordas é uma etapa de preprocessameto importante. Ela é feita usando análise de gradiente multi-dimensional \cite{borda00}. Esta técnica é útil por funcionar bem em imagens coloridas e também por gerar informação de ângulo de gradiente, que vai ser útil nas próximas etapas do processamento.
 
 Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando as seis derivadas de primeira ordem (duas pra cada canal R,G e B da imagem) e depois implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. Este esquema é composto por duas fases: um pixel é selecionado como candidato caso sua magnitude de gradiente seja maior que a magnitude dos seus vizinhos na direção do gradiente. A fim de evitar ruído, a verificação descarta candidatos segundo dois critérios: se o candidato não tem vizinhos também candidatos, e se a magnitude do gradiente daquele pixel é muito diferente da magnitude dos seus vizinhos na direção do gradiente.
 
@@ -27,11 +32,11 @@ Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando a
 
 Esta técnica considera uma imagem colorida como um campo vetorial que mapeia um espaço n-dimensional (espaço) em um m-dimensional (canais), como mostrado em [Lee e Cok]. Portanto, dado um campo vetorial representado pela função $ f: S->R^m $, uma imagem pode ser representada como um subespaço de $f$ dado por $ Vn->m $.
 
-Considerando uma imagem bidimensional com três canais (um para cada canal de cor r, g e b), $DV$ é a matriz que mostra a variação dos valores de r, g e b no espaço infinitesimal dx e dy. 
+Considerando uma imagem bidimensional com três canais (um para cada canal de cor r, g e b), $DV$ é a matriz que mostra a variação dos valores de R, G e B no espaço infinitesimal dx e dy. 
 
 $$ DV = (dx dy)Jc^T $$ 
 
-em que Jc é a matriz jacobiana, que tem a seguinte forma:
+em que $Jc$ é a matriz jacobiana, que tem a seguinte forma:
 
 $$ Jc = \begin{bmatrix} dr/dx & dr/dy \\ dg/dx & dg/dy \\ db/dx & db/dy \end{bmatrix} $$
 

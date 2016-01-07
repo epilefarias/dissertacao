@@ -1,21 +1,80 @@
 \chapter{Resultados Experimentais}
 
-5 - Resultados experimentais: mostrar o ambiente de testes, em detalhes, apresentar, comentar e analisar os resultados experimentais e escolher a melhor métrica;
+%5 - Resultados experimentais: mostrar o ambiente de testes, em detalhes, apresentar, comentar e analisar os resultados experimentais e escolher a melhor métrica;
 
-passo a passo dos experimentos realizados
+%passo a passo dos experimentos realizados
 
-recursos utilizados (hardware, software, tempo)
-obtenção da base de dados
-escolha das imagens de referencia
-captura das imagens
-condições de captura
-primeira base
-segunda base (camara escura. ambiente controlado)
-como isso é uma contribuição
-extração do conteúdo (metodologia explicada no capitulo anterior. falar resumidamente)
-comparações feitas
-resultados
-discussão
-o que funcionou melhor?
-o que funcionou mal?
-melhor metrica de desempenho?
+%recursos utilizados (hardware, software, tempo)
+
+%obtenção da base de dados
+
+%escolha das imagens de referencia
+
+%captura das imagens
+
+%condições de captura
+
+%primeira base
+
+%segunda base (camara escura. ambiente controlado)
+
+%como isso é uma contribuição
+
+%extração do conteúdo (metodologia explicada no capitulo anterior. falar resumidamente)
+
+%comparações feitas
+
+%resultados
+
+%discussão
+
+%o que funcionou melhor?
+
+%o que funcionou mal?
+
+%melhor metrica de desempenho?
+
+Este capítulo apresenta os resultados dos experimentos feitos para validar o método de detecção e extração do conteúdo de telas de TV e monitores. Eles foram implementados na linguagem MATLAB, na versão R2012a, em ambiente Linux, processador Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz e memória RAM 16GB.
+
+Para validar o método, três experimentos foram executados. O primeiro visa comparar o custo em tempo do método original e o método proposto, que utiliza redimensionamento das imagens. O segundo experimento submete ao método as 504 imagens da primeira base de dados e as 600 da segunda, visando verificar a capacidade de corretamente relacionar a tela encontrada com uma imagem de referência. O terceiro experimento visa submeter as mesmas imagens ao método com as modificações propostas, afim de comparar os resultados alcançados com os do método original.
+
+%A base de dados um consiste em um conjunto de 504 fotos coloridas de monitores e telas de TV, em três tamanhos diferentes e condições não controladas de iluminação e captura, assim como seis imagens de referência de resolução 1600 por 900 pixeis. Cada foto é acompanhada por uma marcação de coordenadas que indicam os quatro vértices da tela na foto. Eles são tidos como \textit{ground truth}.
+
+Após extensiva pesquisa em bancos de imagens, não foi encontrada uma base de dados que atenda aos interesses deste trabalho. Portanto, se fez necessário montar uma base própria. Foram feitas duas, uma com 6 imagens de referência e 504 imagens de teste em um ambiente não controlado, outra com 40 imagens de referência e 600 imagens de teste em um ambiente controlado.
+
+\section{Primeira Base}
+
+Para imagens de referência da primeira base foram escolhidas entre menus e vídeos da internet. Quatro seleções diferentes de um menu foram utilizadas, assim como dois frames de um vídeo. As imagens são coloridas e têm resolução 1600 por 900. As fotos dos 14 monitores foram feitas com os mesmos ligados e mostrando cada uma das seis imagens. Elas foram feitas sob duas condições de iluminação: com a iluminação do ambiente ligada e desligada. A câmera utilizada foi a câmera do celular Samsung Galaxy S5, com sensor de 16 MP, abertura de 2,2 polegadas e tamanho máximo de imagem de 5312 por 2988 pixeis. As fotos foram feitas utilizando os tamanhos máximo, [resolução 2] e [resolução 3]. A distância da câmera ao monitor é variável. Devido às diversas locações, as condições de fundo e iluminação são consideradas não controladas. Após a captura das imagens foram acrescentados arquivos, um para cada imagem, com as coordenadas dos quatro pontos que limitam a tela do monitor ou TV fotografada. Esta informação seria utilizada para aferir a eficácia do método em corretamente selecionar a tela da TV na imagem.
+
+\section{Segunda Base}
+
+Para a segunda base, uma câmara escura foi montada a fim de garantir que as fotos teriam o mínimo de interferência externa possível. A câmara é formada por uma estrutura de PVC de [] de largura por [] de comprimento e [] de altura. A estrutura é cúbica e coberta para não deixar passar luz. 
+
+FOTOS
+
+
+
+
+
+
+
+
+Os monitores e a câmera foram levados para dentro da estrutura. Outra diferença da primeira para a segunda base foi a escolha de mais imagens de referência. Como referência foram utilizadas as seguintes imagens:
+\begin{itemize}
+\item um grid
+\item um xadrez
+\item o índio, figura de referência para testes de TV antigos
+\item barra de cores saturada em 20%, 60% e 100%
+\item as três cores primárias puras, saturadas em em 20%, 60% e 100%
+\item as três cores secundárias puras, saturadas em em 20%, 60% e 100%
+\item 12 fotos
+\item 4 menus
+\end{itemize}
+
+Todas as imagens são coloridas e têm tamanho variado. As fotos foram capturadas pela mesma câmera do celular Samsung Galaxy S5 sem flash e todas têm a resolução máxima da câmera, 5312 por 2988 pixeis. Novamente, as imagens foram capturadas com os monitores ligados e mostrando as imagens de referência. A distância entre a câmera e os monitores é variável. 
+
+O primeiro experimento…
+
+O segundo experimento…
+
+O terceiro experimento…
