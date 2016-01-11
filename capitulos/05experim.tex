@@ -1,52 +1,25 @@
 \chapter{Resultados Experimentais}
 
-%5 - Resultados experimentais: mostrar o ambiente de testes, em detalhes, apresentar, comentar e analisar os resultados experimentais e escolher a melhor métrica;
-
-%passo a passo dos experimentos realizados
-
-%recursos utilizados (hardware, software, tempo)
-
-%obtenção da base de dados
-
-%escolha das imagens de referencia
-
-%captura das imagens
-
-%condições de captura
-
-%primeira base
-
-%segunda base (camara escura. ambiente controlado)
-
-%como isso é uma contribuição
-
-%extração do conteúdo (metodologia explicada no capitulo anterior. falar resumidamente)
-
-%comparações feitas
-
-%resultados
-
-%discussão
-
-%o que funcionou melhor?
-
-%o que funcionou mal?
-
-%melhor metrica de desempenho?
-
 Este capítulo apresenta os resultados dos experimentos feitos para validar o método de detecção e extração do conteúdo de telas de TV e monitores. Eles foram implementados na linguagem MATLAB, na versão R2012a, em ambiente Linux, processador Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz e memória RAM 16GB.
 
 Para validar o método, três experimentos foram executados. O primeiro visa comparar o custo em tempo do método original e o método proposto, que utiliza redimensionamento das imagens. O segundo experimento submete ao método as 504 imagens da primeira base de dados e as 600 da segunda, visando verificar a capacidade de corretamente relacionar a tela encontrada com uma imagem de referência. O terceiro experimento visa submeter as mesmas imagens ao método com as modificações propostas, afim de comparar os resultados alcançados com os do método original.
 
 %A base de dados um consiste em um conjunto de 504 fotos coloridas de monitores e telas de TV, em três tamanhos diferentes e condições não controladas de iluminação e captura, assim como seis imagens de referência de resolução 1600 por 900 pixeis. Cada foto é acompanhada por uma marcação de coordenadas que indicam os quatro vértices da tela na foto. Eles são tidos como \textit{ground truth}.
 
-Após extensiva pesquisa em bancos de imagens, não foi encontrada uma base de dados que atenda aos interesses deste trabalho. Portanto, se fez necessário montar uma base própria. Foram feitas duas, uma com 6 imagens de referência e 504 imagens de teste em um ambiente não controlado, outra com 40 imagens de referência e 600 imagens de teste em um ambiente controlado.
+\section{Base de Dados}
 
-\section{Primeira Base}
+Após extensiva pesquisa em bancos de imagens, não foi encontrada uma base de dados que atenda aos interesses deste trabalho.
+%citar bases pesquisadas
+ Portanto, se fez necessário montar uma base própria. Foram feitas duas, uma com 6 imagens de referência e 504 imagens de teste em um ambiente não controlado, outra com 40 imagens de referência e 600 imagens de teste em um ambiente controlado.
 
-Para imagens de referência da primeira base foram escolhidas entre menus e vídeos da internet. Quatro seleções diferentes de um menu foram utilizadas, assim como dois frames de um vídeo. As imagens são coloridas e têm resolução 1600 por 900. As fotos dos 14 monitores foram feitas com os mesmos ligados e mostrando cada uma das seis imagens. Elas foram feitas sob duas condições de iluminação: com a iluminação do ambiente ligada e desligada. A câmera utilizada foi a câmera do celular Samsung Galaxy S5, com sensor de 16 MP, abertura de 2,2 polegadas e tamanho máximo de imagem de 5312 por 2988 pixeis. As fotos foram feitas utilizando os tamanhos máximo, [resolução 2] e [resolução 3]. A distância da câmera ao monitor é variável. Devido às diversas locações, as condições de fundo e iluminação são consideradas não controladas. Após a captura das imagens foram acrescentados arquivos, um para cada imagem, com as coordenadas dos quatro pontos que limitam a tela do monitor ou TV fotografada. Esta informação seria utilizada para aferir a eficácia do método em corretamente selecionar a tela da TV na imagem.
+\subsection{Primeira Base}
 
-\section{Segunda Base}
+As imagens de referência da primeira base foram escolhidas entre menus e vídeos da internet. Quatro seleções diferentes de um menu foram utilizadas, assim como dois frames de um vídeo. As imagens são coloridas e têm resolução 1600 x 900 pixeis. As fotos dos 14 monitores foram feitas com os mesmos ligados e mostrando cada uma das seis imagens. A câmera utilizada foi a câmera do celular Samsung Galaxy S5, com sensor de 16 MP, abertura de 2,2 polegadas, foco automático e sem flash. As fotos foram feitas utilizando os tamanhos 5312 x 2988 pixeis, [resolução 2] e [resolução 3]. A distância da câmera ao monitor é variável, e os monitores têm variação de escala, iluminação e fundo. As imagens desta base têm rótulos manuais com as coordenadas dos quatro pontos que limitam a tela do monitor ou TV fotografada.
+
+%Em uma breve descrição geral, na base de dados BioID temos um total de 1521 imagens contendo faces humanas frontais em nível de cinza de 23 indivíduos diferentes. A resolução das imagens é de 384 × 286 pixels. As faces possuem variações de escala (algumas estão perto da câmera e outras não), iluminação e pequenas rotações. Alguns indivíduos usam óculos, outros têm barba e/ou bigode. As imagens desta base de dados possuem rótulos manuais para 20 pontos fiduciais, porém estes rótulos são imprecisos em diversas imagens.
+
+
+\subsection{Segunda Base}
 
 Para a segunda base, uma câmara escura foi montada a fim de garantir que as fotos teriam o mínimo de interferência externa possível. A câmara é formada por uma estrutura de PVC de [] de largura por [] de comprimento e [] de altura. A estrutura é cúbica e coberta para não deixar passar luz. 
 
@@ -64,17 +37,152 @@ Os monitores e a câmera foram levados para dentro da estrutura. Outra diferenç
 \item um grid
 \item um xadrez
 \item o índio, figura de referência para testes de TV antigos
-\item barra de cores saturada em 20%, 60% e 100%
-\item as três cores primárias puras, saturadas em em 20%, 60% e 100%
-\item as três cores secundárias puras, saturadas em em 20%, 60% e 100%
+\item barra de cores saturada em 20\%, 60\% e 100\%
+\item as três cores primárias puras, saturadas em em 20\%, 60\% e 100\%
+\item as três cores secundárias puras, saturadas em em 20\%, 60\% e 100\%
 \item 12 fotos
 \item 4 menus
 \end{itemize}
 
-Todas as imagens são coloridas e têm tamanho variado. As fotos foram capturadas pela mesma câmera do celular Samsung Galaxy S5 sem flash e todas têm a resolução máxima da câmera, 5312 por 2988 pixeis. Novamente, as imagens foram capturadas com os monitores ligados e mostrando as imagens de referência. A distância entre a câmera e os monitores é variável. 
+Todas as imagens são coloridas e têm tamanho variado. As fotos foram capturadas pela mesma câmera do celular Samsung Galaxy S5 sem flash e todas têm a resolução máxima da câmera, 5312 x 2988 pixeis. Novamente, as imagens foram capturadas com os monitores ligados e mostrando as imagens de referência. A distância entre a câmera e os monitores é variável. Assim como na primeira base, cada imagem tem um rótulo manual que informa as coordenadas dos quatro pontos que limitam a tela da TV ou monitor.
 
-O primeiro experimento…
+\section{Procedimentos}
 
-O segundo experimento…
+\subsection{Primeiro Experimento}
 
-O terceiro experimento…
+% introdução
+
+O experimento apresentado nesta seção foi feitos implementando o método de extração de tela de TV nas mesmas imagens duas vezes, uma com e outra sem redimensionamento.
+
+%base de dados
+
+As imagens escolhidas para compor o conjunto de teste deste experimento foram um subconjunto de 50 imagens aleatoriamente selecionadas da base de dados 1. As imagens são coloridas e têm resoluções 5312 x 2988, [] e [].
+
+%métrica de desempenho
+
+A métrica de desempenho é o tempo utilizado pelo algoritmo para encontrar uma tela de TV.
+%Somente telas encontradas contam? fazer mais de um teste? porque? (se não, explicar o porque tbm)
+O tempo total utilizado pelas 50 telas é obtido e depois sua média calculada.
+
+%procedimentos
+
+%escolha das imagens	aleatorio etc
+%preprocessamento correção de gama (pesquisar literatura) redimensionamento (sim em um experimento e nao em outro)
+As duas simulações tiveram etapas de preprocessamento distintas. A correção de gama foi utilizada em ambas, porém o redimensionamento, alvo deste experimento, foi utilizado somente em uma delas.
+A correção de gama é uma transformação dos valores de intensidade da imagem. É uma transformação que tem como objetivo ajustar a luminância da imagem, levando em conta a relação não-linear entre o valor do pixel e a intensidade mostrada. A literatura apresenta exemplos da utilidade da correção de gama para obter melhores imagens de borda (\cite{corrgamma00}, \cite{corrgamma01}).
+
+%Najafabadi, M. J. E., & Pourghassem, H. (2011, December). A Novel Method for Improving Edge Detection Using Negative and Gamma Correction Functions. In Intelligent Computation and Bio-Medical Instrumentation (ICBMI), 2011 International Conference on (pp. 60-63). IEEE.
+
+%Liu, M., Ding, Y., Wang, X., & Yan, X. (2009, November). Gamma correction with revised piecewise curve and edge directed error diffusion. In Wireless Communications & Signal Processing, 2009. WCSP 2009. International Conference on (pp. 1-4). IEEE.
+
+A transformação é dada pela equação:
+
+\begin{equation}
+I_{corrigida} = {I_{não corrigida}}^\gamma
+\end{equation}
+
+Em que $\gamma$ tem valores acima de zero. Caso $\gamma >1$, os valores de intensidade são comprimidos de forma não-linear, destacando as intensidades mais altas. Com $\gamma <1$ os valores são expandidos, destacando as intensidades mais escuras.
+
+%redimensionamento
+
+O redimensionamento das imagens de entrada foi feito através de interpolação linear. Esta técnica considera a imagem como uma matriz e interpola os valores dos pixels primeiro no sentido horizontal e depois no vertical. Ela é melhor explicada no Capítulo \ref{met} na subseção \ref{redim}. % (capitulo quatro. mesma explicação?? acho que sim)
+ 
+%processamento extração do conteudo (método)
+
+Após o preprocessamento, as imagens foram então submetidas ao algoritmo de extração de tela da TV. A primeira simulação submete a imagem à etapa de redimensionamento. Portanto, a imagem é reduzida à resolução de 1280 x 960 através da interpolação linear e a imagem reduzida é submetida à extração de tela. O tamanho original da imagem é guardado para que ao fim o retângulo encontrado seja redimensionado e a tela da imagem original seja extraída. %fórmula mostrando o redimensionamento do retangulo???
+
+A segunda simulação submete ao método as imagens após a correção de gama, rendendo desnecessário o método para redimensionamento do retângulo encontrado.
+
+%pos processamento   calculado tempo total   calculado ganho de tempo (como?)
+
+Nas duas simulações, o tempo gasto pelo algoritmo para processar cada imagem é calculado em segundos. As condições de hardware em ambas as simulações é igual. Devido à possibilidade do algoritmo não encontrar um retângulo considerado o contorno da tela, o tempo é dividido pelo número de imagens de tela encontradas, através da equação:
+
+\begin{equation}
+T_{médio} = \frac{T_{total}}{n}
+\end{equation}
+
+Em que $T_{total}$ é o tempo total que o algoritmo leva para processar as imagens e $n$ é o número de telas encontradas no fim do processamento.
+
+O procedimento é repetido para a segunda simulação. O tempo $T_{médio}’$ é então calculado e é encontrada a diferença entre os tempos:
+
+\begin{equation}
+D_tempo = T_{médio}’ - T_{médio}
+\end{equation}
+
+%influencia do redimensionamento(resultados)
+%%os resultados serão expostos assim
+%%tabelas/gráficos
+%%análise resultados
+
+\subsection{Segundo Experimento}
+
+% introdução
+
+Experimento que aplica o método 
+
+%base de dados
+
+as bases de dados utilizadas no experimento foram a base 1 e a base 2
+
+%métrica de desempenho
+
+As métricas de desempenho foram a similaridade/dessimilaridade medidas com os métodos LAE, NCC e NCC-BB (como mostrado na seção 4.3.5). Testes feitos:
+primeira base: 
+identificar seleção do menu
+diferenciar menu de trecho de vídeo
+identificar trechos de vídeo
+segunda base:
+diferenciar fotos
+identificar cores
+diferenciar saturação
+cores
+colorbar
+diferenciar cores de fotos
+identificar menu
+
+
+%procedimentos
+
+preprocessamento
+sem??
+processamento
+extração de tela
+pos processamento
+comparação
+
+%o Testes Feitos entra aqui ou na métrica de desempenho
+
+%resultados
+%%os resultados serão expostos assim
+%%tabelas/gráficos
+%%análise resultados
+
+\subsection{Terceiro Experimento}
+
+% introdução
+
+O experimento aplica o método modificado..
+
+%base de dados
+
+as bases de dados utilizadas são as bases 1 e 2
+
+%métrica de desempenho
+
+
+
+%procedimentos
+
+preprocessamento
+correcao gama
+redimensionamento
+processamento
+extração de tela
+pos processamento
+comparação
+
+
+%influencia do [INSIRA AQUI MODIFICAÇÃO](resultados)
+%%os resultados serao expostos assim
+%%tabelas/gráficos
+%%análise resultados

@@ -1,6 +1,8 @@
-\chapter{Metodologia Proposta}
+
+\chapter{Metodologia Proposta} \label{met}
 
 % esse é o texto introdutório. Ele tem que servir como um bom resumo do que o capítulo oferece, de modo que mesmo que a pessoa só leia a introdução ela já tenha uma boa noção do que se trata.
+\textcolor{red}{Felipe, nao dah para comecar uma secao jogando na cara do leitor o que o metodo faz... Aqui voce deve colocar um ou dois paragrafos falando que o metodo foi organizado de modo a detectar bordas de tv em imagens, as quais sao tratadas como objetos quadrangulares. Estes, por sua vez, sao definidos por quatro lados, ou seja, linhas. Sendo assim, determinou-se, com base no algoritmo de fulano de tal (aquela ref dos japoneses), que isso seria feito em quatro passos: detecção de bordas, pois as linhas da tela sao nada mais, nada menos que a bordas entre o quadro e a tela, identificação das linhas, com o objetivo de reconhecer componentes conectados, reconhecimento de retangulos, para que linhas formando retangulos sejam separadas, e escolha do retangulo, que deve atender a certos critérios, como relacao de aspecto de 4:3 ou 16:9... Entendeu? Coloque uns dois paragrafos sobre isso e essas explicações rápidas que eu coloquei, sobre cada passo, devem ser melhoradas e colocadas ao lado de cada item na lista (itemize). Ao final, fale que cada passo serah detalhado nas proximas secoes...}
 O método proposto nesta dissertação para extração de conteúdo de telas de TV e monitores é dividido em quatro etapas:
 
 \begin{itemize}
@@ -21,20 +23,26 @@ A figura \ref{diag} ilustra os estágios do método. Cada um deles será detalha
 \section{Detecção de Bordas}
 
 %lembrar sempre que precisa haver a DESCRIÇÃO das técnicas utilizadas, assim como sua MOTIVAÇÃO (porque usei A e não B, que autores concordam cmg)
-
+\textcolor{red}{felipe, evite frases obvias... eh claro que eh importante.. outra coisa: comece indicando rapidamente o que ela e depois elabore...}
 A detecção de bordas é uma etapa de preprocessameto importante. Ela é feita usando análise de gradiente multi-dimensional \cite{borda00}. Esta técnica é útil por funcionar bem em imagens coloridas e também por gerar informação de ângulo de gradiente, que vai ser útil nas próximas etapas do processamento.
 
 Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando as seis derivadas de primeira ordem (duas pra cada canal R,G e B da imagem) e depois implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. Este esquema é composto por duas fases: um pixel é selecionado como candidato caso sua magnitude de gradiente seja maior que a magnitude dos seus vizinhos na direção do gradiente. A fim de evitar ruído, a verificação descarta candidatos segundo dois critérios: se o candidato não tem vizinhos também candidatos, e se a magnitude do gradiente daquele pixel é muito diferente da magnitude dos seus vizinhos na direção do gradiente.
 
+\textcolor{red}{aqui muita coisa tah faltando... mostre as formulas dos gradintes, coloque uma imagem ilustrando a selecao de candidatos e fale todos os detalhes que voce puder... nao economize palavras...}
+
 %Illingworth, J., \& Kittler, J. (1988). A survey of the Hough transform.Computer vision, graphics, and image processing, 44(1), 87-116.
+
 
 \subsection{Obtenção do Gradiente}
 
-Esta técnica considera uma imagem colorida como um campo vetorial que mapeia um espaço n-dimensional (espaço) em um m-dimensional (canais), como mostrado em [Lee e Cok]. Portanto, dado um campo vetorial representado pela função $ f: S->R^m $, uma imagem pode ser representada como um subespaço de $f$ dado por $ Vn->m $.
+\textcolor{red}{voce novamente comeca seco... fale o que isso eh...}
+Esta técnica considera uma imagem colorida como um campo vetorial que mapeia um espaço n-dimensional (espaço) em um m-dimensional (canais), como mostrado em [Lee e Cok] \textcolor{red}{nao referencie diretamente a referencia... coloque o nome dos autores e depois a ref... ex: como mostrado por Farias et al. [2]}. Portanto, dado um campo vetorial representado pela função $ f: S->R^m $, uma imagem pode ser representada como um subespaço de $f$ dado por $ Vn->m $.
 
 Considerando uma imagem bidimensional com três canais (um para cada canal de cor r, g e b), $DV$ é a matriz que mostra a variação dos valores de R, G e B no espaço infinitesimal dx e dy. 
 
 $$ DV = (dx dy)Jc^T $$ 
+
+\textcolor{red}{para alinhar a esquerda, use 'noindent'...}
 
 em que $Jc$ é a matriz jacobiana, que tem a seguinte forma:
 
@@ -62,13 +70,20 @@ $$ \theta = tan^{-1}((V-Mxx)/Mxy) $$
 
 A raiz quadrada do maior autovalor $V$ e seu autovetor correspondente são equivalentes à magnitude e direção do gradiente em um ponto da imagem. Portanto, para cada pixel $(i,j)$, seu gradiente é encontrado computando seus autovalores e autovetores com as equações acima descritas.
 
+\textcolor{red}{aqui valem o mesmos comentarios da secao anterior e ainda tem o fato de voce ter colocado exatamente como estah no artigo dos caras... nao faca isso... o leitor tem que ver que voce colocou o seu entendimento e nao uma copia do que leu... Por exemplo, comente sobre o significado da jacobiana, fale se isso pode ser usado em outras imagem com tres canais (HSV, Lab, etc...) e gaste bastante texto explicando cada um dos elementos: V, Mxy, Myy e $\theta$... manjou?}
+
+
 \subsection{Detecção de Candidatos}
+
+\textcolor{red}{nao dah para deixar uma secao com este tamanho... fale mais e coloque uma figura... os mesmos comentarios da primeira secao valem aqui}
 
 Após calcular a matriz $Mc$ para cada pixel da imagem e seus valores de $V$ e $\theta$, os pixeis com máxima local de magnitude de gradiente na direção dele, ou seja, os pixeis cuja magnitude seja maior que a dos seus dois vizinhos na direção do gradiente, são considerados candidatos a pixeis de borda.
 
 \subsection{Verificação de Candidatos}
 
-Após a detecção é implementado um esquema de verificação para descartar falsos pixels de borda, como os gerados por ruído. Ele é baseado em duas operações que se aproveitam das informações obtidas anteriormente e de análise das regiões das imagens:
+Após a detecção é implementado um esquema de verificação para descartar falsos pixels de borda, como os gerados por ruído \textcolor{red}{coloque uma refe aqui... que tipo de ruido? de onde?}. Ele é baseado em duas operações que se aproveitam das informações obtidas anteriormente e de análise das regiões das imagens:
+
+\textcolor{red}{novamente voce economiza palavras... assim nao da... coloque tudo... quero figuras, explicacoes, insights, modificacoes, etc.}
 
 \begin{itemize}
 \item Primeiramente, se um candidato não tiver vizinhos também candidatos, ele é considerado ruído e descartado;
@@ -78,11 +93,16 @@ $$ (sum(| V(i,j) - V(i+p,j+q) |)- sum(V(i+p,j+q))) >0$$
 
 \section{Identificação de Linhas}
 
+\textcolor{red}{nao vou nem comentar isso... ajeite...}
+
 Após detectar as bordas da imagem, se faz necessário ligar os pixeis de borda vizinhos e com orientações semelhantes em conjuntos de segmentos de retas. Com isso, é preparado o terreno para a próxima etapa, que rotula linhas como pertencentes a objetos retangulares. 
 
-A identificação de linhas é feita utilizando a transformada de Hough. Devido ao ruído e a diferenças na iluminação, é possível que segmentos de reta tenham descontinuidades. Para atacar este problema, é implementado um esquema para mesclar segmentos que pareçam pertencer à mesma linha (\textbf{manter o texto desse jeito? não ta muito informal?})
+A identificação de linhas é feita utilizando a transformada de Hough. Devido ao ruído e a diferenças na iluminação, é possível que segmentos de reta tenham descontinuidades. Para atacar este problema, é implementado um esquema para mesclar segmentos que pareçam pertencer à mesma linha (\textbf{manter o texto desse jeito? não ta muito informal?}) \textcolor{red}{tah bem ruim...}
 
 \subsection{Transformada de Hough}
+
+\textcolor{red}{cade o texto falando rapidamente sobre a transformada? como ela surgiu? qual era o objetivo? encontrar pontos com mesmo rho e theta, o que significa que provavelmente fazem parte da mesma linha... e a votacao? cade as figuras? que variante de hough foi usada?... os mesmos comentarios das secoes anteriores valem aqui... e para de fazer tudo a prestacao... coloque as imagens logo...}
+
 
 A transformada de Hough funciona transformando cada pixel na imagem em uma linha reta no espaço paramétrico. Duda e Hart [fonte] propuseram uma parametrização que encaixa os píxeis no espaço x y em uma reta rho = x cos theta +y sen theta, onde rho é a distância entre a origem da imagem e a reta, pelo seu ponto mais próximo, e theta é o ângulo que a normal à reta faz com o eixo x.
 
@@ -130,6 +150,10 @@ Através deste esquema, são identificados e selecionados os segmentos de reta p
 \section{Reconhecimento de Retângulos}
 
 Após identificar as linhas presentes na imagem e eliminar as que não são interessantes, é feita a classificação de certas linhas como sendo pertencentes ou não ao lado de um objeto retangular através de um modelo baseado no Campo Aleatório de Markov (MRF).
+
+\textcolor{red}{nao da para falar de cadeias de markov sem referencias... isso vale para todo o texto... onde tiver uma afirmacao ou algo que nao foi explicado diretamente no texto, coloque uma referencia}
+
+\textcolor{red}{vou parar aqui... tudo que eu falei anteriormente vale para todo o texto...}
 
 O MRF é uma técnica adequada para a resolução do problema porque a probabilidade de uma linha vir a pertencer ao lado de um retângulo depende principalmente dos seus vizinhos. Mapeando estas características, é possível montar um modelo MRF para rotular segmentos. Primeiramente, um sistema de vizinhanças é formado para prover o modelo de informações espaciais sobre as linhas. Após isto, um algoritmo de aprendizado utiliza estas informações para rotular as linhas como pertencentes a um lado de retângulo.
 
@@ -226,7 +250,7 @@ Para este trabalho é considerado que a tela, embora não possa ser a única coi
 
 O resultado da seleção deve ser apenas retângulos de tamanho considerável e com a relação de aspecto próxima à de TVs e monitores. Com isto, se faz necessário um critério de verificação para que o retângulo que mais se assemelha à tela seja o escolhido como verdadeiro. O critério é baseado no de [kastelan]. Neste trabalho, assume-se que, caso seja encontrado mais de um retângulo, os dois maiores retângulos encontrados ao final do processo representam as bordas da tela e do monitor. Portanto, o segundo maior retângulo é escolhido como tela. Caso só seja encontrado um retângulo, ele é escolhido como tela. Caso os critérios de seleção não deem como resposta um retangulo, a resposta do método é que nenhum retângulo que representa a tela foi encontrado.
 
-\subsection{Redimensionamento}
+\subsection{Redimensionamento} \label{redim}
 
 Encontrado o trecho da imagem que representa a tela, se faz necessário separá-lo e colocá-lo em um formato que possa ser utilizado futuramente. Para isto, este trecho da imagem é transformado em uma imagem retangular do mesmo formato da origem. A dificuldade desta transformação está no fato que a a tela na imagem pode ter as mais diversas formas, seja devido a dificuldades na captura como a características inerentes à câmera utilizada. Ela pode não ter a forma perfeitamente retangular ou ter uma orientação diferente. As imagens de referência, por outro lado, têm formato bem definido e são perfeitamente horizontais.
 A transformação se dá em duas fases: a rotação da imagem e o redimensionamento. A rotação visa transmitir o conteudo de uma imagem quadrangular qualquer $A’B’C’D’$ para um retangulo perfeitamente regular $ABCD$. O problema é encontrar a qual parte $G’(x’,y’)$ da região retangular pertence cada parte $G(x,y)$ do retângulo transformado.
