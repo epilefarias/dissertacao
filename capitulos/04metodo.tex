@@ -12,23 +12,40 @@ O método proposto nesta dissertação para extração de conteúdo de telas de 
  \item escolha do retângulo que representa a tela;
 \end{itemize}
 
-A figura \ref{diag} ilustra os estágios do método. Cada um deles será detalhado a seguir.
+A figura \ref{figdiag} ilustra os estágios do método. Cada um deles será detalhado a seguir.
 
 %DIAGRAMA DE BLOCOS DO MÉTODO AQUI
 
 \begin{figure} [h]
-\includegraphics[width = \textwidth]{figuras/diag.pdf} \label{diag} \caption{Diagrama de blocos do método}
+\includegraphics[width = \textwidth]{figuras/diag.pdf} \label{figdiag}
+\caption{Diagrama de blocos do método}
 \end{figure} 
 
-\section{Detecção de Bordas}
+\section{Detecção de Bordas} \label{met:borda}
 
 %lembrar sempre que precisa haver a DESCRIÇÃO das técnicas utilizadas, assim como sua MOTIVAÇÃO (porque usei A e não B, que autores concordam cmg)
-\textcolor{red}{felipe, evite frases obvias... eh claro que eh importante.. outra coisa: comece indicando rapidamente o que ela e depois elabore...}
-A detecção de bordas é uma etapa de preprocessameto importante. Ela é feita usando análise de gradiente multi-dimensional \cite{borda00}. Esta técnica é útil por funcionar bem em imagens coloridas e também por gerar informação de ângulo de gradiente, que vai ser útil nas próximas etapas do processamento.
+%\textcolor{red}{felipe, evite frases obvias... eh claro que eh importante.. outra coisa: comece indicando rapidamente o que ela e depois elabore...}
+A borda de uma imagem é uma mudança significativa nos valores de intensidade de uma imagem, normalmente indicando uma mudança de região nela. Um mapa de borda da imagem é, portanto, uma matriz do mesmo tamanho da imagem, com pontos indicando a localização das bordas. A detecção de bordas é a área de processamento de imagem que estuda meios de localizar estas bordas \cite{borda01}. A figura \ref{exemploborda} mostra um exemplo de detecção de bordas.
 
-Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando as seis derivadas de primeira ordem (duas pra cada canal R,G e B da imagem) e depois implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. Este esquema é composto por duas fases: um pixel é selecionado como candidato caso sua magnitude de gradiente seja maior que a magnitude dos seus vizinhos na direção do gradiente. A fim de evitar ruído, a verificação descarta candidatos segundo dois critérios: se o candidato não tem vizinhos também candidatos, e se a magnitude do gradiente daquele pixel é muito diferente da magnitude dos seus vizinhos na direção do gradiente.
+%Jain, R., Kasturi, R., & Schunck, B. G. (1995). Machine vision (Vol. 5). New York: McGraw-Hill.
 
-\textcolor{red}{aqui muita coisa tah faltando... mostre as formulas dos gradintes, coloque uma imagem ilustrando a selecao de candidatos e fale todos os detalhes que voce puder... nao economize palavras...}
+
+\begin{figure}[h]
+  \centering
+  \subfloat[original]{\includegraphics[width=0.45\textwidth]{figuras/fig1orig.jpg}\label{fig:f1}}
+  \hfill
+  \subfloat[borda]{\includegraphics[width=0.45\textwidth]{figuras/fig1borda.jpg}\label{fig:f2}}
+  \caption{imagem e seu mapa de bordas}
+  \label{exemploborda}
+\end{figure}
+
+
+%A detecção de bordas é uma etapa de preprocessameto importante.
+Neste trabalho, a detecção de bordas é feita usando análise de gradiente multi-dimensional \cite{borda00}. Esta técnica considera a imagem um campo vetorial, ou seja, uma função no espaço $x,y$. Ela calcula seu gradiente para eleger candidatos a pixels de borda. Após isso, é implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. O pixel é selecionado como candidato caso sua magnitude de gradiente seja um máximo local. A verificação descarta candidatos caso o candidato não tenha vizinhos também candidatos e se a magnitude do gradiente daquele pixel for muito diferente da magnitude dos seus vizinhos na direção do gradiente.
+Através deste esquema, é possível detectar a borda de imagens coloridas no espaço RGB. Ele será mais detalhado a seguir.
+%Esta técnica é útil por funcionar bem em imagens coloridas e também por gerar informação de ângulo de gradiente, que vai ser útil nas próximas etapas do processamento.
+
+%\textcolor{red}{aqui muita coisa tah faltando... mostre as formulas dos gradintes, coloque uma imagem ilustrando a selecao de candidatos e fale todos os detalhes que voce puder... nao economize palavras...}
 
 %Illingworth, J., \& Kittler, J. (1988). A survey of the Hough transform.Computer vision, graphics, and image processing, 44(1), 87-116.
 
@@ -36,7 +53,16 @@ Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando a
 \subsection{Obtenção do Gradiente}
 
 \textcolor{red}{voce novamente comeca seco... fale o que isso eh...}
+
+
 Esta técnica considera uma imagem colorida como um campo vetorial que mapeia um espaço n-dimensional (espaço) em um m-dimensional (canais), como mostrado em [Lee e Cok] \textcolor{red}{nao referencie diretamente a referencia... coloque o nome dos autores e depois a ref... ex: como mostrado por Farias et al. [2]}. Portanto, dado um campo vetorial representado pela função $ f: S->R^m $, uma imagem pode ser representada como um subespaço de $f$ dado por $ Vn->m $.
+
+Explicar o conceito de campo vetorial
+
+exemplos do professor: pode ser usado em outros tipos de representação de imagem?
+
+
+%Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando as seis derivadas de primeira ordem (duas pra cada canal R,G e B da imagem) e depois implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. Este esquema é composto por duas fases: um pixel é selecionado como candidato caso sua magnitude de gradiente seja maior que a magnitude dos seus vizinhos na direção do gradiente. A fim de evitar ruído, a verificação descarta candidatos segundo dois critérios: se o candidato não tem vizinhos também candidatos, e se a magnitude do gradiente daquele pixel é muito diferente da magnitude dos seus vizinhos na direção do gradiente.
 
 Considerando uma imagem bidimensional com três canais (um para cada canal de cor r, g e b), $DV$ é a matriz que mostra a variação dos valores de R, G e B no espaço infinitesimal dx e dy. 
 
@@ -72,10 +98,7 @@ A raiz quadrada do maior autovalor $V$ e seu autovetor correspondente são equiv
 
 \textcolor{red}{aqui valem o mesmos comentarios da secao anterior e ainda tem o fato de voce ter colocado exatamente como estah no artigo dos caras... nao faca isso... o leitor tem que ver que voce colocou o seu entendimento e nao uma copia do que leu... Por exemplo, comente sobre o significado da jacobiana, fale se isso pode ser usado em outras imagem com tres canais (HSV, Lab, etc...) e gaste bastante texto explicando cada um dos elementos: V, Mxy, Myy e $\theta$... manjou?}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 5efb18d5c7289de0e678f15c603552aea62833ee
 \subsection{Detecção de Candidatos}
 
 \textcolor{red}{nao dah para deixar uma secao com este tamanho... fale mais e coloque uma figura... os mesmos comentarios da primeira secao valem aqui}
@@ -94,26 +117,67 @@ Após a detecção é implementado um esquema de verificação para descartar fa
 $$ (sum(| V(i,j) - V(i+p,j+q) |)- sum(V(i+p,j+q))) >0$$
 \end {itemize}
 
-\section{Identificação de Linhas}
+\section{Identificação de Linhas} \label{met:linha}
 
-\textcolor{red}{nao vou nem comentar isso... ajeite...}
+%\textcolor{red}{nao vou nem comentar isso... ajeite...}
 
-Após detectar as bordas da imagem, se faz necessário ligar os pixeis de borda vizinhos e com orientações semelhantes em conjuntos de segmentos de retas. Com isso, é preparado o terreno para a próxima etapa, que rotula linhas como pertencentes a objetos retangulares. 
+%Após detectar as bordas da imagem, se faz necessário ligar os pixeis de borda vizinhos e com orientações semelhantes em conjuntos de segmentos de retas. Com isso, é preparado o terreno para a próxima etapa, que rotula linhas como pertencentes a objetos retangulares. 
 
-A identificação de linhas é feita utilizando a transformada de Hough. Devido ao ruído e a diferenças na iluminação, é possível que segmentos de reta tenham descontinuidades. Para atacar este problema, é implementado um esquema para mesclar segmentos que pareçam pertencer à mesma linha (\textbf{manter o texto desse jeito? não ta muito informal?}) \textcolor{red}{tah bem ruim...}
+%A identificação de linhas é feita utilizando a transformada de Hough. Devido ao ruído e a diferenças na iluminação, é possível que segmentos de reta tenham descontinuidades. Para atacar este problema, é implementado um esquema para mesclar segmentos que pareçam pertencer à mesma linha (\textbf{manter o texto desse jeito? não ta muito informal?}) \textcolor{red}{tah bem ruim...}
+
+Esta seção apresenta o esquema de identificação de linhas em uma imagem deste método. A identificação é baseada na transformada de Hough \cite{houghintro00}, uma técnica que facilita o trabalho de encontrar linhas e outros padrões complexos em imagens binárias ao transformar estes padrões em conjuntos de parâmetros mais facilmente identificáveis. Sua aplicação para encontrar linhas é baseada na parametrização popularizada por Duda e Hart em \cite{houghintro02}.
+
+Os segmentos encontrados na transformada não necessariamente correspondem às linhas dos objetos que as fotos representam. Descontinuidades em retas podem aparecer devido a diferenças na iluminação ou reflexos. Portanto, as linhas encontradas pela transformada são posteriormente submetidas a um esquema de  mesclagem e seleção, de forma que somente os segmentos relevantes para o reconhecimento de retângulos seja dada como resultado final. A mesclagem é feita analisando as propriedades espaciais das linhas encontradas, juntando as que têm orientação e distância da origem semelhantes e eliminando as que têm ângulo muito diferente de 90º e 0º.
 
 \subsection{Transformada de Hough}
 
-\textcolor{red}{cade o texto falando rapidamente sobre a transformada? como ela surgiu? qual era o objetivo? encontrar pontos com mesmo rho e theta, o que significa que provavelmente fazem parte da mesma linha... e a votacao? cade as figuras? que variante de hough foi usada?... os mesmos comentarios das secoes anteriores valem aqui... e para de fazer tudo a prestacao... coloque as imagens logo...}
+%\textcolor{red}{cade o texto falando rapidamente sobre a transformada? como ela surgiu? qual era o objetivo? encontrar pontos com mesmo rho e theta, o que significa que provavelmente fazem parte da mesma linha... e a votacao? cade as figuras? que variante de hough foi usada?... os mesmos comentarios das secoes anteriores valem aqui... e para de fazer tudo a prestacao... coloque as imagens logo...}
 
+A transformada de Hough foi criada por P.V.C Hough para detectar padrões complexos em imagens binárias. Para atingir este objetivo, são determinados parâmetros que caracterizam estes padrões. Assim, o problema de detectar um padrão em uma imagem binária é transformado no problema de detectar um valor no espaço paramétrico \cite{houghintro01}.
 
-A transformada de Hough funciona transformando cada pixel na imagem em uma linha reta no espaço paramétrico. Duda e Hart [fonte] propuseram uma parametrização que encaixa os píxeis no espaço x y em uma reta rho = x cos theta +y sen theta, onde rho é a distância entre a origem da imagem e a reta, pelo seu ponto mais próximo, e theta é o ângulo que a normal à reta faz com o eixo x.
+%fonte: VC, H. P. (1962). U.S. Patent No. 3,069,654. Washington, DC: U.S. Patent and Trademark Office.
 
-FIGURA COM UMA RETA MOSTRANDO RHO E THETA
+No caso específico de detecção de retas, a transformada de Hough funciona transformando uma linha reta em um ponto no espaço paramétrico. Os parâmetros utilizados por Hough para caracterizar uma reta no espaço $x,y$ são a inclinação $m$ e interseção $b$, portanto a reta $y = mx+b$ é representada como um ponto no espaço $m,p$.
 
-Assim, dado um pixel de borda, para cada possível reta que passe por ele, é computado um ponto no espaço $(\rho,\theta)$. O conjunto de linhas possíveis passando por um determinado ponto forma um sinusoide naquele espaço. Com dois ou mais pontos na imagem pertencendo à mesma linha, as sinusoides que os representam se tocam justamente no ponto que representa a mesma.
+Supondo que se tenha um conjunto de $n$ pontos em uma imagem $N = \{(x_1,y_1),(x_2,y_2),...,(x_n,y_n)\}$  e se queira descobrir a que linha eles pertencem, são computadas todas as retas que passam por aquele conjunto de pontos. Para cada reta que contém um dos pontos é computado um voto no espaço paramétrico $m,b$. Assim, a reta com maior número de votos é considerada a reta a qual os pontos pertencem. Este processo pode ser melhor representado na figura \ref{houghpuro}
 
-FIGURA REPRESENTANDO DOIS PONTOS LIGADOS À MESMA LINHA E O SEU ESPAÇO PARAMÉTRICO
+\begin{figure}[h]
+  \centering
+  \subfloat[imagem original]{\includegraphics[width=0.4\textwidth]{figuras/houghpuro00.jpg}\label{houghpuro:f1}}
+  \hfill
+  \subfloat[representação no espaço paramétrico]{\includegraphics[width=0.4\textwidth]{figuras/houghpuro01.jpg}\label{houghpuro:f2}}
+  \caption{imagem com pontos colineares e sua representação no espaço $m,b$. Adaptado de \cite{houghintro01}}
+  \label{houghpuro}
+\end{figure}
+
+Entretanto, a parametrização no espaço $m,b$ não consegue representar corretamente linhas verticais ou próximas desta inclinação, como perceberam Duda e Hart em seu influente artigo \cite{houghintro02}. A fim de eliminar estes problemas, eles propuseram uma nova parametrização para a transformada de Hough. Nela, as retas no espaço $x,y$ são representadas no espaço $\rho,\theta$, onde $\rho$ é a distância entre a origem da imagem e a reta, pelo seu ponto mais próximo, e $\theta$ é o ângulo que a normal à reta faz com o eixo $x$. A equação da reta, portanto, é dada por: 
+
+$$\rho = x cos \theta +y sin \theta $$ 
+
+%fonte: Duda, R. O., & Hart, P. E. (1972). Use of the Hough transformation to detect lines and curves in pictures. Communications of the ACM, 15(1), 11-15.
+
+%FIGURA COM UMA RETA MOSTRANDO RHO E THETA
+
+\begin{figure} [h]
+\centering
+\includegraphics[width = 0.6\textwidth]{figuras/hough.jpg} \label{hough} \caption{Representação paramétrica de Hough. Adaptado de \cite{hough00}}
+\end{figure} 
+
+%imagem de: Jung, C. R., & Schramm, R. (2004, October). Rectangle detection based on a windowed Hough transform. In Computer Graphics and Image Processing, 2004. Proceedings. 17th Brazilian Symposium on (pp. 113-120). IEEE.
+
+Assim, dado um pixel de borda, para cada possível reta que passe por ele, é computado um ponto no espaço $(\rho,\theta)$. O conjunto de linhas possíveis passando por um determinado ponto forma um sinusoide naquele espaço. Com dois ou mais pontos na imagem pertencendo à mesma linha, as sinusoides que os representam se tocam justamente no ponto que representa a mesma. Isto é melhor representado na imagem \ref{houghlinhas}, que mostra uma imagem com dois pontos brancos e sua representação no espaço de Hough.
+
+%FIGURA REPRESENTANDO DOIS PONTOS LIGADOS À MESMA LINHA E O SEU ESPAÇO PARAMÉTRICO
+
+\begin{figure}[h]
+  \centering
+  \subfloat[imagem original]{\includegraphics[width=0.35\textwidth]{figuras/houghpts0000.jpg}\label{houghlinhas:f1}}
+  \hfill
+  \subfloat[representação no espaço de Hough]{\includegraphics[width=0.5\textwidth]{figuras/houghpts0001.jpg}\label{houghlinhas:f2}}
+  \caption{imagem com dois pontos e a representação paramétrica}
+  \label{houghlinhas}
+\end{figure}
+
 
 O algoritmo para encontrar linhas utilizando a transformada de Hough, portanto, tem os seguintes passos: 
 \begin{itemize}
@@ -129,7 +193,6 @@ Utilizando os conhecimentos sobre o problema e análise espacial das linhas, for
 %mesclar linhas próximas
 
 Iluminação ou ruído podem interferir na correta detecção de linhas. Com isso, o mesmo segmento pode acabar sendo detectado como dois segmentos menores. A fim de atacar este problema, esta parte do algoritmo mescla linhas encontradas no processo anterior segundo os seguintes critérios:
-\textcolor{red}{tudo que voce puder explicar por formulas, explique... coloque formulas, mesmo que simples, pois isso cria uma linguagem matematica... por exemplo, no primeiro abaixo, coloque (rho1 - rho2) < $\delta$.. entendeu?}
 \begin{itemize}
 \item As linhas devem ter orientação e distância da origem semelhante. Devido ao ruído e a problemas na quantização, é possível que algumas linhas do mesmo segmento tenham orientação ou distância da origem um pouco diferentes entre si;
 \item A distância entre os segmentos deve ser muito pequena (não maior que 5 pixeis);
@@ -151,49 +214,127 @@ Através deste esquema, são identificados e selecionados os segmentos de reta p
 %Illingworth, J., & Kittler, J. (1988). A survey of the Hough transform.Computer vision, graphics, and image processing, 44(1), 87-116.
 
 
-\section{Reconhecimento de Retângulos}
+\section{Reconhecimento de Retângulos} \label{met:retangulo}
 
-Após identificar as linhas presentes na imagem e eliminar as que não são interessantes, é feita a classificação de certas linhas como sendo pertencentes ou não ao lado de um objeto retangular através de um modelo baseado no Campo Aleatório de Markov (MRF).
+%problema
+Após identificar as linhas presentes na imagem e eliminar as que não são interessantes, é necessário classificar as linhas encontradas como pertencentes ou não ao lado de um objeto retangular. Neste trabalho, a classificação é feita através de um modelo baseado no Campo Aleatório de Markov (MRF). A teoria do MRF utiliza as relações entre elementos vizinhos para estimar o estado futuro de seus elementos. Portanto, é criado algoritmo baseado neste modelo para rotular as linhas encontradas.
+%Um Campo Aleatório de Markov pode ser utilizado para modelar entidades tais como pixels ou linhas, caracterizando as relações entre as entidades utilizando as distribuições
 
-\textcolor{red}{nao da para falar de cadeias de markov sem referencias... isso vale para todo o texto... onde tiver uma afirmacao ou algo que nao foi explicado diretamente no texto, coloque uma referencia}
+%Para classificar linhas como parte de um retângulo é necessário um modelo que leve em conta as relações entre elas. O Campo Aleatório de Markov é uma ferramenta que utiliza justamente as relações entre elementos vizinhos para estimar o estado futuro de seus elementos. Portanto, é criado algoritmo baseado neste modelo para rotular as linhas encontradas.
+%como funciona mrf
+%\textcolor{red}{nao da para falar de cadeias de markov sem referencias... isso vale para todo o texto... onde tiver uma afirmacao ou algo que nao foi explicado diretamente no texto, coloque uma referencia}
 
-\textcolor{red}{vou parar aqui... tudo que eu falei anteriormente vale para todo o texto...}
+%\textcolor{red}{vou parar aqui... tudo que eu falei anteriormente vale para todo o texto...}
 
-O MRF é uma técnica adequada para a resolução do problema porque a probabilidade de uma linha vir a pertencer ao lado de um retângulo depende principalmente dos seus vizinhos. Mapeando estas características, é possível montar um modelo MRF para rotular segmentos. Primeiramente, um sistema de vizinhanças é formado para prover o modelo de informações espaciais sobre as linhas. Após isto, um algoritmo de aprendizado utiliza estas informações para rotular as linhas como pertencentes a um lado de retângulo.
+%Processo Estocástico definição
 
-Seja $L = {l1,l2,...,ln}$ o conjunto de segmentos de linha encontrados no processo anterior, $d = {1,2,..,n}$ o conjunto de indices de $L$ e $F = {F1,F2,...,Fn}$ uma família de variáveis aleatórias, em que cada variável $Fi$ toma um valor de 0 a 1 que indica se a linha $li$ pertence ao lado de um objeto retangular. Quando $Fi = 1$, $li$ é considerrado um lado de um retangulo.
+%Variável aleatória definição
 
-\subsection{Sistema de Vizinhança}
+Esta seção abordará os principais conceitos relativos ao MRF, a formação e necessidade do Sistema de Vizinhanças, o funcionamento do algoritmo de classificação e a posterior escolha do retângulo que representa a tela, assim como seu redimensionamento.
 
-%dados de entrada/organização
+\subsection{Campo Aleatório de Markov (MRF)}
 
-O conjunto de linhas vizinhas da linha $li$ é representado por $N(li)$. Ele é formado por linhas tais que $li$ não pertence a $N(li)$ e se $lj$ pertence a $N(li)$, $li$ pertence a $N(lj)$. Para uma linha $lj$ ser considerada vizinha de $li$, ela deve obedecer a três condições:
+Um Campo Aleatório de Markov (MRF) é um processo estocástico que apresenta propriedade Markoviana. A definição desta propriedade, assim nomeada em homenagem a Andrei Markov, é que o estado futuro de um processo pode ser previsto sabendo apenas o estado atual, ignorando seus estados anteriores.
+
+\subsubsection{Conceitos Iniciais}
+
+A teoria relativa ao MRF utiliza diversos conceitos da estatística que podem não ser familiares. A fim de melhor entendimento da seção, alguns deles serão expostos abaixo: 
+
 \begin{itemize}
+
+\item \textbf{variável aleatória} é o nome dado a uma variável cujo valor não é exato, mas sim pode ter uma série de valores, cada um deles associado a uma probabilidade. Neste trabalho, variáveis aleatórias serão representadas por uma letra latina maiúscula:
+
+$$ X $$
+
+E sua probabilidade de apresentar valor $x$ será representada como segue:
+
+$$ P(X = x)$$
+
+\item \textbf{Processo estocástico}, ou processo aleatório, é um conjunto de variáveis aleatórias que representam a evolução de um mesmo sistema ao longo do tempo. Dado um conjunto de variáveis aleatórias $X$ e o tempo $T$ formado pelos passos $t$, um processo estocástico pode ser representado por:
+
+$$ \{X_t,t\subset T\}$$
+
+Em que $X_t$ representa o estado do processo no tempo $t$.
+
+\item \textbf{Campo aleatório} é um conjunto de variáveis aleatórias. A diferença para o processo estocástico é que o parâmetro que une estas variáveis não precisa ser necessariamente o tempo. O MRF é um tipo de campo aleatório.
+
+\end{itemize}
+
+A teoria do MRF permite modelar a probabilidade \textit{a priori} de elementos relacionados entre si. Em conjunto com teorias de estimação, é formulada uma função objetiva para estimar os valores das variáveis aleatórias. Esta função pode ser encaixada em um algoritmo devido a um teorema que equivale o MRF a uma distribuição de Gibbs.
+
+Para caracterizar as relações entre os elementos pertencentes ao MRF é criado um sistema de vizinhanças. Este sistema utiliza as informações espaciais das linhas para estabelecer as relações entre elas.
+
+%As probabilidades/o estado futuro dos elementos do modelo MRF dependem das inter-reações entre eles e seus elementos vizinhos. Para caracterizar estes elementos, um sistema de vizinhança é criado.
+
+%(1.1 da referencia)
+
+%Portanto, dada a variável aleatória $X$, $X_n$ representa seu estado no passo $n$. Caso $X$ seja parte de uma Cadeia de Markov, a probabilidade de $X_{n+1}$ ser igual a um estado $x$ é dada por:
+
+%$$ P(X_{n+1} = x|X_1,...,X_n ) = P(x|X_n) $$
+
+
+
+%O MRF é uma técnica adequada para a resolução do problema porque a probabilidade de uma linha vir a pertencer ao lado de um retângulo depende principalmente dos seus vizinhos. Mapeando estas características, é possível montar um modelo MRF para rotular segmentos. Primeiramente, um sistema de vizinhanças é formado para prover o modelo de informações espaciais sobre as linhas. Após isto, um algoritmo de aprendizado utiliza estas informações para rotular as linhas como pertencentes a um lado de retângulo.
+
+\subsubsection{Sistema de Vizinhanças}
+
+Um campo aleatório é considerado um MRF se a probabilidade condicional de um elemento depender de seus elementos vizinhos \cite{vizinh00}. O sistema de vizinhanças caracteriza os elementos do campo como vizinhos ou não entre si.
+
+%MELHORAR O sistema de vizinhanças foi criado para fornecer ao modelo MRF as informações relativas às linhas. Estas informações são obtidas explorando características espaciais das mesmas. Características estas que são
+
+%fonte: Wang, X., & Wang, H. (2004). Evolutionary optimization with Markov random field prior. Evolutionary Computation, IEEE Transactions on, 8(6), 567-579.
+
+O sistema de vizinhança é caracterizado como segue: o conjunto de elementos vizinhos do elemento $l_i$ é representado por $N(l_i)$. Pertencem a $N(l_i)$ elementos que observem as seguintes condições:
+\begin{itemize}
+\item $l_i$ não pertence a $N(l_i)$ 
+\item se $l_j$ pertence a $N(l_i)$, $l_i$ pertence a $N(l_j)$.
+\end{itemize}
+No caso específico deste modelo, os elementos são linhas. A vizinhança é caracterizada utilizando suas relações espaciais. Para uma linha $lj$ ser considerada vizinha de $li$, ela deve obedecer a três condições:
+	\begin{itemize}
 \item $lj$ deve ser paralela ou perpendicular a $li$. Uma variável $H(i,j)$ é formada para avaliar as relações espaciais entre as linhas $li$ e $lj$. Se $H(i,j) = 1$, $li$ e $lj$ são perpendiculares entre si, ao passo que se $H(i,j) = 0$, $li$ e $lj$ são paralelas. Caso os ângulos entre $li$ e $lj$ não pertençam a nenhuma das categorias anteriores, $H(i,j) = -1$;
 \item A distância $D(i,j)$ entre $li$ e $lj$ não pode ser muito grande ou muito pequena. A distância é computada de duas formas, dependendo de $H(i,j)$. Caso $H(i,j) = 0$, a distância entre $li$ e $lj$ é a menor distância entre as duas linhas, ou seja, o comprimento de uma reta normal às duas que toca as duas linhas. Neste caso, $D(i,j)$ deve ser menor que o Maior Tamanho de Retângulo possível (MRS), normalmente igual ao tamanho da imagem, e maior que o Menor Retângulo Possível (MIS).  Caso $H(i,j) = 1$, a distândia é considerada a menor distânca entre o dim de um segmento e outro segmento. Neste caso, $D(i,j)$ deve ser menor que metade do tamanho do menor segmento;
 \item Por último, se $li$ e $lj$ são paralelos, eles devem se sobrepor em uma porção significativa quando projetados na direção prependicular às linhas. Se a sobreposição for superior a 60\% do tamanho das linhas, elas podem ser vizinhas. 
 \end{itemize}
- A figura [figura 2] ilustra as condições explicadas. Nela, $l1$ e $l2$ são linhas paralelas, $l3$ é uma linha perpendicular às duas, $D(1,2)$ é a distância entre $l1$ e $l2$ e $D(2,3)$ é a distância entre $l2$ e $l3$. A projeção da sobreposição da linha $l1$ na linha $l2$ é o segmento $AB$. Somente se $AB > 0.6*max(tam_l1,tam_l2)$, $l2$ será considerado vizinho de l1.
+ A figura \ref{uelinha} ilustra as condições explicadas. Nela, $l1$ e $l2$ são linhas paralelas, $l3$ é uma linha perpendicular às duas, $D(1,2)$ é a distância entre $l1$ e $l2$ e $D(2,3)$ é a distância entre $l2$ e $l3$. A projeção da sobreposição da linha $l1$ na linha $l2$ é o segmento $AB$. Somente se $AB > 0.6*max(tam_l1,tam_l2)$, $l2$ será considerado vizinho de l1.
 
-FIGURA 2 DA REFERENCIA ZERO
+%FIGURA 2 DA REFERENCIA ZERO
 
-Com o sistema de vizinhanças descrito acima, o conjunto F é assumido como um MRF com suas características locais, para
+\begin{figure} [h]
+\centering
+\includegraphics[width = 0.6\textwidth]{figuras/linhasparal.jpg} \label{uelinha} \caption{Linhas paralelas e perpendiculares. Adaptado de \cite{mrf}}
+\end{figure} 
 
-$$ i \subset d, P(F_i|F_j,j \subset d, j \neq i) = P(F_i|F_j, j \subset N(l_i)) $$
+%figura de: Liu, Y., Ikenaga, T., & Goto, S. (2007). An MRF model-based approach to the detection of rectangular shape objects in color images. Signal Processing, 87(11), 2649-2658.
 
-\subsection{Marcação de Linhas}
+%Com o sistema de vizinhanças descrito acima, o conjunto F é assumido como um MRF com suas características locais, para
+
+%$$ i \in d, P(F_i|F_j,j \in d, j \neq i) = P(F_i|F_j, j \in N(l_i)) $$
+
+\subsubsection{Algoritmo de classificação}
+
+O problema de classificação encarado neste trabalho pode ser caracterizado a seguir. Seja $L = \{l_1,l_2,...,l_n\}$ o conjunto de segmentos de linha encontrados no processo anterior, $d = \{1,2,..,n\}$ o conjunto de indices de $L$ e $F = \{F_1,F_2,...,F_n\}$ uma família de variáveis aleatórias, em que cada variável $Fi$ toma um valor $f_i$ no espaço $[0,1]$. Este valor indica a probabilidade da linha $l_i$ pertencer ao lado de um objeto retangular.
+
+O evento da variável $F_i$ ter o valor $f_i$ é representado como $F_i = f_i$. O evento conjunto em que o cada uma das variáveis de $F$ apresenta um conjunto de valores $ f = \{f_1,f_2,...,f_n\} $ é representado como $(F_1=f_1,...,F_n=f_n)$, ou $F = f$. O conjunto de valores $f$ é chamado de \textit{configuração} de $F$. A probabilidade deste evento conjunto é representada por $P(F=f)$
 
   %    b.   rotulando segmentos de linha
 
-Sendo $ f = \{f_1,f_2,...,f_n\} $ uma configuração de $F$, tal que $ \{F_1 = f_1,...,F_n=f_n\} $ e $ N = {N(L_i)| \forall i \subset d} $ a coleção de segmentos vizinhos a um segmento de linha, podemos calcular a probabilidade posterior seguindo a distribuição de Gibbs, que é como segue:
+Sendo $F$ um MRF, a probabilidade de qualquer evento referente a ele depende de sua vizinhança. Essa vizinhança, encontrada na subseção anterior, é representada por $ N = \{N(l_i)| \forall i \in d\} $ e é a coleção de segmentos vizinhos a um segmento de linha $l_i$. 
 
-\begin{equation} \label{gibbs}
- P(F = f|L) = Z^{-1} exp[-E(f)/T] 
+Devido à equivalência entre o MRF e a distribuição de Gibbs \cite{mrfgibbs}, a probabilidade deste evento pode ser calculada seguindo esta distribuição, que é como segue:
+
+\begin{equation} \label{eqgibbs}
+ P(F = f|L) = Z^{-1} exp[\frac{-E(f)}{T}] 
 \end{equation}
 
 Em que $T$ é a temperatura, $Z$ é o fator de normalização e $E(f)$ é a função de energia posterior $ E(f)=U(f)/T+U(l|f) $, onde $U(f)$ e $U(l|f)$ são respectivamente a energia anterior e a energia de aproximação.
 
-Assim, o reconhecimento de lado do retângulo pode ser encarado como o seguinte problema de otimização: para um dado $L$, arg max $ P(f_i|l_i) $ para cada $ l_i $ é encontrado por arg min $ E(f) $, ou seja, minimizar a função de energia vai maximzar a probabilidade definida na equação \ref{gibbs}.
+%$ P(F=f|L) $ é a distribuição posterior do MRF.
+
+A maior parte dos problemas de visão computacional e processamento de imagens é tratada como um problema de otimização\cite{li2009markov}. Isto se deve ao alto grau de incertezas que permeia qualquer processo que envolva imagens. Ruído, descontinuidades e oclusão de parte dos objetos são geradores de incertezas, portanto é muito difícil obter uma solução exata. Uma solução inexata, porém ótima, é mais facilmente obtida.
+
+A função de energia tem um papel importante nestes tipos de problema. Ela pode ser usada como uma medida da qualidade da solução, assim como facilita a procura por uma solução mínima, ou ótima. Uma função de energia bem projetada tem seu valor mínimo quando a solução é ótima.
+
+Assim, o reconhecimento de lado do retângulo pode ser encarado como o seguinte problema: para um dado $L$, $ arg max \quad  P(f_i|l_i) $ para cada $ l_i $ é encontrado por $arg min \quad E(f) $, ou seja, minimizar a função de energia vai maximzar a probabilidade definida na equação \ref{eqgibbs}.
 
 Maximizar esta probabilidade vai dar a máxima estimativa posterior de potenciais lados de retângulos na imagem de bordas. A função de energia $ E(f) $ é minimizada enquanto cada $ f_i $ é convergido para 0 ou 1. A função $ E $ consiste nos quatro termos a seguir:
 
@@ -209,12 +350,14 @@ E_2 = \alpha _2 {\sum_{i=1}^{n} (\frac{f_i}{LEN_i}\times AVGLEN)}  \label{e2}
 E_3 = -\alpha _3 {\sum_{i=1}^{n} (f_i \ln f_i + (1-f_i)\ln(1-f_i))} \label{e3}
 \end{equation}
 
-\begin{equation}
-E_4 = \alpha_4 {\sum_{i=1}^{n} {\sum_ {j\in N(l_i)}^{}f_if_j\left \{ H(i,j)\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_k} + \\ 	(1-H(i,j))\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_kH(k,j)} \right \}}} \label{e4}
-\end{equation}
+\begin{align}
+E_4 = \alpha_4 \sum_{i=1}^{n} \sum_ {j\in N(l_i)}^{}f_if_j \{ H(i,j)\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_k} +\\ \nonumber
+(1-H(i,j))\times \min_{k\in (N(l_i)\cap N(l_j))} \frac{D(k,i)+D(k,j)}{f_kH(k,j)} \}
+\label{e4}
+\end{align}
 
 Onde $ \alpha _1 $, $ \alpha _2 $, $ \alpha _3 $ e $ \alpha _4 $ são constantes positivas que controlam as contribuições de cada termo individual da função de energia. AVGLEN é o comprimento médio do conjunto de segmentos L:
-
+	
 $$ AVGLEN = \frac{1}{n} \displaystyle \sum_{i=1}^{n} LEN_i $$
 
 $E_1$ apoia o agrupamento de segmentos próximos uns dos outros. $E_2$ favorece segmentos longos. $E_3$ é a entropia da configuração ${f_i}$, empurrando os ${f_i}$ para 0 ou 1. Por fim, $E_4$ favorece dois segmentos vizinhos, ambos próximos de um dos seus vizinhos em comum.
@@ -246,20 +389,35 @@ A escolha do retângulo que representa a tela do monitor utiliza critérios cria
 
 O motivo para a tela estar nos limites da imagem é a foto ser composta inteiramente pela tela. Este caso é evitado porque estas condições de captura são muito exigentes e há o risco grande de que uma parte da tela seja perdida caso a distancia entre a tela e a câmera sofram uma variação. Além disso, o diferencial do método aqui explicado é conseguir capturar a tela de um monitor em um ambiente qualquer. Capturar somente a tela rende o método inútil.
 
-Monitores têm uma relação de aspecto muito específica. Superando a 4/3, desde 2009 a relação de aspecto mais comum em monitores e telas de TV é de 16/9, assim como a razão inversa 9/16 é a mais comum em celulares. Isso se deve em parte por ser o formato padrão de imagens em HDTV, Full HD e transmissão de TV digital e analógica [fonte]. Assim, a fim de evitar falsos positivos, o método descarta, dentre os objetos encontrados, os que não tiverem uma relação de aspecto próxima dos monitores que estão sendo estudados.
+Monitores têm uma relação de aspecto muito específica. Superando a 4/3, desde 2009 a relação de aspecto mais comum em monitores e telas de TV é de 16/9, assim como a razão inversa 9/16 é a mais comum em celulares. Isso se deve em parte por ser o formato padrão de imagens em HDTV, Full HD e transmissão de TV digital e analógica \cite{DVB}. Assim, a fim de evitar falsos positivos, o método descarta, dentre os objetos encontrados, os que não tiverem uma relação de aspecto próxima dos monitores que estão sendo estudados.
 
 A fim de garantir que o objeto encontrado realmente tem formato retangular, suas diagonais são medidas e comparadas. Devido às instabilidades na captura ou próprias da câmera, é comum que as diagonais não tenham o mesmo tamanho exato, mas elas devem estar dentro de uma margem de segurança.
 
 Para este trabalho é considerado que a tela, embora não possa ser a única coisa na imagem, precisa ser grande o suficiente para que seja possível extrair informações dela. Para isso, é necessário que a tela ocupe um espaço mínimo da imagem. Com isto em mente, a área dos objetos retangulares é calculada e comparada com o tamanho da imagem, a fim de descartar os que têm área abaixo da mínima.
 
-O resultado da seleção deve ser apenas retângulos de tamanho considerável e com a relação de aspecto próxima à de TVs e monitores. Com isto, se faz necessário um critério de verificação para que o retângulo que mais se assemelha à tela seja o escolhido como verdadeiro. O critério é baseado no de [kastelan]. Neste trabalho, assume-se que, caso seja encontrado mais de um retângulo, os dois maiores retângulos encontrados ao final do processo representam as bordas da tela e do monitor. Portanto, o segundo maior retângulo é escolhido como tela. Caso só seja encontrado um retângulo, ele é escolhido como tela. Caso os critérios de seleção não deem como resposta um retangulo, a resposta do método é que nenhum retângulo que representa a tela foi encontrado.
+O resultado da seleção deve ser apenas retângulos de tamanho considerável e com a relação de aspecto próxima à de TVs e monitores. Com isto, se faz necessário um critério de verificação para que o retângulo que mais se assemelha à tela seja o escolhido como verdadeiro. O critério é baseado no de Kastelan et. al \cite{inspect}. Neste trabalho, assume-se que, caso seja encontrado mais de um retângulo, os dois maiores retângulos encontrados ao final do processo representam as bordas da tela e do monitor. Portanto, o segundo maior retângulo é escolhido como tela. Caso só seja encontrado um retângulo, ele é escolhido como tela. Caso os critérios de seleção não deem como resposta um retangulo, a resposta do método é que nenhum retângulo que representa a tela foi encontrado.
 
 \subsection{Redimensionamento} \label{redim}
 
-Encontrado o trecho da imagem que representa a tela, se faz necessário separá-lo e colocá-lo em um formato que possa ser utilizado futuramente. Para isto, este trecho da imagem é transformado em uma imagem retangular do mesmo formato da origem. A dificuldade desta transformação está no fato que a a tela na imagem pode ter as mais diversas formas, seja devido a dificuldades na captura como a características inerentes à câmera utilizada. Ela pode não ter a forma perfeitamente retangular ou ter uma orientação diferente. As imagens de referência, por outro lado, têm formato bem definido e são perfeitamente horizontais.
+A região escolhida como tela do monitor não tem necessariamente a forma perfeitamente retangular nem o mesmo tamanho que a imagem de referência. Isto pode ter muitas razões, como o ângulo entre a câmera e o monitor, ou a curvatura da lente e outras características inerentes à câmera. Com isso em vista, se faz necessário um esquema de transformação a fim de converter o trecho da imagem original em uma imagem de tamanho e formato compatível com os métodos de medida de desempenho.
+%rmação está no fato que a a tela na imagem pode ter as mais diversas formas, seja devido a dificuldades na captura como a características inerentes à câmera utilizada. Ela pode não ter a forma perfeitamente retangular ou ter uma orientação diferente. As imagens de referência, por outro lado, têm formato bem definido e são perfeitamente horizontais.
+%Encontrado o trecho da imagem que representa a tela, se faz necessário separá-lo e colocá-lo em um formato que possa ser utilizado futuramente. Para isto, este trecho da imagem é transformado em uma imagem retangular do mesmo formato da origem.
+%A dificuldade desta transformação está no fato que a a tela na imagem pode ter as mais diversas formas, seja devido a dificuldades na captura como a características inerentes à câmera utilizada. Ela pode não ter a forma perfeitamente retangular ou ter uma orientação diferente. As imagens de referência, por outro lado, têm formato bem definido e são perfeitamente horizontais.
+
 A transformação se dá em duas fases: a rotação da imagem e o redimensionamento. A rotação visa transmitir o conteudo de uma imagem quadrangular qualquer $A’B’C’D’$ para um retangulo perfeitamente regular $ABCD$. O problema é encontrar a qual parte $G’(x’,y’)$ da região retangular pertence cada parte $G(x,y)$ do retângulo transformado.
 
-FIGURA MOSTRANDO O TRECHO DA IMAGEM A’B’C’D’ COM O PONTO G’ E O CORRESPONDENTE ABCD E G
+%FIGURA MOSTRANDO O TRECHO DA IMAGEM A’B’C’D’ COM O PONTO G’ E O CORRESPONDENTE ABCD E G
+
+\begin{figure}[h]
+  \centering
+  \subfloat[trecho da imagem]{\includegraphics[width=0.45\textwidth]{figuras/retangulo00.jpg}\label{fig:f1}}
+  \hfill
+  \subfloat[retângulo]{\includegraphics[width=0.45\textwidth]{figuras/retangulo01.jpg}\label{fig:f2}}
+  \caption{transformação da região retangular A'B'C'D' no retângulo ABCD. Adaptado de \cite{inspect}}
+  \label{redimens}
+\end{figure} 
+
+%figura de: Kastelan, I., Katona, M., Marijan, D., & Zloh, J. (2011). Automated optical inspection system for digital TV sets. EURASIP Journal on Advances in Signal Processing, 2011(1), 1-17.
 
 Dado que o retângulo transformado tem tamanho $(col_r,lin_r)$, que a região da imagem $A’B’C’D’$ é delimitada pelos pontos $A’ = (x_{a’},y_{a’})$, $B’ = (x_{b’},y_{b’})$, $C’ = (x_{c’},y_{c’})$ e $D’ = (x_{d’},y_{d’})$, podemos definir as variações dependentes de $x$ como $dx1 = \frac{x_{b’}-x_{a’}}{col_r}$ e $dy1 = \frac{y_{b’}-y_{a’}}{col_r}$. As variações dependentes de $y$ são $dx2 = \frac{x_{c’}-x_{a’}}{lin_r}$ e $dy2 = \frac{y_{c’}-y_{a’}}{lin_r}$.
 
@@ -295,7 +453,7 @@ Este método utiliza três técnicas para avaliar seu desempenho em selecionar a
 
 %LAE
 
-O método LAE divide a imagem de teste e a de referência em regiões consideradas atômicas. Ele compara cada região na imagem de teste com a região correspondente na imagem de referência, portanto necessitando que as duas imagens tenham o mesmo tamanho e formato. A fim de reduzir o erro induzido por diferenças na iluminação, primeiramente as imagens são normalizadas utilizando a normalização estatística padrão. Dada uma imagem $A$, sua média $\mu_A$ e seu desvio padrão $\sigma_A$ são calculados e a imagem normalizada $A_n$ é dada pela equação \ref{normal}:
+O método LAE divide a imagem de teste e a de referência em regiões consideradas atômicas. Ele compara cada região na imagem de teste com a região correspondente na imagem de referência, portanto necessitando que as duas imagens tenham o mesmo tamanho e formato. Diferenças na iluminação entre as imagens comparadas podem resultar em valores de intensidade diferentes para a imagem, mesmo representando o mesmo objeto ou a mesma região. A fim de reduzir esta diferença, primeiramente as imagens são normalizadas utilizando a normalização estatística padrão. Dada uma imagem $A$, sua média $\mu_A$ e seu desvio padrão $\sigma_A$ são calculados e a imagem normalizada $A_n$ é dada pela equação \ref{normal}:
 
 \begin{equation}
 A_n = \frac{A-\mu_A}{\sigma_A} \label{normal}
@@ -312,7 +470,7 @@ D = \sum_ {x,y}^{} \sum_{c=R,G,B}^{} \left | \frac{A(x,y)-\mu _A}{\sigma _A} - \
 \item NCC (Normalized Cross-Correlation)
 \end{itemize}
 
-O método NCC é baseado na correlação cruzada para medir a similaridade entre duas imagens. Assim como no LAE, para diminuir o erros devido à diferença de iluminação, primeiramente as imagens são submetidas à normalização estatística padrão. A similaridade entre imagens normalizadas $A_n$ e $B_n$ é calculada segundo a equação \ref{ncc1}:
+O método NCC é baseado na correlação cruzada para medir a similaridade entre duas imagens. Assim como no LAE, para diminuir erros devido à diferença de iluminação, primeiramente as imagens são submetidas à normalização estatística padrão. A similaridade entre imagens normalizadas $A_n$ e $B_n$ é calculada segundo a equação \ref{ncc1}:
 
 \begin{equation}
 S = \iint A_n(x,y)*B_n(x,y) dx dy \label{ncc1} 
@@ -342,10 +500,22 @@ S = \frac{\sum \sum (A(x,y)-\mu _A)(B(x,y)-\mu _B)}{\sqrt{\sum \sum (A(x,y)-\mu 
 \item NCC-BB (Normalized Cross-Correlation using Blocks)
 \end{itemize}
 
-Este método foi criado para contornar um prolema encontrado pelo método NCC: sua pontuação depende do conteúdo da imagem, portanto tornando difícil a tarefa de escolher um limiar de similaridade que respondesse bem a qualquer imagem. Nele, é calculada a similaridade relativa entre as imagens.
-A ideia deste método é dividir cada imagem em um certo número de blocos menores e computar a correlação cruzada em cada um destes blocos, ao invés de na imagem toda. Primeiramente, a imagem de referência é dividida nestes blocos e é calculada a sua similaridade com uma imagem considerada correta. Estes valores de similaridade são então guardados como um conjunto de valores padrão $S_{padrao}$.
-Após isto, para cada imagem de teste submetida ao método, é feito o cálculo da similaridade em cada um dos seus blocos e os valores são comparados com os encontrados em cada região e somados para compor o valor de similaridade relativa. Sendo $S_{A,B}$ a similaridade entre as imagens $A$ e $B$, a similaridade relativa pode ser calculada através da equação \ref{nccbb}
+Este método foi criado para contornar um problema encontrado pelo método NCC: sua pontuação depende do conteúdo da imagem, portanto tornando difícil a tarefa de escolher um limiar de similaridade que respondesse bem a qualquer imagem. Nele, é calculada a similaridade relativa entre as imagens.
+Para isto são executados os seguintes passos:
+\begin{itemize}
+\item As imagens a ser comparadas são divididas em um $n$ blocos menores de mesmo tamanho;
+\item É calculada a correlação cruzada da imagem de referência com uma imagem considerada correta para cada um dos blocos. Estes valores de similaridade são então guardados como um conjunto de valores padrão $S_{padrao}$;
+\item Para cada imagem de teste submetida ao método, é calculada a correlação cruzada em cada um dos seus blocos;
+\item Os valores de similaridade encontrados são comparados bloco a bloco e somados para compor o valor de similaridade relativa. Sendo $S_{A,B}$ a similaridade entre as imagens $A$ e $B$, a similaridade relativa pode ser calculada através da equação \ref{nccbb}
 
 \begin{equation}
 S = \max_{blocos}|S_{A,B} - S_{padrao}| \label{nccbb}
 \end{equation}
+
+\end{itemize}
+%cada imagem é dividida em um $n$ blocos menores e é computada a correlação cruzada em cada um destes blocos, ao invés de na imagem toda. Primeiramente, a imagem de referência é dividida nestes blocos e é calculada a sua similaridade com uma imagem considerada correta. Estes valores de similaridade são então guardados como um conjunto de valores padrão $S_{padrao}$.
+%Após isto, para cada imagem de teste submetida ao método, é feito o cálculo da similaridade em cada um dos seus blocos e os valores são comparados com os encontrados em cada região e somados para compor o valor de similaridade relativa. Sendo $S_{A,B}$ a similaridade entre as imagens $A$ e $B$, a similaridade relativa pode ser calculada através da equação \ref{nccbb}
+
+%\begin{equation}
+%S = \max_{blocos}|S_{A,B} - S_{padrao}| \label{nccbb}
+%\end{equation}
