@@ -2,24 +2,28 @@
 \chapter{Metodologia Proposta} \label{met}
 
 % esse é o texto introdutório. Ele tem que servir como um bom resumo do que o capítulo oferece, de modo que mesmo que a pessoa só leia a introdução ela já tenha uma boa noção do que se trata.
-\textcolor{red}{Felipe, nao dah para comecar uma secao jogando na cara do leitor o que o metodo faz... Aqui voce deve colocar um ou dois paragrafos falando que o metodo foi organizado de modo a detectar bordas de tv em imagens, as quais sao tratadas como objetos quadrangulares. Estes, por sua vez, sao definidos por quatro lados, ou seja, linhas. Sendo assim, determinou-se, com base no algoritmo de fulano de tal (aquela ref dos japoneses), que isso seria feito em quatro passos: detecção de bordas, pois as linhas da tela sao nada mais, nada menos que a bordas entre o quadro e a tela, identificação das linhas, com o objetivo de reconhecer componentes conectados, reconhecimento de retangulos, para que linhas formando retangulos sejam separadas, e escolha do retangulo, que deve atender a certos critérios, como relacao de aspecto de 4:3 ou 16:9... Entendeu? Coloque uns dois paragrafos sobre isso e essas explicações rápidas que eu coloquei, sobre cada passo, devem ser melhoradas e colocadas ao lado de cada item na lista (itemize). Ao final, fale que cada passo serah detalhado nas proximas secoes...}
-O método proposto nesta dissertação para extração de conteúdo de telas de TV e monitores é dividido em quatro etapas:
+%\textcolor{red}{Felipe, nao dah para comecar uma secao jogando na cara do leitor o que o metodo faz... Aqui voce deve colocar um ou dois paragrafos falando que o metodo foi organizado de modo a detectar bordas de tv em imagens, as quais sao tratadas como objetos quadrangulares. Estes, por sua vez, sao definidos por quatro lados, ou seja, linhas. Sendo assim, determinou-se, com base no algoritmo de fulano de tal (aquela ref dos japoneses), que isso seria feito em quatro passos: detecção de bordas, pois as linhas da tela sao nada mais, nada menos que a bordas entre o quadro e a tela, identificação das linhas, com o objetivo de reconhecer componentes conectados, reconhecimento de retangulos, para que linhas formando retangulos sejam separadas, e escolha do retangulo, que deve atender a certos critérios, como relacao de aspecto de 4:3 ou 16:9... Entendeu? Coloque uns dois paragrafos sobre isso e essas explicações rápidas que eu coloquei, sobre cada passo, devem ser melhoradas e colocadas ao lado de cada item na lista (itemize). Ao final, fale que cada passo serah detalhado nas proximas secoes...}
+
+Este capítulo apresenta o método de detecção e extração de tela de TV de uma imagem, assim como as técnicas para verificar a corretude da extração. O problema detecção da tela de TV é encarado como um subtipo da detecção de objetos quadrangulares, já que as quatro bordas do monitor são encaradas como linhas que formam um objeto quadrangular.
+
+Partindo desta definição, foi montado um método com base no algoritmo proposto por Liu, Ikenaga e Goto \cite{mrf}. Este método é dividido em quatro etapas, que são como segue:
 
 \begin{itemize}
- \item detecção de bordas na imagem;
- \item identificação das linhas;
- \item reconhecimento de retângulos;
- \item escolha do retângulo que representa a tela;
+ \item \textbf{detecção de bordas na imagem}: as linhas que formam a tela de TV são pontos em que há grande variação nos níveis RGB da imagem, ou seja, bordas. Um esquema de detecção de bordas é o primeiro passo para encontrar informações de linha na imagem;
+ \item \textbf{identificação das linhas}: após encontrado o mapa de bordas da imagem, é implementado um algoritmo para identificar quais formam linhas. No caso deste método, o algoritmo é baseado na transformada de Hough;
+ \item \textbf{reconhecimento de retângulos}: as informações de linha são utilizadas pelo método para identificar objetos retangulares presentes na tela;
+ \item \textbf{escolha do retângulo que representa a tela}: características inerentes a telas de TV, como a relação de aspecto de 16/9 ou 4/3 ou o formato retangular, são levadas em conta para montar um esquema de selação de retângulos que identifique corretamente qual representa a tela na imagem;
 \end{itemize}
 
-A figura \ref{figdiag} ilustra os estágios do método. Cada um deles será detalhado a seguir.
+A figura \ref{figdiag} ilustra os estágios do método, que serão detalhados nas próximas seções:
+
 
 %DIAGRAMA DE BLOCOS DO MÉTODO AQUI
 
 \begin{figure} [h]
 \includegraphics[width = \textwidth]{figuras/diag.pdf} \label{figdiag}
 \caption{Diagrama de blocos do método}
-\end{figure} 
+\end{figure}
 
 \section{Detecção de Bordas} \label{met:borda}
 
@@ -52,41 +56,66 @@ Através deste esquema, é possível detectar a borda de imagens coloridas no es
 
 \subsection{Obtenção do Gradiente}
 
-\textcolor{red}{voce novamente comeca seco... fale o que isso eh...}
+%\textcolor{red}{voce novamente comeca seco... fale o que isso eh...}
 
+Um campo vetorial é uma construção matemática que aponta um vetor ou conjunto de vetores a cada valor de um espaço n-dimensional. Ele pode ser representado como:
 
-Esta técnica considera uma imagem colorida como um campo vetorial que mapeia um espaço n-dimensional (espaço) em um m-dimensional (canais), como mostrado em [Lee e Cok] \textcolor{red}{nao referencie diretamente a referencia... coloque o nome dos autores e depois a ref... ex: como mostrado por Farias et al. [2]}. Portanto, dado um campo vetorial representado pela função $ f: S->R^m $, uma imagem pode ser representada como um subespaço de $f$ dado por $ Vn->m $.
+$$ \textbf{f}:X \rightarrow \mathbb{R}^m $$
 
-Explicar o conceito de campo vetorial
+Em que $X$ é um subconjunto de $\mathbb{R}^m$ e $\textbf{f}$ pode ser composto por um ou mais vetores. Uma imagem pode ser considerada um campo vetorial cujo domínio é o espaço bidimensional e cujo contradomínio é composto por três vetores, um para cada elemento no espaço $RGB$, como mostrado em Lee e Cok \cite{borda00}.
 
-exemplos do professor: pode ser usado em outros tipos de representação de imagem?
+Portanto, dado um campo vetorial representado pela função $ f: S \to \mathbb{R}^2 $, uma imagem no espaço $RGB$ pode ser representada como um subespaço de $f$ representado como $ V_{2 \to 3} $.
+
+%Esta técnica considera uma imagem colorida como um campo vetorial que mapeia um espaço n-dimensional (espaço) em um m-dimensional (canais), como mostrado em [Lee e Cok] \textcolor{red}{nao referencie diretamente a referencia... coloque o nome dos autores e depois a ref... ex: como mostrado por Farias et al. [2]}. Portanto, dado um campo vetorial representado pela função $ f: S->R^m $, uma imagem pode ser representada como um subespaço de $f$ dado por $ Vn->m $.
+
+%exemplos do professor: pode ser usado em outros tipos de representação de imagem?
 
 
 %Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando as seis derivadas de primeira ordem (duas pra cada canal R,G e B da imagem) e depois implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. Este esquema é composto por duas fases: um pixel é selecionado como candidato caso sua magnitude de gradiente seja maior que a magnitude dos seus vizinhos na direção do gradiente. A fim de evitar ruído, a verificação descarta candidatos segundo dois critérios: se o candidato não tem vizinhos também candidatos, e se a magnitude do gradiente daquele pixel é muito diferente da magnitude dos seus vizinhos na direção do gradiente.
 
-Considerando uma imagem bidimensional com três canais (um para cada canal de cor r, g e b), $DV$ é a matriz que mostra a variação dos valores de R, G e B no espaço infinitesimal dx e dy. 
+A derivada da função $f$ nestas condições pode ser representada pela matriz $D$ tal que:
 
-$$ DV = (dx dy)Jc^T $$ 
+$$ f' = D = \begin{bmatrix} 
+\frac{\partial r}{\partial x} & \frac{\partial r}{\partial y} \\
+\frac{\partial g}{\partial x} & \frac{\partial g}{\partial y} \\
+\frac{\partial b}{\partial x} & \frac{\partial b}{\partial y} \\ 
+\end{bmatrix} $$
 
-\textcolor{red}{para alinhar a esquerda, use 'noindent'...}
+Saindo de um ponto $x$ qualquer na imagem, o deslocamento $d$ na direção do vetor unitário $\textbf{u}$ é dado pela equação:
 
-em que $Jc$ é a matriz jacobiana, que tem a seguinte forma:
+$$d = \sqrt[]{\textbf{u}^TD^TD\textbf{u}}$$
 
-$$ Jc = \begin{bmatrix} dr/dx & dr/dy \\ dg/dx & dg/dy \\ db/dx & db/dy \end{bmatrix} $$
+O maior valor de $d$, ou seja, o gradiente deste vetor, é dado pelo maior autovalor de $D^TD$. Definindo as variáveis $Mxx$, $Mxy$ e $Myy$ como:
+%Considerando uma imagem bidimensional com três canais (um para cada canal de cor r, g e b), $DV$ é a matriz que mostra a variação dos valores de R, G e B no espaço infinitesimal dx e dy. 
 
-$ DV^2 $ é a matriz que mostra a taxa de variação dos valores da matriz $DV$. Ela é dada por:
+%$$ DV = (dx dy)Jc^T $$ 
 
-$$ DV^2 = (dx dy)Mc(dx dy)^T $$
+%\textcolor{red}{para alinhar a esquerda, use 'noindent'...}
 
-em que $ Mc = Jc^T Jc = \begin{bmatrix} Mxx & Mxy \\ Mxy & Myy \end{bmatrix}$
+%em que $Jc$ é a matriz jacobiana, que tem a seguinte forma:
 
-$$ Mxx = (dr/dx)^2+(dg/dx)^2+(db/dx)^2 $$
+%$$ Jc = \begin{bmatrix} 
+%\frac{\partial r}{\partial x} & \frac{\partial r}{\partial y} \\
+%\frac{\partial g}{\partial x} & \frac{\partial g}{\partial y} \\
+%\frac{\partial b}{\partial x} & \frac{\partial b}{\partial y} \\ 
+%\end{bmatrix} $$
 
-$$ Mxy = (dr/dx)(dr/dy)+(dg/dx)(dg/dy)+(db/dx)(db/dy) $$
+%$ DV^2 $ é a matriz que mostra a taxa de variação dos valores da matriz $DV$. Ela é dada por:
 
-$$ Myy = (dr/dy)^2+(dg/dy)^2+(db/dy)^2 $$
+%$$ DV^2 = (dx dy)Mc(dx dy)^T $$
 
-Maximizando esses valores para cada ponto de $ DV^2 $, são obtidas a magnitude e direção do gradiente. Isso é conseguido maximizando os valores de Mc, o que é um problema de autovalores. O maior autovalor de Mc é dado por:
+$$ Mxx = (\frac{\partial r}{\partial x})^2+(\frac{\partial g}{\partial x})^2+(\frac{\partial b}{\partial x})^2 $$
+
+$$ Mxy =(\frac{\partial r}{\partial x})(\frac{\partial r}{\partial y})+(\frac{\partial g}{\partial x})(\frac{\partial g}{\partial y})+(\frac{\partial b}{\partial x})(\frac{\partial b}{\partial y}) $$
+
+$$ Myy = (\frac{\partial r}{\partial y})^2+(\frac{\partial g}{\partial y})^2+(\frac{\partial b}{\partial y})^2 $$
+
+podemos definir $D^TD$ como:
+
+$$ D^T D = \begin{bmatrix} Mxx & Mxy \\ Mxy & Myy \end{bmatrix}$$
+
+
+O maior autovalor de $D^TD$ é dado por:
 
 $$ V = (\sqrt{( (Mxx+Myy)^2 - 4 x(Mxx \times Myy - (Mxy)^2 ) )}+Mxx+ Myy)/2 $$
 
@@ -96,25 +125,43 @@ $$ \theta = tan^{-1}((V-Mxx)/Mxy) $$
 
 A raiz quadrada do maior autovalor $V$ e seu autovetor correspondente são equivalentes à magnitude e direção do gradiente em um ponto da imagem. Portanto, para cada pixel $(i,j)$, seu gradiente é encontrado computando seus autovalores e autovetores com as equações acima descritas.
 
-\textcolor{red}{aqui valem o mesmos comentarios da secao anterior e ainda tem o fato de voce ter colocado exatamente como estah no artigo dos caras... nao faca isso... o leitor tem que ver que voce colocou o seu entendimento e nao uma copia do que leu... Por exemplo, comente sobre o significado da jacobiana, fale se isso pode ser usado em outras imagem com tres canais (HSV, Lab, etc...) e gaste bastante texto explicando cada um dos elementos: V, Mxy, Myy e $\theta$... manjou?}
+%\textcolor{red}{aqui valem o mesmos comentarios da secao anterior e ainda tem o fato de voce ter colocado exatamente como estah no artigo dos caras... nao faca isso... o leitor tem que ver que voce colocou o seu entendimento e nao uma copia do que leu... Por exemplo, comente sobre o significado da jacobiana, fale se isso pode ser usado em outras imagem com tres canais (HSV, Lab, etc...) e gaste bastante texto explicando cada um dos elementos: V, Mxy, Myy e $\theta$... manjou?}
 
 
 \subsection{Detecção de Candidatos}
 
-\textcolor{red}{nao dah para deixar uma secao com este tamanho... fale mais e coloque uma figura... os mesmos comentarios da primeira secao valem aqui}
+%\textcolor{red}{nao dah para deixar uma secao com este tamanho... fale mais e coloque uma figura... os mesmos comentarios da primeira secao valem aqui}
 
-Após calcular a matriz $Mc$ para cada pixel da imagem e seus valores de $V$ e $\theta$, os pixeis com máxima local de magnitude de gradiente na direção dele, ou seja, os pixeis cuja magnitude seja maior que a dos seus dois vizinhos na direção do gradiente, são considerados candidatos a pixeis de borda.
+A detecção de candidatos a pixel de borda é o primeiro passo para obtenção da imagem de borda. Ela filtra a imagem em busca de candidatos que serão depois selecionados em um sistema de verificação, mais custoso computacionalmente.
+
+Primeiramente é calculada a matriz $D^TD$, assim como seus valores de $V$ e $\theta$, para cada um dos pixels da imagem. A detecção de candidatos a pixel de borda é feita analisando esta informação. São considerados candidatos os pixeis cuja magnitude é uma máxima local, ou seja, os pixeis cuja magnitude seja maior que a dos seus dois vizinhos na direção do gradiente, são considerados candidatos a pixeis de borda. Isto pode ser melhor exemplificado pela figura \ref{maxlocal}.
+
+%Após calcular a matriz $Mc$ para cada pixel da imagem e seus valores de $V$ e $\theta$, os pixeis com máxima local de magnitude de gradiente na direção dele, ou seja, os pixeis cuja magnitude seja maior que a dos seus dois vizinhos na direção do gradiente, são considerados candidatos a pixeis de borda.
+
+\begin{figure} [h]
+\centering
+\includegraphics[width = 0.5\textwidth]{figuras/vizinh.jpg} \label{maxlocal}
+\caption{Direção de gradiente de um pixel e seus vizinhos. Adaptado de \cite{mrf}}
+\end{figure}
 
 \subsection{Verificação de Candidatos}
 
-Após a detecção é implementado um esquema de verificação para descartar falsos pixels de borda, como os gerados por ruído \textcolor{red}{coloque uma refe aqui... que tipo de ruido? de onde?}. Ele é baseado em duas operações que se aproveitam das informações obtidas anteriormente e de análise das regiões das imagens:
+A verificação é um processo necessário para descartar os pixeis cujo gradiente é uma máxima local mas não são pixeis de borda. Isto pode ocorrer devido a ruído (adquirido na aquisição da imagem, devido à curvatura da lente ou à quantização), diferenças na iluminação dos objetos, efeitos de luz e sombra ou oclusão de objetos \cite{ruidocausas}.
 
-\textcolor{red}{novamente voce economiza palavras... assim nao da... coloque tudo... quero figuras, explicacoes, insights, modificacoes, etc.}
+%, como os gerados por ruído \textcolor{red}{coloque uma refe aqui... que tipo de ruido? de onde?}. 
+
+Esta verificação é baseada em operações que se aproveitam das informações obtidas anteriormente e de análise das regiões das imagens. Elas são livremente baseadas na etapa de verificação de candidatos do detector de bordas de Canny \cite{canny}:
+
+%\textcolor{red}{novamente voce economiza palavras... assim nao da... coloque tudo... quero figuras, explicacoes, insights, modificacoes, etc.}
 
 \begin{itemize}
-\item Primeiramente, se um candidato não tiver vizinhos também candidatos, ele é considerado ruído e descartado;
-\item Foi percebido que não há variação muito grande entre as magnitudes de píxeis de borda vizinhos. Portanto, se a magnitude do gradiente de um pixel é muito diferente da dos seus vizinhos, o candidato é descartado. A seguinte inequação é definida para avaliar a diferença:
-$$ (sum(| V(i,j) - V(i+p,j+q) |)- sum(V(i+p,j+q))) >0$$
+\item Primeiramente, a vizinhança do pixel é analisada. O candidato a pixel de borda deve ter vizinhos também candidatos. Se nenhum dos oito pixeis vizinhos for um candidato a pixel de borda, aquele pixel é considerado ruído e descartado;
+\item Foi percebido que não há variação muito grande entre as magnitudes de pixeis de borda vizinhos \cite{mrf}. Portanto, é calculada a diferença entre magnitude do gradiente dos pixeis vizinhos. Caso esta diferença seja grande demais, o pixel é descartado. A seguinte inequação é definida para avaliar a diferença:
+\begin{equation}
+(sum(| V(i,j) - V(i+p,j+q) |)- sum(V(i+p,j+q))) >0
+\end{equation}
+
+
 \end {itemize}
 
 \section{Identificação de Linhas} \label{met:linha}
