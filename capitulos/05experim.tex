@@ -1,52 +1,110 @@
 \chapter{Resultados Experimentais}
 
-Este capítulo apresenta os resultados dos experimentos feitos para validar o método de detecção e extração do conteúdo de telas de TV e monitores. Eles foram implementados na linguagem MATLAB, na versão R2012a, em ambiente Linux, processador Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz e memória RAM 16GB.
+%Este capítulo apresenta os resultados dos experimentos feitos para validar o método de detecção e extração do conteúdo de telas de TV e monitores. Eles foram implementados na linguagem MATLAB, na versão R2012a, em ambiente Linux, processador Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz e memória RAM 16GB.
 
-Para validar o método, três experimentos foram executados. O primeiro visa comparar o custo em tempo do método original e o método proposto, que utiliza redimensionamento das imagens. O segundo experimento submete ao método as 504 imagens da primeira base de dados e as 600 da segunda, visando verificar a capacidade de corretamente relacionar a tela encontrada com uma imagem de referência. O terceiro experimento visa submeter as mesmas imagens ao método com as modificações propostas, afim de comparar os resultados alcançados com os do método original.
+Para validar o método de detecção e extração do conteúdo de telas de TV e monitores, desenvolvido no Capítulo \ref{met}, foram feitos experimentos que abordam  de um sistema de inspeção automática de monitores. 
+
+%falar um pouco mais sobre inspeção automática de monitores. aquela referencia do Kastelan. procurar mais
+
+Com o volume de produção de eletrônicos de consumo, tem se mostrado necessário o uso de sistemas de inspeção automática para verificar a qualidade do produto ou de partes dele conforme vão sendo produzidos. Este tipo de inspeção tem ganhado terreno em relação à inspeção manual devido à maior precisão,  menor tempo de inspeção e uso de recursos humanos \cite{vantagemauto}.
+
+Muitos sistemas de inspeção automática de telas de TV e monitores têm sido propostos \cite{vantagemauto,sistauto00,sisauto01,sisauto02}. Entretanto, a abordagem adotada por este método, de comparar imagens de referência com fotos do monitor, têm ainda poucos trabalhos \cite{inspect}.
+
+Este capítulo explicará 
+%usa esse verbo?
+os experimentos e será organizado como segue: uma seção sobre o \textit{setup} dos experimentos, seguida por uma seção detalhando as bases de dados utilizadas. Depois uma seção detalhará os procedimentos experimentais e a última seção detalhará os resultados.
+%o que pode ser inspecionado? que erros são comuns? um paragrafo
+
+%breve resumo do que sera encarado nas próximas seções
+%três experimentos foram executados. O primeiro visa comparar o custo em tempo do método original e o método proposto, que utiliza redimensionamento das imagens. O segundo experimento submete ao método as 504 imagens da primeira base de dados e as 600 da segunda, visando verificar a capacidade de corretamente relacionar a tela encontrada com uma imagem de referência. O terceiro experimento visa submeter as mesmas imagens ao método com as modificações propostas, afim de comparar os resultados alcançados com os do método original.
 
 %A base de dados um consiste em um conjunto de 504 fotos coloridas de monitores e telas de TV, em três tamanhos diferentes e condições não controladas de iluminação e captura, assim como seis imagens de referência de resolução 1600 por 900 pixeis. Cada foto é acompanhada por uma marcação de coordenadas que indicam os quatro vértices da tela na foto. Eles são tidos como \textit{ground truth}.
 
-\section{Base de Dados}
+\section{Setup dos Experimentos}
 
-Após extensiva pesquisa em bancos de imagens, não foi encontrada uma base de dados que atenda aos interesses deste trabalho.
+Os experimentos foram implementados na linguagem MATLAB, na versão R2012a, em ambiente Linux, processador Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz e memória RAM 16GB. Para fins de simulação, o cálculo da transformada de Hough foi feito utilizando a própria função interna do Matlab. Diversos \textit{scripts} foram programados e combinados para que fosse possível implementar as simulações propostas, assim como para a geração dos rótulos com as coordenadas da tela nas fotos. As imagens de treino e de teste foram capturadas, armazenadas e usadas como entrada dos \textit{scripts}.
+
+%Todas as imagens de base têm formato RGB.
+
+\section{Bases de Dados}
+
+%Após extensiva pesquisa em bancos de imagens, não foi encontrada uma base de dados que atenda aos interesses deste trabalho.
+
 %citar bases pesquisadas
- Portanto, se fez necessário montar uma base própria. Foram feitas duas, uma com 6 imagens de referência e 504 imagens de teste em um ambiente não controlado, outra com 40 imagens de referência e 600 imagens de teste em um ambiente controlado.
+
+% o que foi procurado
+Para os experimentos, se fez necessário um conjunto de imagens em par, em que cada par era composto por:
+\begin{itemize}
+\item a foto de um monitor ou televisão ligado com conteúdo sendo mostrado;
+\item uma cópia do conteúdo mostrado na tela ou monitor, para fins de comparação;
+\end{itemize}
+
+Após extensiva pesquisa em bancos de imagens, não foi encontrada uma base que tivesse conteúdo semelhante. Portanto, se fez necessário montar uma base própria. Foram feitas duas, uma com 6 imagens de referência e 504 imagens de teste em um ambiente não controlado, outra com 40 imagens de referência e 600 imagens de teste em um ambiente controlado.
 
 \subsection{Primeira Base}
 
-As imagens de referência da primeira base foram escolhidas entre menus e vídeos da internet. Quatro seleções diferentes de um menu foram utilizadas, assim como dois frames de um vídeo. As imagens são coloridas e têm resolução 1600 x 900 pixeis. As fotos dos 14 monitores foram feitas com os mesmos ligados e mostrando cada uma das seis imagens. A câmera utilizada foi a câmera do celular Samsung Galaxy S5, com sensor de 16 MP, abertura de 2,2 polegadas, foco automático e sem flash. As fotos foram feitas utilizando os tamanhos 5312 x 2988 pixeis, [resolução 2] e [resolução 3]. A distância da câmera ao monitor é variável, e os monitores têm variação de escala, iluminação e fundo. As imagens desta base têm rótulos manuais com as coordenadas dos quatro pontos que limitam a tela do monitor ou TV fotografada.
+%As imagens de referência da primeira base foram escolhidas entre menus e vídeos da internet. Quatro seleções diferentes de um menu foram utilizadas, assim como dois frames de um vídeo. As imagens são coloridas e têm resolução 1600 x 900 pixeis. As fotos dos 14 monitores foram feitas com os mesmos ligados e mostrando cada uma das seis imagens. A câmera utilizada foi a câmera do celular Samsung Galaxy S5, com sensor de 16 MP, abertura de 2,2 polegadas, foco automático e sem flash. As fotos foram feitas utilizando os tamanhos 5312 x 2988 pixeis, [resolução 2] e [resolução 3]. A distância da câmera ao monitor é variável, e os monitores têm variação de escala, iluminação e fundo. As imagens desta base têm rótulos manuais com as coordenadas dos quatro pontos que limitam a tela do monitor ou TV fotografada.
+
+Para a primeira base, o conteúdo a ser mostrado nos monitores foi composto por quatro imagens de um mesmo menu de seleção, cada uma mostrando uma opção diferente selecionada, e dois frames de um mesmo vídeo. As imagens são coloridas e têm resolução 1600 x 900 pixeis.
+
+Os 14 monitores foram fotografados ligados e mostrando cada uma das seis imagens. Era necessário escolher uma câmera de baixo custo e com alta resolução, visto que é desejável que sistema de inspeção automática tenha um custo operacional baixo.
+
+A câmera escolhida foi a câmera do celular Samsung Galaxy S5, com sensor de 16 MP, abertura de 2,2 polegadas, foco automático e sem flash. As fotos foram feitas utilizando as resoluções de 5312 x 2988, 3264 x 2448 e 2048 x 1152 pixeis. A distância da câmera ao monitor é variável, e os monitores têm variação de escala, iluminação e fundo. As imagens desta base foram rotuladas manualmente com as coordenadas dos quatro pontos que limitam a tela do monitor ou TV fotografada.
+
+\begin{figure}[h]
+  \centering
+  \subfloat[imagem de referência - menu]{\includegraphics[width=0.45\textwidth]{figuras/refmenu.jpg}\label{primbasefotos:1}}
+  \hfill
+  \subfloat[imagem de referência - frame]{\includegraphics[width=0.45\textwidth]{figuras/refvid.jpg}\label{primbasefotos:2}}
+  \hfill
+  \subfloat[foto - menu]{\includegraphics[width=0.45\textwidth]{figuras/fotomenu.jpg}\label{primbasefotos:3}}
+  \hfill
+  \subfloat[foto - frame]{\includegraphics[width=0.45\textwidth]{figuras/fotovid.jpg}\label{primbasefotos:4}}
+  \caption{Imagens da primeira base. As figuras \ref{primbasefotos:1} e \ref{primbasefotos:2} mostram imagens de referência e as imagens \ref{primbasefotos:3} e \ref{primbasefotos:4} são fotografias dos	 monitores mostrando os respectivos conteúdos de referência}
+  \label{primbasefotos}
+\end{figure}
+
 
 %Em uma breve descrição geral, na base de dados BioID temos um total de 1521 imagens contendo faces humanas frontais em nível de cinza de 23 indivíduos diferentes. A resolução das imagens é de 384 × 286 pixels. As faces possuem variações de escala (algumas estão perto da câmera e outras não), iluminação e pequenas rotações. Alguns indivíduos usam óculos, outros têm barba e/ou bigode. As imagens desta base de dados possuem rótulos manuais para 20 pontos fiduciais, porém estes rótulos são imprecisos em diversas imagens.
 
 
 \subsection{Segunda Base}
 
-Para a segunda base, uma câmara escura foi montada a fim de garantir que as fotos teriam o mínimo de interferência externa possível. A câmara é formada por uma estrutura de PVC de [] de largura por [] de comprimento e [] de altura. A estrutura é cúbica e coberta para não deixar passar luz. 
+Para a segunda base, uma câmara escura foi montada a fim de garantir que as fotos teriam o mínimo de interferência externa possível. A câmara foi formada por uma estrutura cúbica, de tamanho suficiente para que os monitores e a câmera pudessem ficar dentro dela, e coberta para não deixar passar luz.
 
-FOTOS
+\begin{figure}
+ \centering
+ \subfloat[estrutura sem cobertura]{\includegraphics[width=0.45\textwidth]{figuras/camara00.jpg}\label{camaraescura:1}}
+  \hfill
+  \subfloat[estrutura com cobertura completa]{\includegraphics[width=0.45\textwidth]{figuras/camara01.jpg}\label{camaraescura:2}}
+  \caption{camara escura}
+  \label{camaraescura}
+\end{figure}
+
+
+%Os monitores e a câmera foram levados para dentro da estrutura. Outra diferença da primeira para a segunda base foi a escolha de mais imagens de referência. Como referência foram utilizadas as seguintes imagens:
 
 
 
-
-
-
-
-
-Os monitores e a câmera foram levados para dentro da estrutura. Outra diferença da primeira para a segunda base foi a escolha de mais imagens de referência. Como referência foram utilizadas as seguintes imagens:
+Foram escolhidas imagens de referência com uma diversidade maior que na primeira base, de modo que pudessem ser feitos experimentos diferentes e mais específicos nas fotos da segunda base. Como referência foram utilizadas as seguintes imagens:
 \begin{itemize}
-\item um grid
-\item um xadrez
-\item o índio, figura de referência para testes de TV antigos
-\item barra de cores saturada em 20\%, 60\% e 100\%
-\item as três cores primárias puras, saturadas em em 20\%, 60\% e 100\%
-\item as três cores secundárias puras, saturadas em em 20\%, 60\% e 100\%
-\item 12 fotos
-\item 4 menus
+\item \textbf{um grid} branco de linhas pretas, para poder verificar a eficiência do método quando há muitos objetos retangulares na imagem;
+\item \textbf{um xadrez} preto e branco, visando verificar a eficiência do programa com imagens que possuem muitos objetos retangulares de cores diferentes;
+\item \textbf{o índio}, figura de referência para testes de TV antigos que ajudava a verificar a qualidade da transmissão da imagem;
+\item \textbf{barra de cores} saturada em 20\%, 60\% e 100\%. Estas imagens podem ajudar a analisar como o monitor reage à saturação;
+\item \textbf{as três cores primárias puras}, saturadas em em 20\%, 60\% e 100\%, com o mesmo objetivo do colorbar, analisando por cor;
+\item \textbf{as três cores secundárias puras}, saturadas em em 20\%, 60\% e 100\%, com o mesmo objetivo das imagens do colorbar e cores primárias;
+\item \textbf{12 fotos} de ambientes reais, com o objetivo de analisar a eficiência do método com imagens com alto nível de detalhe;
+\item \textbf{4 menus}, visando analisar a eficiência do método em diferenciar opções de menu;
 \end{itemize}
 
-Todas as imagens são coloridas e têm tamanho variado. As fotos foram capturadas pela mesma câmera do celular Samsung Galaxy S5 sem flash e todas têm a resolução máxima da câmera, 5312 x 2988 pixeis. Novamente, as imagens foram capturadas com os monitores ligados e mostrando as imagens de referência. A distância entre a câmera e os monitores é variável. Assim como na primeira base, cada imagem tem um rótulo manual que informa as coordenadas dos quatro pontos que limitam a tela da TV ou monitor.
+Todas as imagens são coloridas e têm tamanho variado. As fotos foram capturadas pela mesma câmera do celular Samsung Galaxy S5 sem flash e todas têm a resolução máxima da câmera, 5312 x 2988 pixeis. Novamente, os monitores foram fotografados ligados e mostrando as imagens de referência. A distância entre a câmera e os monitores é variável. Assim como na primeira base, cada imagem tem um rótulo manual que informa as coordenadas dos quatro pontos que limitam a tela da TV ou monitor.
 
 \section{Procedimentos}
+
+\begin{comment}
+
+
 
 \subsection{Primeiro Experimento}
 
@@ -114,6 +172,7 @@ D_tempo = T_{médio}’ - T_{médio}
 %%tabelas/gráficos
 %%análise resultados
 
+
 \subsection{Segundo Experimento}
 
 % introdução
@@ -163,11 +222,6 @@ comparação
 
 O experimento aplica o método modificado..
 
-%base de dados
-
-as bases de dados utilizadas são as bases 1 e 2
-
-%métrica de desempenho
 
 
 
@@ -182,7 +236,12 @@ pos processamento
 comparação
 
 
+\end{comment}
+
+\section{Resultados Experimentais}
+
 %influencia do [INSIRA AQUI MODIFICAÇÃO](resultados)
 %%os resultados serao expostos assim
 %%tabelas/gráficos
 %%análise resultados
+
