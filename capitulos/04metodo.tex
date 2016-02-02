@@ -4,32 +4,46 @@
 % esse é o texto introdutório. Ele tem que servir como um bom resumo do que o capítulo oferece, de modo que mesmo que a pessoa só leia a introdução ela já tenha uma boa noção do que se trata.
 %\textcolor{red}{Felipe, nao dah para comecar uma secao jogando na cara do leitor o que o metodo faz... Aqui voce deve colocar um ou dois paragrafos falando que o metodo foi organizado de modo a detectar bordas de tv em imagens, as quais sao tratadas como objetos quadrangulares. Estes, por sua vez, sao definidos por quatro lados, ou seja, linhas. Sendo assim, determinou-se, com base no algoritmo de fulano de tal (aquela ref dos japoneses), que isso seria feito em quatro passos: detecção de bordas, pois as linhas da tela sao nada mais, nada menos que a bordas entre o quadro e a tela, identificação das linhas, com o objetivo de reconhecer componentes conectados, reconhecimento de retangulos, para que linhas formando retangulos sejam separadas, e escolha do retangulo, que deve atender a certos critérios, como relacao de aspecto de 4:3 ou 16:9... Entendeu? Coloque uns dois paragrafos sobre isso e essas explicações rápidas que eu coloquei, sobre cada passo, devem ser melhoradas e colocadas ao lado de cada item na lista (itemize). Ao final, fale que cada passo serah detalhado nas proximas secoes...}
 
-Este capítulo apresenta o método de detecção e extração de tela de TV de uma imagem, assim como as técnicas para verificar a corretude da extração. O problema detecção da tela de TV é encarado como um subtipo da detecção de objetos quadrangulares, já que as quatro bordas do monitor são encaradas como linhas que formam um objeto quadrangular.
+%Este capítulo apresenta o método de detecção e extração de tela de TV de uma imagem, assim como as técnicas para verificar a corretude da extração. O problema detecção da tela de TV é encarado como um subtipo da detecção de objetos quadrangulares, já que as quatro bordas do monitor são encaradas como linhas que formam um objeto quadrangular.
 
-Partindo desta definição, foi montado um método com base no algoritmo proposto por Liu, Ikenaga e Goto \cite{mrf}. Este método é dividido em quatro etapas, que são como segue:
+%Partindo desta definição, foi montado um método com base no algoritmo proposto por Liu, Ikenaga e Goto \cite{mrf}. Este método é dividido em quatro etapas, que são como segue:
+
+\textcolor{red}{Este capítulo apresenta o método de detecção e extração de telas de TV e monitores, bem como as métricas de desempenho utilizadas para avaliar o método. Ele está organizado em seções, que são como segue: a introdução contextualiza o problema de detecção de objetos quadrangulares e telas de TV e monitores, a Detecção de Bordas aborda as técnicas utilizadas neste método para detectar bordas, a Detecção de Linhas detalha como foi feita a detecção de linhas, o Reconhecimento de Retângulos aborda as técnicas utilizadas para reconhecer as linhas encontradas como parte de retângulos, assim como o processo de escolha do retângulo que representa a tela.}
+
+\section{Introdução}
+
+O problema da detecção de objetos quadrangulares \cite{objquadrangular} possui diversas aplicações. Por exemplo, navegação de robôs \cite{navegrobo} e auxílio à identificação de danos por terremoto \cite{terremoto}. Especificamente nesta dissertação, iremos abordar a detecção de telas de TV e monitores. %Esta aplicação é importante em alguns cenários, por exemplo, como \textbf{dois exemplos e suas referências}.
+
+Para caracterizarmos o problema da detecção de objetos quadrangulares precisamos considerar a definição proposta em \cite{objquadrangular}. Nela, um objeto quadrangular é definido como um objeto delimitado por quatro segmentos de reta conectados por quatro vértices.
+
+Partindo desta definição, foi montado um método com base no algoritmo proposto em \cite{mrf}. Este método é dividido em quatro etapas, que são como segue:
 
 \begin{itemize}
- \item \textbf{detecção de bordas na imagem}: as linhas que formam a tela de TV são pontos em que há grande variação nos níveis RGB da imagem, ou seja, bordas. Um esquema de detecção de bordas é o primeiro passo para encontrar informações de linha na imagem;
- \item \textbf{identificação das linhas}: após encontrado o mapa de bordas da imagem, é implementado um algoritmo para identificar quais formam linhas. No caso deste método, o algoritmo é baseado na transformada de Hough;
- \item \textbf{reconhecimento de retângulos}: as informações de linha são utilizadas pelo método para identificar objetos retangulares presentes na tela;
- \item \textbf{escolha do retângulo que representa a tela}: características inerentes a telas de TV, como a relação de aspecto de 16/9 ou 4/3 ou o formato retangular, são levadas em conta para montar um esquema de selação de retângulos que identifique corretamente qual representa a tela na imagem;
+ \item \textbf{detecção de bordas}: a detecção de bordas fornece ao método um meio de analisar as informações sobre os objetos presentes na imagem usando menos memória e recursos computacionais do que usando a imagem original;%as linhas que formam a tela de TV são pontos em que há grande variação nos níveis RGB da imagem, ou seja, bordas. Um esquema de detecção de bordas é o primeiro passo para encontrar informações de linha na imagem;
+ \item \textbf{detecção das linhas}: a detecção de linhas segue o processo de detecção de bordas e fornece as informações espaciais sobre os segmentos de reta presentes na imagem, para ser utilizadas na etapa de reconhecimento de retângulos;%após encontrado o mapa de bordas da imagem, é implementado um algoritmo para identificar quais formam linhas. No caso deste método, o algoritmo é baseado na transformada de Hough;
+ \item \textbf{reconhecimento de retângulos}: as informações sobre as linhas são coletadas e utilizadas por algoritmos para que objetos retangulares presentes na imagem, cujos limites correspondam às linhas encontradas, possam ser detectados;%as informações de linha são utilizadas pelo método para identificar objetos retangulares presentes na tela;
+ \item \textbf{identificação do retângulo que representa a tela}: as características ierentes ao objetivo da detecção são utilizadas para montar um esquema de seleção, de forma que, dentre os retângulos encontrados, o que corresponde ao objeto seja identificado;% inerentes às telas de TV e monitores, como tamanho, forma, orientação e relação de aspecto, são utilizadas pelo método para ;%características inerentes a telas de TV, como a relação de aspecto de 16/9 ou 4/3 ou o formato retangular, são levadas em conta para montar um esquema de selação de retângulos que identifique corretamente qual representa a tela na imagem;
 \end{itemize}
 
-A figura \ref{figdiag} ilustra os estágios do método, que serão detalhados nas próximas seções:
+A Figura \ref{testefigura} ilustra as etapas do método, que serão detalhados nas próximas seções:
 
 
 %DIAGRAMA DE BLOCOS DO MÉTODO AQUI
 
 \begin{figure} [h]
-\includegraphics[width = \textwidth]{figuras/diag.pdf} \label{figdiag}
-\caption{Diagrama de blocos do método}
+\centering
+\includegraphics[width = \textwidth]{figuras/diaginicial.pdf} \label{testefigura}
+\caption{Fluxograma do método de extração de telas de TV e monitores.}
 \end{figure}
 
 \section{Detecção de Bordas} \label{met:borda}
 
 %lembrar sempre que precisa haver a DESCRIÇÃO das técnicas utilizadas, assim como sua MOTIVAÇÃO (porque usei A e não B, que autores concordam cmg)
 %\textcolor{red}{felipe, evite frases obvias... eh claro que eh importante.. outra coisa: comece indicando rapidamente o que ela e depois elabore...}
-A borda de uma imagem é uma mudança significativa nos valores de intensidade de uma imagem, normalmente indicando uma mudança de região nela. Um mapa de borda da imagem é, portanto, uma matriz do mesmo tamanho da imagem, com pontos indicando a localização das bordas. A detecção de bordas é a área de processamento de imagem que estuda meios de localizar estas bordas \cite{borda01}. A figura \ref{exemploborda} mostra um exemplo de detecção de bordas.
+
+A detecção de bordas é a etapa inicial do método. Ela tem como entrada a imagem de entrada e dá como saída uma matriz binária chamada mapa de bordas, em que cada pixel que corresponde a uma borda na imagem tem valor 1 na matriz e os restantes têm valor 0. A teoria relacionada à detecção de bordas é abordada em detalhes no Capítulo \ref{refteor}. A Figura \ref{exemploborda} mostra um exemplo de extração de bordas de uma imagem.
+
+%A borda de uma imagem é uma mudança significativa nos valores de intensidade de uma imagem, normalmente indicando uma mudança de região nela. Um mapa de borda da imagem é, portanto, uma matriz do mesmo tamanho da imagem, com pontos indicando a localização das bordas. A detecção de bordas é a área de processamento de imagem que estuda meios de localizar estas bordas \cite{borda01}. A Figura \ref{exemploborda} mostra um exemplo de detecção de bordas.
 
 %Jain, R., Kasturi, R., & Schunck, B. G. (1995). Machine vision (Vol. 5). New York: McGraw-Hill.
 
@@ -45,8 +59,15 @@ A borda de uma imagem é uma mudança significativa nos valores de intensidade d
 
 
 %A detecção de bordas é uma etapa de preprocessameto importante.
-Neste trabalho, a detecção de bordas é feita usando análise de gradiente multi-dimensional \cite{borda00}. Esta técnica considera a imagem um campo vetorial, ou seja, uma função no espaço $x,y$. Ela calcula seu gradiente para eleger candidatos a pixels de borda. Após isso, é implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. O pixel é selecionado como candidato caso sua magnitude de gradiente seja um máximo local. A verificação descarta candidatos caso o candidato não tenha vizinhos também candidatos e se a magnitude do gradiente daquele pixel for muito diferente da magnitude dos seus vizinhos na direção do gradiente.
-Através deste esquema, é possível detectar a borda de imagens coloridas no espaço RGB. Ele será mais detalhado a seguir.
+%Neste trabalho, a detecção de bordas é feita usando análise de gradiente multi-dimensional \cite{borda00}. Esta técnica considera a imagem um campo vetorial, ou seja, uma função no espaço $x,y$. Ela calcula seu gradiente para eleger candidatos a pixels de borda. Após isso, é implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. O pixel é selecionado como candidato caso sua magnitude de gradiente seja um máximo local. A verificação descarta candidatos caso o candidato não tenha vizinhos também candidatos e se a magnitude do gradiente daquele pixel for muito diferente da magnitude dos seus vizinhos na direção do gradiente.
+%Através deste esquema, é possível detectar a borda de imagens coloridas no espaço RGB. Ele será mais detalhado a seguir.
+
+%falar sobre como funciona o fluxo do processo. qual a utilidade de calcular o ggradiente, depois pra que fazer a seleção de candidatos e por último como e porque fazer a verificação. 
+
+O esquema de detecção de bordas utilizado nesta dissertação é baseado na análise de gradiente multi-dimensional \cite{borda00} e no detector de Canny \cite{canny}. A imagem é tratada como um campo vetorial e são calculadas a magnitude e direção de seu 	gradiente. Utilizando esse esquema é possível obter o gradiente de imagens coloridas sem precisar recorrer à conversão para tons de cinza. A magnitude e direção do gradiente são informações úteis para a seleção de candidatos a pixeis de borda. Esta seleção é feita para separar, dentre os pixeis, os mais propícios a pertencerem a bordas de objetos com pouco custo computacional. A verificação, mais custosa computacionalmente que a seleção, é feita para descartar, dentre os pixeis anotados como candidatos, os que realmente não pertençam a uma borda.
+
+As etapas do esquema de detecção de bordas serão detalhadas a seguir.
+
 %Esta técnica é útil por funcionar bem em imagens coloridas e também por gerar informação de ângulo de gradiente, que vai ser útil nas próximas etapas do processamento.
 
 %\textcolor{red}{aqui muita coisa tah faltando... mostre as formulas dos gradintes, coloque uma imagem ilustrando a selecao de candidatos e fale todos os detalhes que voce puder... nao economize palavras...}
@@ -134,7 +155,7 @@ A raiz quadrada do maior autovalor $V$ e seu autovetor correspondente são equiv
 
 A detecção de candidatos a pixel de borda é o primeiro passo para obtenção da imagem de borda. Ela filtra a imagem em busca de candidatos que serão depois selecionados em um sistema de verificação, mais custoso computacionalmente.
 
-Primeiramente é calculada a matriz $D^TD$, assim como seus valores de $V$ e $\theta$, para cada um dos pixels da imagem. A detecção de candidatos a pixel de borda é feita analisando esta informação. São considerados candidatos os pixeis cuja magnitude é uma máxima local, ou seja, os pixeis cuja magnitude seja maior que a dos seus dois vizinhos na direção do gradiente, são considerados candidatos a pixeis de borda. Isto pode ser melhor exemplificado pela figura \ref{maxlocal}.
+Primeiramente é calculada a matriz $D^TD$, assim como seus valores de $V$ e $\theta$, para cada um dos pixels da imagem. A detecção de candidatos a pixel de borda é feita analisando esta informação. São considerados candidatos os pixeis cuja magnitude é uma máxima local, ou seja, os pixeis cuja magnitude seja maior que a dos seus dois vizinhos na direção do gradiente, são considerados candidatos a pixeis de borda. Isto pode ser melhor exemplificado pela Figura \ref{maxlocal}.
 
 %Após calcular a matriz $Mc$ para cada pixel da imagem e seus valores de $V$ e $\theta$, os pixeis com máxima local de magnitude de gradiente na direção dele, ou seja, os pixeis cuja magnitude seja maior que a dos seus dois vizinhos na direção do gradiente, são considerados candidatos a pixeis de borda.
 
@@ -164,7 +185,7 @@ Esta verificação é baseada em operações que se aproveitam das informações
 
 \end {itemize}
 
-\section{Identificação de Linhas} \label{met:linha}
+\section{Detecção de Linhas} \label{met:linha}
 
 %\textcolor{red}{nao vou nem comentar isso... ajeite...}
 
@@ -186,7 +207,7 @@ A transformada de Hough foi criada por P.V.C Hough para detectar padrões comple
 
 No caso específico de detecção de retas, a transformada de Hough funciona transformando uma linha reta em um ponto no espaço paramétrico. Os parâmetros utilizados por Hough para caracterizar uma reta no espaço $x,y$ são a inclinação $m$ e interseção $b$, portanto a reta $y = mx+b$ é representada como um ponto no espaço $m,p$.
 
-Supondo que se tenha um conjunto de $n$ pontos em uma imagem $N = \{(x_1,y_1),(x_2,y_2),...,(x_n,y_n)\}$  e se queira descobrir a que linha eles pertencem, são computadas todas as retas que passam por aquele conjunto de pontos. Para cada reta que contém um dos pontos é computado um voto no espaço paramétrico $m,b$. Assim, a reta com maior número de votos é considerada a reta a qual os pontos pertencem. Este processo pode ser melhor representado na figura \ref{houghpuro}
+Supondo que se tenha um conjunto de $n$ pontos em uma imagem $N = \{(x_1,y_1),(x_2,y_2),...,(x_n,y_n)\}$  e se queira descobrir a que linha eles pertencem, são computadas todas as retas que passam por aquele conjunto de pontos. Para cada reta que contém um dos pontos é computado um voto no espaço paramétrico $m,b$. Assim, a reta com maior número de votos é considerada a reta a qual os pontos pertencem. Este processo pode ser melhor representado na Figura \ref{houghpuro}
 
 \begin{figure}[h]
   \centering
@@ -489,7 +510,7 @@ $$ I(x,y) = \frac{y_2-y}{y_2-y_1}I(x,y_1) + \frac{y-y_1}{y_2-y_1}I(x,y_2)$$
 
 Com esta técnica, é possível obter uma aproximação do trecho da tela da TV ou monitor presentes na imagem capturada, do tamanho e formato necessários para a avaliação de desempenho.
 
-\subsection{Métricas de Desempenho}
+\section{Métricas de Desempenho}
 
 Este método utiliza três técnicas para avaliar seu desempenho em selecionar acertadamente o trecho da imagem que representa a tela. Estas técnicas comparam a imagem obtida, após rotacionada e redimensionada, com uma imagem de referência de mesmo formato e tamanho. Elas são:
 \begin{itemize}

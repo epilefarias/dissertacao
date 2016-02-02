@@ -102,12 +102,21 @@ Todas as imagens são coloridas e têm tamanho variado. As fotos foram capturada
 
 \section{Procedimentos}
 
-\begin{comment}
+\subsection{Pré-prcessamento}
 
 
 
 \subsection{Primeiro Experimento}
 
+A figura \ref{fig:exptempo} mostra o diagrama de blocos do funcionamento do primeiro experimento.
+
+
+\begin{figure} [h]
+\centering
+	\includegraphics[width = \textwidth]{figuras/experimento_tempo.pdf} \label{fig:exptempo} \caption{Outline do primeiro experimento}
+\end{figure} 
+
+\begin{comment}
 % introdução
 
 O experimento apresentado nesta seção foi feitos implementando o método de extração de tela de TV nas mesmas imagens duas vezes, uma com e outra sem redimensionamento.
@@ -121,13 +130,17 @@ As imagens escolhidas para compor o conjunto de teste deste experimento foram um
 A métrica de desempenho é o tempo utilizado pelo algoritmo para encontrar uma tela de TV.
 %Somente telas encontradas contam? fazer mais de um teste? porque? (se não, explicar o porque tbm)
 O tempo total utilizado pelas 50 telas é obtido e depois sua média calculada.
+\end{comment}
 
 %procedimentos
 
 %escolha das imagens	aleatorio etc
 %preprocessamento correção de gama (pesquisar literatura) redimensionamento (sim em um experimento e nao em outro)
+
+
+
 As duas simulações tiveram etapas de preprocessamento distintas. A correção de gama foi utilizada em ambas, porém o redimensionamento, alvo deste experimento, foi utilizado somente em uma delas.
-A correção de gama é uma transformação dos valores de intensidade da imagem. É uma transformação que tem como objetivo ajustar a luminância da imagem, levando em conta a relação não-linear entre o valor do pixel e a intensidade mostrada. A literatura apresenta exemplos da utilidade da correção de gama para obter melhores imagens de borda (\cite{corrgamma00}, \cite{corrgamma01}).
+A correção de gama é uma transformação dos valores de intensidade da imagem. É uma transformação que tem como objetivo ajustar a luminância da imagem, levando em conta a relação não-linear entre o valor do pixel e a intensidade mostrada. A literatura apresenta exemplos da utilidade da correção de gama para obter melhores imagens de borda \cite{corrgamma00,corrgamma01}.
 
 %Najafabadi, M. J. E., & Pourghassem, H. (2011, December). A Novel Method for Improving Edge Detection Using Negative and Gamma Correction Functions. In Intelligent Computation and Bio-Medical Instrumentation (ICBMI), 2011 International Conference on (pp. 60-63). IEEE.
 
@@ -175,6 +188,12 @@ D_tempo = T_{médio}’ - T_{médio}
 
 \subsection{Segundo Experimento}
 
+\begin{figure} [h]
+\centering
+\includegraphics[width = \textwidth]{figuras/experimento_template.pdf} \label{exptemplate} \caption{Outline dos experimentos}
+\end{figure} 
+
+\begin{comment}
 % introdução
 
 Experimento que aplica o método 
