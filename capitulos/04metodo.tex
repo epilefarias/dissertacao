@@ -12,18 +12,74 @@
 
 \section{Introdução}
 
-O problema da detecção de objetos quadrangulares \cite{objquadrangular} possui diversas aplicações. Por exemplo, navegação de robôs \cite{navegrobo} e auxílio à identificação de danos por terremoto \cite{terremoto}. Especificamente nesta dissertação, iremos abordar a detecção de telas de TV e monitores. %Esta aplicação é importante em alguns cenários, por exemplo, como \textbf{dois exemplos e suas referências}.
+O problema da detecção de objetos quadrangulares em imagens \cite{quadquadrinhos ,objquadrangular00} possui diversas aplicações. Por exemplo, navegação de robôs \cite{navegrobo,navegrobo00} e detecção de prédios em imagens de satélites \cite{prediosatelite,prediosatelite00,prediosatelite01}. % e de placas que indicam material perigoso \cite{materialperig}. http://ieeexplore.ieee.org/xpls/icp.jsp?arnumber=1048435&tag=1
+ Para caracterizarmos o problema da detecção de objetos quadrangulares precisamos considerar que um objeto quadrangular \cite{quadquadrinhos} em uma imagem é definido como um objeto delimitado por quatro segmentos de reta distintos pertencentes à imagem, conectados por quatro vértices. Em particular, podemos encarar a detecção de telas de TV e monitores como um problema de detecção de objetos quadrangulares \cite{inspect}. De fato, isto pode ser feito devido à padronização da fabricação de TVs e monitores \cite{DVB}, que recomenda algumas características para as telas. Este cenário favorece a criação de um sistema de inspeção de telas podendo auxiliar sistemas para inspeção automática \cite{inspect}.
 
-Para caracterizarmos o problema da detecção de objetos quadrangulares precisamos considerar a definição proposta em \cite{objquadrangular}. Nela, um objeto quadrangular é definido como um objeto delimitado por quatro segmentos de reta conectados por quatro vértices.
+%importancia detecção de telas de tv
+%A importância deste método está na sua utilização para inspeção automática de TVs. Sistemas de inspeção automática de TVs recentes capturam a imagem a ser mostrada na tela \cite{inspectgrabber}, antes de ela ser mostrada, para compará-la com uma imagem de referência. Esta técnica, embora rápida, não detecta problemas na tela do ponto de vista do usuário. Utilizando o método aqui proposto, é possível detectar quando a imagem na memória da TV ou monitor não corresponde à imagem mostrada na tela ou quando a operação da TV tem algum problema.
+%Sistemas de inspeção automática de TVs recentes capturam a imagem a ser mostrada na tela \cite{inspectgrabber}, antes de ela ser mostrada, para compará-la com uma imagem de referência. Esta técnica, embora rápida, não detecta problemas na tela do ponto de vista do usuário. %elaborar mais
 
-Partindo desta definição, foi montado um método com base no algoritmo proposto em \cite{mrf}. Este método é dividido em quatro etapas, que são como segue:
+%Inúmeros trabalhos foram desenvolvidos envolvendo inspeção automática de TVs. Como por exemplo, existem trabalhos focados em encontrar erros no software utilizado no aparelho, tais como \textit{deadlocks}, vazamentos de memória e problemas na alocação de tarefas \cite{inspectsoftware}. Há trabalhos focados em encontrar problemas na interação entre hardware e software \cite{inspecthardsoft}, e ainda outros focados na análise da qualidade da imagem mostrada \cite{inspectimage00,inspectimage01,inspectimage02}. Trabalhos mais recentes têm focado em uma análise dos http://servicos.netcombo.com.br/netPortalWEB/appmanager/portal/desktop?_nfpb=true&_pageLabel=cadastro_page&bew=1erros de operação nos aparelhos de TV \cite{inspectgrabber}.
+
+PARÁGRAFO PARA A INTRODUÇÃO
+
+A detecção de falhas em TVs e monitores é um problema abordado por diversos trabalhos e alguns destes utilizam técnicas de campos multidisciplinares, como processamento de sinais, engenharia de software, IA e RP. Por exemplo, no sistema mostrado em \cite{inspectsoftware}, os autores propõem encontrar erros no software utilizado no aparelho, tais como \textit{deadlocks}, vazamentos de memória e problemas na alocação de tarefas \textcolor{red}{explicar mais}. Outro exemplo é apresentado em \cite{inspecthardsoft}, que usa um sinal de referência misturado com um sinal de erro através de software para encontrar problemas na interação entre hardware e software. Alguns trabalhs de detecção de falhas propõem um sistema de inspeção automática baseado na análise digital da imagem mostrada, técnica que permite verificar tanto hardware quanto software \cite{inspect,inspectimage00,inspectimage01,inspectimage02,inspectgrabber} \textcolor{red}{explicar mais}.
+
+Os métodos de inspeção automática de TVs e monitores por análise digital da imagem podem ser divididos em duas categorias principais. Na primeira, encontramos os métodos em que a captura da imagem é feita diretamente da memória da TV ou monitor. Perceba que a captura é feita antes da exibição da imagem na TV ou monitor \cite{inspectimage00,inspectimage03,inspectimage04}. Esta categoria de métodos proporciona a detecção de erros de hardware e software que produzam como resultado uma imagem defeituosa na memória da TV ou monitor. Na segunda, temos os métodos em que a captura da imagem é feita através de uma câmera \cite{inspect,vantagemauto}. Assim, podemos analisar a imagem exibida na TV ou monitor do ponto de vista do usuário.
+ conseguimos detectar, além das falhas detectadas na primeira categoria, problemas nos circuitos entre a memória interna da TV e a tela.
+%A importância deste método está na sua utilização para inspeção automática de TVs. Utilizando o método aqui proposto, é possível detectar quando a imagem na memória da TV ou monitor não corresponde à imagem mostrada na tela ou quando a operação da TV tem algum problema. %refazer essa frase toda. dados.
+
+Geralmente, os métodos de inspeção automática de TVs e monitores em que a captura da imagem é feita por uma câmera utilizam uma ou mais das seguintes etapas:
 
 \begin{itemize}
- \item \textbf{detecção de bordas}: a detecção de bordas fornece ao método um meio de analisar as informações sobre os objetos presentes na imagem usando menos memória e recursos computacionais do que usando a imagem original;%as linhas que formam a tela de TV são pontos em que há grande variação nos níveis RGB da imagem, ou seja, bordas. Um esquema de detecção de bordas é o primeiro passo para encontrar informações de linha na imagem;
- \item \textbf{detecção das linhas}: a detecção de linhas segue o processo de detecção de bordas e fornece as informações espaciais sobre os segmentos de reta presentes na imagem, para ser utilizadas na etapa de reconhecimento de retângulos;%após encontrado o mapa de bordas da imagem, é implementado um algoritmo para identificar quais formam linhas. No caso deste método, o algoritmo é baseado na transformada de Hough;
- \item \textbf{reconhecimento de retângulos}: as informações sobre as linhas são coletadas e utilizadas por algoritmos para que objetos retangulares presentes na imagem, cujos limites correspondam às linhas encontradas, possam ser detectados;%as informações de linha são utilizadas pelo método para identificar objetos retangulares presentes na tela;
- \item \textbf{identificação do retângulo que representa a tela}: as características ierentes ao objetivo da detecção são utilizadas para montar um esquema de seleção, de forma que, dentre os retângulos encontrados, o que corresponde ao objeto seja identificado;% inerentes às telas de TV e monitores, como tamanho, forma, orientação e relação de aspecto, são utilizadas pelo método para ;%características inerentes a telas de TV, como a relação de aspecto de 16/9 ou 4/3 ou o formato retangular, são levadas em conta para montar um esquema de selação de retângulos que identifique corretamente qual representa a tela na imagem;
+\item \textbf{pré-processamento}: as imagens capturadas geralmente necessitam de algum pré-processamento, seja para eliminar ruído ou para destacar as características necessárias para que as etapas seguintes possam ser executadas.
+\item \textbf{detecção da região da tela na imagem}: utilizando as informações geradas na fase de pré-processamento, o método deve ser capaz de identificar na imagem a região que corresponde  à tela. Isto normalmente é feito através de uma combinação de detecção de retângulos e identificação, se aproveitando de características da tela.
+\item \textbf{extração do conteúdo da tela}: identificada a região, nesta etapa é feita a extração do conteudo da tela. Ele é extraído para um formato que seja compatível com a etapa de comparação.
+\item \textbf{inspeção}: nesta etapa é feita a inspeção a tela, através da comparação do conteúdo extraído com uma ou mais referências. A comparação pode ser feita de diversas formas, utilizando toda a imagem capturada ou parte dela. O resultado pode ser uma pontuação, uma imagem ou um rótulo (ok ou não ok).
 \end{itemize}
+
+Nesta dissertação, conforme comentamos, apresentamos um método de detecção de telas que representa uma alternativa para integrar um sistema de inspeção automática de telas de TV e monitores. \textcolor{red}{inserir vantagens, motivações e contribuições aqui}. Uma contribuição deste trabalho é aliar o método de detecção de tela às técnicas de detecção de borda através de análise de gradiente multi-dimensional e detecção de retângulo utilizando um modelo baseado no Campo Aleatório de Markov, apresentadas em \cite{mrf}.
+
+%O método proposto apresenta uma alternativa de inspeção automática de TVs e monitores, adquirindo o conteúdo da tela através de uma câmera fotográfica e comparando este conteúdo com imagens de referência. Este curso de ação apresenta a vantagem de conseguir analisar a imagem do ponto de vista do usuário final, além de poder verificar problemas no circuito entre a tela e a memória da TV ou monitor e problemas na funcionalidade da TV \cite{inspect}.
+
+\begin{comment}
+
+
+%nao eh trivial, pois envolve diversos metodos de processamrto
+
+Este não é um problema de solução trivial. A resolução deste problema envolve diversos métodos de processamento digital de imagens, tais como detecção de telas, detecção de linhas, mesclagem de linhas, classificação de linhas e detecção de objetos retangulares.
+
+%A fim de gerar uma alternativa de solução para o problema da detecção de telas de TV e monitores,
+%comentar mais sobre as etapas utilizadas
+%foi criado um método com base no algoritmo proposto em \cite{mrf}. Este método é dividido em quatro etapas, que são como segue:
+A fim de gerar uma alternativa de solução para o problema da detecção de telas de TV e monitores,
+%comentar mais sobre as etapas utilizadas
+foi criado um método com base no algoritmo proposto em \cite{mrf}. A ideia basica deste método é classificar as linhas presentes na imagem como lados de um objeto retangular através de um modelo MRF e após isto identificar o objeto que representa a tela. Este método é dividido em quatro etapas, que são como segue:
+
+%\end{comment}
+
+%O método é baseado no algoritmo proposto em \cite{mrf}. A ideia básica deste método é classificar as linhas presentes na imagem como lados de um objeto retangular através de um modelo MRF e, após isto, identificar o objeto que representa a tela. É uma operação que envolve diversos métodos de processamento digital de imagens, tais como detecção de telas, detecção de linhas, mesclagem de linhas, classificação de linhas e detecção de objetos retangulares. Este método é dividido em quatro etapas, que são como segue:
+
+O método aqui apresentado consiste nas seguintes etapas, que serão detalhados nas seções seguintes: \textcolor{red}{se vou apresentar nas próximas seções, pq fazer um resumo em bullet points agora?}
+
+\begin{itemize}
+%porque usou deteccao de bordas, o q me traz pro metodo. pq quatro etapas e pq essas??
+ \item \textbf{detecção de bordas}: a detecção de bordas tem como resposta as um mapa dos pixeis em que há grande variação nos níveis da imagem. Portanto, é uma etapa que tem dupla importância para o método, visto que facilita a detecção de linhas tanto destacando os limites dos objetos presentes na imagem quanto diminuindo a quantidade de informação a ser processada;
+ %a fim de identificar as linhas presentes na imagem, a detecção de bordas é uma etapa importante, visto que é um processo que tem como entrada uma imagem e dá como resposta os limites dos objetos presentes na mesma. A informação é resumida ao essencial para a etapa de detecção de linhas;%as linhas que formam a tela de TV são pontos em que há grande variação nos níveis RGB da imagem, ou seja, bordas. Um esquema de detecção de bordas é o primeiro passo para encontrar informações de linha na imagem;
+ % \item \textbf{detecção de bordas}: a detecção de bordas fornece ao método um meio de analisar as informações sobre os objetos presentes na imagem usando menos memória e recursos computacionais do que usando a imagem original;%as linhas que formam a tela de TV são pontos em que há grande variação nos níveis RGB da imagem, ou seja, bordas. Um esquema de detecção de bordas é o primeiro passo para encontrar informações de linha na imagem;
+\item \textbf{detecção das linhas}: a detecção de retângulos é mais rápida e menos custosa computacionalmente quando combina a detecção de segmentos de linha com um esquema de classificação das linhas encontradas \cite{mrf}, portanto um esquema de detecção de linhas se faz necessário como primeira parte deste esquema;%após encontrado o mapa de bordas da imagem, é implementado um algoritmo para identificar quais formam linhas. No caso deste método, o algoritmo é baseado na transformada de Hough;
+% \item \textbf{detecção das linhas}: a detecção de linhas segue o processo de detecção de bordas e fornece as informações espaciais sobre os segmentos de reta presentes na imagem, para ser utilizadas na etapa de reconhecimento de retângulos;%após encontrado o mapa de bordas da imagem, é implementado um algoritmo para identificar quais formam linhas. No caso deste método, o algoritmo é baseado na transformada de Hough;
+
+ \item \textbf{detecção de retângulos}: como segunda parte do sistema de detecção, é utilizado um modelo MRF para rotular as linhas encontradas como parte de objetos retangulares. Este método é utilizado devido à robustez e baixo custo, quando comparado com outros métodos na literatura \cite{mrf};%as informações de linha são utilizadas pelo método para identificar objetos retangulares presentes na tela;
+ 
+% \item \textbf{reconhecimento de retângulos}: as informações sobre as linhas são coletadas e utilizadas por algoritmos para que objetos retangulares presentes na imagem, cujos limites correspondam às linhas encontradas, possam ser detectados;%as informações de linha são utilizadas pelo método para identificar objetos retangulares presentes na tela;
+ 
+ \item \textbf{identificação do retângulo que representa a tela}: o método identifica todos os objetos retangulares presentes na imagem, portanto um esquema de seleção se faz necessário para identificar qual representa a tela, se aproveitando das características de telas de TV;% inerentes às telas de TV e monitores, como tamanho, forma, orientação e relação de aspecto, são utilizadas pelo método para ;%características inerentes a telas de TV, como a relação de aspecto de 16/9 ou 4/3 ou o formato retangular, são levadas em conta para montar um esquema de selação de retângulos que identifique corretamente qual representa a tela na imagem;
+ 
+% \item \textbf{identificação do retângulo que representa a tela}: as características ierentes ao objetivo da detecção são utilizadas para montar um esquema de seleção, de forma que, dentre os retângulos encontrados, o que corresponde ao objeto seja identificado;% inerentes às telas de TV e monitores, como tamanho, forma, orientação e relação de aspecto, são utilizadas pelo método para ;%características inerentes a telas de TV, como a relação de aspecto de 16/9 ou 4/3 ou o formato retangular, são levadas em conta para montar um esquema de selação de retângulos que identifique corretamente qual representa a tela na imagem;
+\end{itemize}
+
+\end{comment}
 
 A Figura \ref{testefigura} ilustra as etapas do método, que serão detalhados nas próximas seções:
 
@@ -35,6 +91,14 @@ A Figura \ref{testefigura} ilustra as etapas do método, que serão detalhados n
 \includegraphics[width = \textwidth]{figuras/diaginicial.pdf} \label{testefigura}
 \caption{Fluxograma do método de extração de telas de TV e monitores.}
 \end{figure}
+
+\section{Abordagem da Metodologia} \label{met:abord}
+
+A utilização da metodologia descrita neste capítulo se encontra nas linhas de montagem de TVs e monitores. Em conjunto com um sistema gerador de sinais para a TV e com o auxílio de um sistema computacional para diagnóstico, esta metodologia fornece a base para um sistema que inspeciona aspectos operacionais e falhas possíveis em uma TV ou monitor, sem a necessidade de constante intervenção humana e com aumento da confiabilidade e rapidez, se comparado com a inspeção manual \cite{vantagemauto}. \textcolor{red}{MENCIONAR COMO VANTAGEM?: devido à metodologia, o sistema precisa de pouca ou nenhuma reprogramação, para o caso de diferentes modelos/tamanhos de tv, se for respeitada a proporção 16:9}
+
+O modelo MRF apresenta uma alternativa para a detecção de retângulos robusta a diferentes tamanhos, orientações e cores de retângulo. Assim, a posição, cor ou orientação da TV ou monitor testados, assim como do fundo do ambiente onde a imagem é capturada, têm menor influência sobre o resultado da inspeção que nos sistemas propostos por outros trabalhos com tema semelhante \cite{inspect,vantagemauto}.
+
+A análise de gradiente multi-dimensional é uma técnica para detecção de bordas em imagens coloridas robusta a mudanças na iluminação e cores da imagem. Isto apresenta uma vantagem sobre outras técnicas estudadas na literatura, que detectam bordas somente em imagens em escala de cinza \cite{canny,citasobel,roberts}. Isto se dá porque a informação de cor adiciona a tarefas de processamento de imagens, como segmentação e classificação, meios de aumentar tanto a eficácia quanto a variedade de aplicações \cite{bordacolor}.
 
 \section{Detecção de Bordas} \label{met:borda}
 
@@ -53,7 +117,7 @@ A detecção de bordas é a etapa inicial do método. Ela tem como entrada a ima
   \subfloat[original]{\includegraphics[width=0.45\textwidth]{figuras/fig1orig.jpg}\label{fig:f1}}
   \hfill
   \subfloat[borda]{\includegraphics[width=0.45\textwidth]{figuras/fig1borda.jpg}\label{fig:f2}}
-  \caption{imagem e seu mapa de bordas}
+  \caption{Imagem e seu mapa de bordas.}
   \label{exemploborda}
 \end{figure}
 
@@ -162,7 +226,7 @@ Primeiramente é calculada a matriz $D^TD$, assim como seus valores de $V$ e $\t
 \begin{figure} [h]
 \centering
 \includegraphics[width = 0.5\textwidth]{figuras/vizinh.jpg} \label{maxlocal}
-\caption{Direção de gradiente de um pixel e seus vizinhos. Adaptado de \cite{mrf}}
+\caption{Direção de gradiente de um pixel e seus vizinhos. Adaptado de \cite{mrf}.}
 \end{figure}
 
 \subsection{Verificação de Candidatos}
@@ -214,7 +278,7 @@ Supondo que se tenha um conjunto de $n$ pontos em uma imagem $N = \{(x_1,y_1),(x
   \subfloat[imagem original]{\includegraphics[width=0.4\textwidth]{figuras/houghpuro00.jpg}\label{houghpuro:f1}}
   \hfill
   \subfloat[representação no espaço paramétrico]{\includegraphics[width=0.4\textwidth]{figuras/houghpuro01.jpg}\label{houghpuro:f2}}
-  \caption{imagem com pontos colineares e sua representação no espaço $m,b$. Adaptado de \cite{houghintro01}}
+  \caption{imagem com pontos colineares e sua representação no espaço $m,b$. Adaptado de \cite{houghintro01}.}
   \label{houghpuro}
 \end{figure}
 
@@ -242,7 +306,7 @@ Assim, dado um pixel de borda, para cada possível reta que passe por ele, é co
   \subfloat[imagem original]{\includegraphics[width=0.35\textwidth]{figuras/houghpts0000.jpg}\label{houghlinhas:f1}}
   \hfill
   \subfloat[representação no espaço de Hough]{\includegraphics[width=0.5\textwidth]{figuras/houghpts0001.jpg}\label{houghlinhas:f2}}
-  \caption{imagem com dois pontos e a representação paramétrica}
+  \caption{imagem com dois pontos e a representação paramétrica.}
   \label{houghlinhas}
 \end{figure}
 
@@ -369,7 +433,7 @@ No caso específico deste modelo, os elementos são linhas. A vizinhança é car
 
 \begin{figure} [h]
 \centering
-\includegraphics[width = 0.6\textwidth]{figuras/linhasparal.jpg} \label{uelinha} \caption{Linhas paralelas e perpendiculares. Adaptado de \cite{mrf}}
+\includegraphics[width = 0.6\textwidth]{figuras/linhasparal.jpg} \label{uelinha} \caption{Linhas paralelas e perpendiculares. Adaptado de \cite{mrf}.}
 \end{figure} 
 
 %figura de: Liu, Y., Ikenaga, T., & Goto, S. (2007). An MRF model-based approach to the detection of rectangular shape objects in color images. Signal Processing, 87(11), 2649-2658.
@@ -481,7 +545,7 @@ A transformação se dá em duas fases: a rotação da imagem e o redimensioname
   \subfloat[trecho da imagem]{\includegraphics[width=0.45\textwidth]{figuras/retangulo00.jpg}\label{fig:f1}}
   \hfill
   \subfloat[retângulo]{\includegraphics[width=0.45\textwidth]{figuras/retangulo01.jpg}\label{fig:f2}}
-  \caption{transformação da região retangular A'B'C'D' no retângulo ABCD. Adaptado de \cite{inspect}}
+  \caption{transformação da região retangular A'B'C'D' no retângulo ABCD. Adaptado de \cite{inspect}.}
   \label{redimens}
 \end{figure} 
 
