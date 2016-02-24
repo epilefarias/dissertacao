@@ -21,9 +21,9 @@ O problema da detecção de objetos quadrangulares em imagens \cite{quadquadrinh
 
 %Inúmeros trabalhos foram desenvolvidos envolvendo inspeção automática de TVs. Como por exemplo, existem trabalhos focados em encontrar erros no software utilizado no aparelho, tais como \textit{deadlocks}, vazamentos de memória e problemas na alocação de tarefas \cite{inspectsoftware}. Há trabalhos focados em encontrar problemas na interação entre hardware e software \cite{inspecthardsoft}, e ainda outros focados na análise da qualidade da imagem mostrada \cite{inspectimage00,inspectimage01,inspectimage02}. Trabalhos mais recentes têm focado em uma análise dos http://servicos.netcombo.com.br/netPortalWEB/appmanager/portal/desktop?_nfpb=true&_pageLabel=cadastro_page&bew=1erros de operação nos aparelhos de TV \cite{inspectgrabber}.
 
-PARÁGRAFO PARA A INTRODUÇÃO
+%PARÁGRAFO PARA A INTRODUÇÃO
 
-A detecção de falhas em TVs e monitores é um problema abordado por diversos trabalhos e alguns destes utilizam técnicas de campos multidisciplinares, como processamento de sinais, engenharia de software, IA e RP. Por exemplo, no sistema mostrado em \cite{inspectsoftware}, os autores propõem encontrar erros no software utilizado no aparelho, tais como \textit{deadlocks}, vazamentos de memória e problemas na alocação de tarefas \textcolor{red}{explicar mais}. Outro exemplo é apresentado em \cite{inspecthardsoft}, que usa um sinal de referência misturado com um sinal de erro através de software para encontrar problemas na interação entre hardware e software. Alguns trabalhs de detecção de falhas propõem um sistema de inspeção automática baseado na análise digital da imagem mostrada, técnica que permite verificar tanto hardware quanto software \cite{inspect,inspectimage00,inspectimage01,inspectimage02,inspectgrabber} \textcolor{red}{explicar mais}.
+%A detecção de falhas em TVs e monitores é um problema abordado por diversos trabalhos e alguns destes utilizam técnicas de campos multidisciplinares, como processamento de sinais, engenharia de software, IA e RP. Por exemplo, no sistema mostrado em \cite{inspectsoftware}, os autores propõem encontrar erros no software utilizado no aparelho, tais como \textit{deadlocks}, vazamentos de memória e problemas na alocação de tarefas \textcolor{red}{explicar mais}. Outro exemplo é apresentado em \cite{inspecthardsoft}, que usa um sinal de referência misturado com um sinal de erro através de software para encontrar problemas na interação entre hardware e software. Alguns trabalhs de detecção de falhas propõem um sistema de inspeção automática baseado na análise digital da imagem mostrada, técnica que permite verificar tanto hardware quanto software \cite{inspect,inspectimage00,inspectimage01,inspectimage02,inspectgrabber} \textcolor{red}{explicar mais}.
 
 Os métodos de inspeção automática de TVs e monitores por análise digital da imagem podem ser divididos em duas categorias principais. Na primeira, encontramos os métodos em que a captura da imagem é feita diretamente da memória da TV ou monitor. Perceba que a captura é feita antes da exibição da imagem na TV ou monitor \cite{inspectimage00,inspectimage03,inspectimage04}. Esta categoria de métodos proporciona a detecção de erros de hardware e software que produzam como resultado uma imagem defeituosa na memória da TV ou monitor. Na segunda, temos os métodos em que a captura da imagem é feita através de uma câmera \cite{inspect,vantagemauto}. Assim, podemos analisar a imagem exibida na TV ou monitor do ponto de vista do usuário.
  conseguimos detectar, além das falhas detectadas na primeira categoria, problemas nos circuitos entre a memória interna da TV e a tela.
@@ -38,7 +38,21 @@ Geralmente, os métodos de inspeção automática de TVs e monitores em que a ca
 \item \textbf{inspeção}: nesta etapa é feita a inspeção a tela, através da comparação do conteúdo extraído com uma ou mais referências. A comparação pode ser feita de diversas formas, utilizando toda a imagem capturada ou parte dela. O resultado pode ser uma pontuação, uma imagem ou um rótulo (ok ou não ok).
 \end{itemize}
 
-Nesta dissertação, conforme comentamos, apresentamos um método de detecção de telas que representa uma alternativa para integrar um sistema de inspeção automática de telas de TV e monitores. \textcolor{red}{inserir vantagens, motivações e contribuições aqui}. Uma contribuição deste trabalho é aliar o método de detecção de tela às técnicas de detecção de borda através de análise de gradiente multi-dimensional e detecção de retângulo utilizando um modelo baseado no Campo Aleatório de Markov, apresentadas em \cite{mrf}.
+\section{Metodologia de Detecção de Telas Proposta} \label{met:abord}
+
+Nesta dissertação, conforme comentamos, apresentamos uma metodologia de detecção de telas que representa uma alternativa para integrar um sistema de inspeção automática de telas de TV e monitores. Devido à crescente necessidade de um sistema rápido e eficiente de inspeção de telas \cite{inspectimage03}, esta metodologia pode ser empregada em linhas de montagem de TVs e monitores. Em relação às contribuições científicas, comentamos que esta metodologia utiliza um sistema de detecção de telas robusto \cite{inspect} com técnicas de detecção de borda através de análise de gradiente multi-dimensional e detecção de retângulo utilizando um modelo baseado no campo aleatório de Markov \cite{mrf}.
+
+A Figura \ref{figmetod} ilustra as etapas do método, detalhados nas próximas seções. A metodologia completa possui quatro etapas, descritas em linhas gerais conforme a seguir. Primeiramente, a detecção de bordas é feita através de uma combinação da analise de gradiente multi-dimensional \cite{borda00} e no detector de Canny \cite{canny}. Esta é uma técnica para detecção de bordas em imagens coloridas robusta a mudanças na iluminação e cores. Um esquema de detecção de linhas baseado na transformada de Hough é utilizado no mapa de bordas resultante da etapa de detecção de bordas. Estas linhas são agrupadas como parte de objetos retangulares através de um modelo baseado no campo aleatório de Markov (MRF) \cite{mrf}. Por último, os retângulos resultantes são classificados, de forma a encontrar o retângulo que representa a tela.
+
+A seguir, conforme comentamos, detalharemos todas as etapas da metodologia de detecção de telas proposta, enfatizando as suas particularidades, algoritmos e modelagem.
+
+\begin{figure} [h]
+\centering
+\includegraphics[width = \textwidth]{figuras/metodo.pdf}
+\caption{Fluxograma do método de extração de telas de TV e monitores.} \label{figmetod}
+\end{figure}
+
+%A primeira contribuição deste trabalho é o sistema de inspeção automática de telas de TV e monitores, que emprega a esta metodologia técnicas de ...
 
 %O método proposto apresenta uma alternativa de inspeção automática de TVs e monitores, adquirindo o conteúdo da tela através de uma câmera fotográfica e comparando este conteúdo com imagens de referência. Este curso de ação apresenta a vantagem de conseguir analisar a imagem do ponto de vista do usuário final, além de poder verificar problemas no circuito entre a tela e a memória da TV ou monitor e problemas na funcionalidade da TV \cite{inspect}.
 
@@ -81,31 +95,20 @@ O método aqui apresentado consiste nas seguintes etapas, que serão detalhados 
 
 \end{comment}
 
-A Figura \ref{testefigura} ilustra as etapas do método, que serão detalhados nas próximas seções:
+%A utilização da metodologia descrita neste capítulo se encontra nas linhas de montagem de TVs e monitores. Em conjunto com um sistema gerador de sinais para a TV e com o auxílio de um sistema computacional para diagnóstico, esta metodologia fornece a base para um sistema que inspeciona aspectos operacionais e falhas possíveis em uma TV ou monitor, sem a necessidade de constante intervenção humana e com aumento da confiabilidade e rapidez, se comparado com a inspeção manual \cite{vantagemauto}.% \textcolor{red}{MENCIONAR COMO VANTAGEM?: devido à metodologia, o sistema precisa de pouca ou nenhuma reprogramação, para o caso de diferentes modelos/tamanhos de tv, se for respeitada a proporção 16:9}
+
+%O modelo MRF apresenta uma alternativa para a detecção de retângulos robusta a diferentes tamanhos, orientações e cores de retângulo. Assim, a posição, cor ou orientação da TV ou monitor testados, assim como do fundo do ambiente onde a imagem é capturada, têm menor influência sobre o resultado da inspeção que nos sistemas propostos por outros trabalhos com tema semelhante \cite{inspect,vantagemauto}.
+
+%A análise de gradiente multi-dimensional é uma técnica para detecção de bordas em imagens coloridas robusta a mudanças na iluminação e cores da imagem. Isto apresenta uma vantagem sobre outras técnicas estudadas na literatura, que detectam bordas somente em imagens em escala de cinza \cite{canny,citasobel,roberts}. Isto se dá porque a informação de cor adiciona a tarefas de processamento de imagens, como segmentação e classificação, meios de aumentar tanto a eficácia quanto a variedade de aplicações \cite{bordacolor}.
 
 
-%DIAGRAMA DE BLOCOS DO MÉTODO AQUI
-
-\begin{figure} [h]
-\centering
-\includegraphics[width = \textwidth]{figuras/diaginicial.pdf} \label{testefigura}
-\caption{Fluxograma do método de extração de telas de TV e monitores.}
-\end{figure}
-
-\section{Abordagem da Metodologia} \label{met:abord}
-
-A utilização da metodologia descrita neste capítulo se encontra nas linhas de montagem de TVs e monitores. Em conjunto com um sistema gerador de sinais para a TV e com o auxílio de um sistema computacional para diagnóstico, esta metodologia fornece a base para um sistema que inspeciona aspectos operacionais e falhas possíveis em uma TV ou monitor, sem a necessidade de constante intervenção humana e com aumento da confiabilidade e rapidez, se comparado com a inspeção manual \cite{vantagemauto}. \textcolor{red}{MENCIONAR COMO VANTAGEM?: devido à metodologia, o sistema precisa de pouca ou nenhuma reprogramação, para o caso de diferentes modelos/tamanhos de tv, se for respeitada a proporção 16:9}
-
-O modelo MRF apresenta uma alternativa para a detecção de retângulos robusta a diferentes tamanhos, orientações e cores de retângulo. Assim, a posição, cor ou orientação da TV ou monitor testados, assim como do fundo do ambiente onde a imagem é capturada, têm menor influência sobre o resultado da inspeção que nos sistemas propostos por outros trabalhos com tema semelhante \cite{inspect,vantagemauto}.
-
-A análise de gradiente multi-dimensional é uma técnica para detecção de bordas em imagens coloridas robusta a mudanças na iluminação e cores da imagem. Isto apresenta uma vantagem sobre outras técnicas estudadas na literatura, que detectam bordas somente em imagens em escala de cinza \cite{canny,citasobel,roberts}. Isto se dá porque a informação de cor adiciona a tarefas de processamento de imagens, como segmentação e classificação, meios de aumentar tanto a eficácia quanto a variedade de aplicações \cite{bordacolor}.
 
 \section{Detecção de Bordas} \label{met:borda}
 
 %lembrar sempre que precisa haver a DESCRIÇÃO das técnicas utilizadas, assim como sua MOTIVAÇÃO (porque usei A e não B, que autores concordam cmg)
 %\textcolor{red}{felipe, evite frases obvias... eh claro que eh importante.. outra coisa: comece indicando rapidamente o que ela e depois elabore...}
 
-A detecção de bordas é a etapa inicial do método. Ela tem como entrada a imagem de entrada e dá como saída uma matriz binária chamada mapa de bordas, em que cada pixel que corresponde a uma borda na imagem tem valor 1 na matriz e os restantes têm valor 0. A teoria relacionada à detecção de bordas é abordada em detalhes no Capítulo \ref{refteor}. A Figura \ref{exemploborda} mostra um exemplo de extração de bordas de uma imagem.
+A detecção de bordas é uma técnica de processamento de imagens que identifica descontinuidades em propriedades de uma imagem \cite{borda01}. Dada uma imagem digital de entrada, a saída de um detector de bordas é um mapa de bordas, uma matriz binária do tamanho da imagem em que cada pixel de valor 1 corresponde a borda. A Figura \ref{exemploborda} mostra um exemplo de extração de bordas de uma imagem.
 
 %A borda de uma imagem é uma mudança significativa nos valores de intensidade de uma imagem, normalmente indicando uma mudança de região nela. Um mapa de borda da imagem é, portanto, uma matriz do mesmo tamanho da imagem, com pontos indicando a localização das bordas. A detecção de bordas é a área de processamento de imagem que estuda meios de localizar estas bordas \cite{borda01}. A Figura \ref{exemploborda} mostra um exemplo de detecção de bordas.
 
@@ -128,9 +131,17 @@ A detecção de bordas é a etapa inicial do método. Ela tem como entrada a ima
 
 %falar sobre como funciona o fluxo do processo. qual a utilidade de calcular o ggradiente, depois pra que fazer a seleção de candidatos e por último como e porque fazer a verificação. 
 
-O esquema de detecção de bordas utilizado nesta dissertação é baseado na análise de gradiente multi-dimensional \cite{borda00} e no detector de Canny \cite{canny}. A imagem é tratada como um campo vetorial e são calculadas a magnitude e direção de seu 	gradiente. Utilizando esse esquema é possível obter o gradiente de imagens coloridas sem precisar recorrer à conversão para tons de cinza. A magnitude e direção do gradiente são informações úteis para a seleção de candidatos a pixeis de borda. Esta seleção é feita para separar, dentre os pixeis, os mais propícios a pertencerem a bordas de objetos com pouco custo computacional. A verificação, mais custosa computacionalmente que a seleção, é feita para descartar, dentre os pixeis anotados como candidatos, os que realmente não pertençam a uma borda.
+%O esquema de detecção de bordas utilizado nesta dissertação é baseado na análise de gradiente multi-dimensional \cite{borda00} e no detector de Canny \cite{canny}. A imagem é tratada como um campo vetorial e são calculadas a magnitude e direção de seu 	gradiente. Utilizando esse esquema é possível obter o gradiente de imagens coloridas sem precisar recorrer à conversão para tons de cinza. A magnitude e direção do gradiente são informações úteis para a seleção de candidatos a pixeis de borda. Esta seleção é feita para separar, dentre os pixeis, os mais propícios a pertencerem a bordas de objetos com pouco custo computacional. A verificação, mais custosa computacionalmente que a seleção, é feita para descartar, dentre os pixeis anotados como candidatos, os que realmente não pertençam a uma borda.
 
-As etapas do esquema de detecção de bordas serão detalhadas a seguir.
+O esquema de detecção de bordas utilizado nesta dissertação é baseado na análise de gradiente multi-dimensional \cite{borda00} e no detector de Canny \cite{canny}. Suas etapas, ilustradas na Figura \ref{figborda}, serão descritas conforme segue. Primeiramente, a imagem é tratada como um campo vetorial e são calculadas a magnitude e direção de seu gradiente. Utilizando esse esquema é possível obter o gradiente de imagens coloridas sem a necessidade de recorrer à conversão para tons de cinza. 
+Após o cálculo do gradiente, são feitas a seleção e verificação de candidatos a pixel de borda. Na etapa da seleção, são separados, dentre os pixeis, os mais propícios a pertencerem a bordas de objetos. Isto é feito utilizando um esquema simples mostrado na Seção \ref{met:bordasele}, que tem baixo custo computacional, porém produz muitos falsos positivos. A verificação, mais custosa computacionalmente que a seleção, é feita para descartar, dentre os pixeis anotados como candidatos, os que realmente não pertençam a uma borda, conforme mostrado na Seção \ref{met:bordaveri}.
+
+
+\begin{figure} [h]
+\centering
+\includegraphics[width = \textwidth]{figuras/borda.pdf}
+\caption{Fluxograma da técnica de detecção de bordas.} \label{figborda}
+\end{figure}
 
 %Esta técnica é útil por funcionar bem em imagens coloridas e também por gerar informação de ângulo de gradiente, que vai ser útil nas próximas etapas do processamento.
 
@@ -139,38 +150,67 @@ As etapas do esquema de detecção de bordas serão detalhadas a seguir.
 %Illingworth, J., \& Kittler, J. (1988). A survey of the Hough transform.Computer vision, graphics, and image processing, 44(1), 87-116.
 
 
-\subsection{Obtenção do Gradiente}
+\subsection{Cálculo do Gradiente} \label{met:bordagrad}
 
 %\textcolor{red}{voce novamente comeca seco... fale o que isso eh...}
 
-Um campo vetorial é uma construção matemática que aponta um vetor ou conjunto de vetores a cada valor de um espaço n-dimensional. Ele pode ser representado como:
+Nesta seção, apresentamos o cálculo da magnitude $V$ e direção $\theta$ do gradiente
+de uma imagem de entrada. 
+\begin{comment}
+Primeiramente, definiremos campo vetorial como:
 
-$$ \textbf{f}:X \rightarrow \mathbb{R}^m $$
+\begin{equation}
+\vec{\textbf{f}}:\mathbb{R}^n \to \mathbb{R}^m 
+\end{equation}
 
-Em que $X$ é um subconjunto de $\mathbb{R}^m$ e $\textbf{f}$ pode ser composto por um ou mais vetores. Uma imagem pode ser considerada um campo vetorial cujo domínio é o espaço bidimensional e cujo contradomínio é composto por três vetores, um para cada elemento no espaço $RGB$, como mostrado em Lee e Cok \cite{borda00}.
+Em que $\vec{\textbf{f}}$ é um campo vetorial, uma função que mapeia um espaço $n$-dimensional $\mathbb{R}^n$ e tem como resposta, para cada ponto neste espaço, um vetor no espaço $m$-dimensional $\mathbb{R}^m$.
+Uma imagem pode ser considerada um campo vetorial cujo domínio é o espaço bidimensional e cujo contradomínio é composto por três vetores, um para cada canal no espaço $RGB$ \cite{borda00}.
 
-Portanto, dado um campo vetorial representado pela função $ f: S \to \mathbb{R}^2 $, uma imagem no espaço $RGB$ pode ser representada como um subespaço de $f$ representado como $ V_{2 \to 3} $.
+Portanto, dado um campo vetorial representado pela função $ \vec{\textbf{f}}: \mathbb{R}^2 \to \mathbb{R}^3 $, uma imagem no espaço $RGB$ pode ser representada como um subespaço de $\vec{\textbf{f}}$. A derivada de $\vec{\textbf{f}}$ pode ser representada pela matriz $D$ composta pelas derivadas parciais da imagem em cada canal do espaço RGB, tal que:
+\end{comment}
+Podemos considerar primeiramente uma imagem $I(x,y)$ de um canal. Seu gradiente $G$ é um vetor $ \{I_{x},I_{y}\}$ em que $I_x$ e $I_y$ são as derivadas de primeira ordem da imagem nas direções $x$ e $y$. Sua magnitude pode ser dada por $|G| = \sqrt[]{I_x^2 +I_y^2}$ e a matriz Jacobiana da imagem é dada por $J_b = [I_x I_y]$.
 
-%Esta técnica considera uma imagem colorida como um campo vetorial que mapeia um espaço n-dimensional (espaço) em um m-dimensional (canais), como mostrado em [Lee e Cok] \textcolor{red}{nao referencie diretamente a referencia... coloque o nome dos autores e depois a ref... ex: como mostrado por Farias et al. [2]}. Portanto, dado um campo vetorial representado pela função $ f: S->R^m $, uma imagem pode ser representada como um subespaço de $f$ dado por $ Vn->m $.
+O autovalor e autovetor da matriz $ M_b = J_b^T J_b = \begin{bmatrix} I_x^2 & I_{xy} \\ I_{xy} & I_y^2 \end{bmatrix} $ podem ser utilizados para calcular a magnitude e direção do gradiente, respectivamente. O autovalor é o traço da matriz $(I_x^2 + I_y^2)$ e equivale à magnitude do gradiente $|G|$ elevado ao quadrado. O respectivo autovetor é simplesmente o gradiente $G = \{I_x, I_y\}$.
 
-%exemplos do professor: pode ser usado em outros tipos de representação de imagem?
+Considerando agora uma imagem colorida no espaço RGB, a informação em cada pixel não é mais um escalar, e sim um vetor com três valores. O vetor diferença $DV$ que representa o deslocamento infinitesimal no plano da imagem na direção $\{dx,dy\}$ é dado por $DV = (dx \text{ } dy)J_b^T$, em que $J_b$ é a matriz jacobiana da imagem:
 
-
-%Dada uma imagem colorida, o gradiente é obtido calculando e depois combinando as seis derivadas de primeira ordem (duas pra cada canal R,G e B da imagem) e depois implementando um esquema de seleção e verificação de candidatos para formar a imagem de borda. Este esquema é composto por duas fases: um pixel é selecionado como candidato caso sua magnitude de gradiente seja maior que a magnitude dos seus vizinhos na direção do gradiente. A fim de evitar ruído, a verificação descarta candidatos segundo dois critérios: se o candidato não tem vizinhos também candidatos, e se a magnitude do gradiente daquele pixel é muito diferente da magnitude dos seus vizinhos na direção do gradiente.
-
-A derivada da função $f$ nestas condições pode ser representada pela matriz $D$ tal que:
-
-$$ f' = D = \begin{bmatrix} 
+\begin{comment}
+\begin{equation}
+\nabla \textbf{f} = D = \begin{bmatrix}
 \frac{\partial r}{\partial x} & \frac{\partial r}{\partial y} \\
 \frac{\partial g}{\partial x} & \frac{\partial g}{\partial y} \\
-\frac{\partial b}{\partial x} & \frac{\partial b}{\partial y} \\ 
-\end{bmatrix} $$
+\frac{\partial b}{\partial x} & \frac{\partial b}{\partial y} \\
+\end{bmatrix}
+\end{equation}
 
 Saindo de um ponto $x$ qualquer na imagem, o deslocamento $d$ na direção do vetor unitário $\textbf{u}$ é dado pela equação:
 
-$$d = \sqrt[]{\textbf{u}^TD^TD\textbf{u}}$$
+\begin{equation}
+\vec{d} = \sqrt[]{\vec{\textbf{u}}^TD^TD\vec{\textbf{u}}}
+%\caption{pois é ne} \label{eqdesl}
+\end{equation}
 
-O maior valor de $d$, ou seja, o gradiente deste vetor, é dado pelo maior autovalor de $D^TD$. Definindo as variáveis $Mxx$, $Mxy$ e $Myy$ como:
+\end{comment}
+
+\begin{equation}
+J_b = \begin{bmatrix}
+\frac{\partial r}{\partial x} & \frac{\partial r}{\partial y} \\
+\frac{\partial g}{\partial x} & \frac{\partial g}{\partial y} \\
+\frac{\partial b}{\partial x} & \frac{\partial b}{\partial y} \\
+\end{bmatrix}
+\end{equation}
+
+A magnitude euclidiana quadrada de $DV $ é dada por:
+\begin{equation}
+DV^2 = (dx \text{ } dy)M_b(dx \text{ } dy)^T
+\end{equation}
+
+Em que podemos definir $M_b$, $M_{xx}$, $M_{xy}$ e $M_{yy}$ como:
+
+\begin{equation}
+M_b = J_b^TJ_b = \begin{bmatrix} M_{xx} & M_{xy} \\ M_{xy} & M_{yy} \end{bmatrix}
+\end{equation}
+%O maior valor de $d$, ou seja, o gradiente deste vetor, é dado pelo maior autovalor de $D^TD$. Definindo as variáveis $M_{xx}$, $M_{xy}$ e $M_{yy}$ como:
 %Considerando uma imagem bidimensional com três canais (um para cada canal de cor r, g e b), $DV$ é a matriz que mostra a variação dos valores de R, G e B no espaço infinitesimal dx e dy. 
 
 %$$ DV = (dx dy)Jc^T $$ 
@@ -188,32 +228,43 @@ O maior valor de $d$, ou seja, o gradiente deste vetor, é dado pelo maior autov
 %$ DV^2 $ é a matriz que mostra a taxa de variação dos valores da matriz $DV$. Ela é dada por:
 
 %$$ DV^2 = (dx dy)Mc(dx dy)^T $$
+\begin{equation}
+M_{xx} = (\frac{\partial r}{\partial x})^2+(\frac{\partial g}{\partial x})^2+(\frac{\partial b}{\partial x})^2
+\end{equation}
 
-$$ Mxx = (\frac{\partial r}{\partial x})^2+(\frac{\partial g}{\partial x})^2+(\frac{\partial b}{\partial x})^2 $$
+\begin{equation}
+M_{xy} =(\frac{\partial r}{\partial x})(\frac{\partial r}{\partial y})+(\frac{\partial g}{\partial x})(\frac{\partial g}{\partial y})+(\frac{\partial b}{\partial x})(\frac{\partial b}{\partial y})
+\end{equation}
 
-$$ Mxy =(\frac{\partial r}{\partial x})(\frac{\partial r}{\partial y})+(\frac{\partial g}{\partial x})(\frac{\partial g}{\partial y})+(\frac{\partial b}{\partial x})(\frac{\partial b}{\partial y}) $$
+\begin{equation}
+M_{yy} = (\frac{\partial r}{\partial y})^2+(\frac{\partial g}{\partial y})^2+(\frac{\partial b}{\partial y})^2
+\end{equation}
 
-$$ Myy = (\frac{\partial r}{\partial y})^2+(\frac{\partial g}{\partial y})^2+(\frac{\partial b}{\partial y})^2 $$
+%podemos definir $D^TD$ como:
 
-podemos definir $D^TD$ como:
+%\begin{equation}
+%D^T D = \begin{bmatrix} M_{xx} & M_{xy} \\ M_{xy} & M_{yy} \end{bmatrix}
+%\end{equation}
 
-$$ D^T D = \begin{bmatrix} Mxx & Mxy \\ Mxy & Myy \end{bmatrix}$$
 
 
-O maior autovalor de $D^TD$ é dado por:
+O maior autovalor de $M_b$ é dado por:
+\begin{equation}
+V = (\sqrt{( (M_{xx}+M_{yy})^2 - 4 x(M_{xx} \times M_{yy} - (M_{xy})^2 ) )}+M_{xx}+ M_{yy})/2
+\end{equation}
 
-$$ V = (\sqrt{( (Mxx+Myy)^2 - 4 x(Mxx \times Myy - (Mxy)^2 ) )}+Mxx+ Myy)/2 $$
+e seu autovetor correspondente é $ \{M_{xy},V-M_{yy}\}/2 $. Portanto a direção do gradiente é dada por:
 
-e seu autovetor correspondente é $ \{Mxy,V-Myy\}/2 $. Portanto a direção do gradiente é dada por:
-
-$$ \theta = tan^{-1}((V-Mxx)/Mxy) $$
+\begin{equation}
+\theta = tan^{-1}((V-Mxx)/Mxy)
+\end{equation}
 
 A raiz quadrada do maior autovalor $V$ e seu autovetor correspondente são equivalentes à magnitude e direção do gradiente em um ponto da imagem. Portanto, para cada pixel $(i,j)$, seu gradiente é encontrado computando seus autovalores e autovetores com as equações acima descritas.
 
 %\textcolor{red}{aqui valem o mesmos comentarios da secao anterior e ainda tem o fato de voce ter colocado exatamente como estah no artigo dos caras... nao faca isso... o leitor tem que ver que voce colocou o seu entendimento e nao uma copia do que leu... Por exemplo, comente sobre o significado da jacobiana, fale se isso pode ser usado em outras imagem com tres canais (HSV, Lab, etc...) e gaste bastante texto explicando cada um dos elementos: V, Mxy, Myy e $\theta$... manjou?}
 
 
-\subsection{Detecção de Candidatos}
+\subsection{Seleção de Candidatos} \label{met:bordasele}
 
 %\textcolor{red}{nao dah para deixar uma secao com este tamanho... fale mais e coloque uma figura... os mesmos comentarios da primeira secao valem aqui}
 
@@ -225,11 +276,11 @@ Primeiramente é calculada a matriz $D^TD$, assim como seus valores de $V$ e $\t
 
 \begin{figure} [h]
 \centering
-\includegraphics[width = 0.5\textwidth]{figuras/vizinh.jpg} \label{maxlocal}
-\caption{Direção de gradiente de um pixel e seus vizinhos. Adaptado de \cite{mrf}.}
+\includegraphics[width = 0.5\textwidth]{figuras/vizinh.jpg} 
+\caption{Direção de gradiente de um pixel e seus vizinhos. Adaptado de \cite{mrf}.} \label{maxlocal}
 \end{figure}
 
-\subsection{Verificação de Candidatos}
+\subsection{Verificação de Candidatos} \label{met:bordaveri}
 
 A verificação é um processo necessário para descartar os pixeis cujo gradiente é uma máxima local mas não são pixeis de borda. Isto pode ocorrer devido a ruído (adquirido na aquisição da imagem, devido à curvatura da lente ou à quantização), diferenças na iluminação dos objetos, efeitos de luz e sombra ou oclusão de objetos \cite{ruidocausas}.
 
@@ -574,6 +625,10 @@ $$ I(x,y) = \frac{y_2-y}{y_2-y_1}I(x,y_1) + \frac{y-y_1}{y_2-y_1}I(x,y_2)$$
 
 Com esta técnica, é possível obter uma aproximação do trecho da tela da TV ou monitor presentes na imagem capturada, do tamanho e formato necessários para a avaliação de desempenho.
 
+\begin{comment}
+
+
+
 \section{Métricas de Desempenho}
 
 Este método utiliza três técnicas para avaliar seu desempenho em selecionar acertadamente o trecho da imagem que representa a tela. Estas técnicas comparam a imagem obtida, após rotacionada e redimensionada, com uma imagem de referência de mesmo formato e tamanho. Elas são:
@@ -651,3 +706,5 @@ S = \max_{blocos}|S_{A,B} - S_{padrao}| \label{nccbb}
 %\begin{equation}
 %S = \max_{blocos}|S_{A,B} - S_{padrao}| \label{nccbb}
 %\end{equation}
+
+\end{comment}

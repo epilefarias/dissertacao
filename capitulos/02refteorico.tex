@@ -1,8 +1,24 @@
-\chapter{Fundamentos Teóricos} \label{refteor}
+\chapter{Fundamentos Teóricos} \label{funt}
 
-\textcolor{red}{Este capítulo falará do referencial teórico. ele será dividido em x partes.}
+%\textcolor{red}{Este capítulo falará do referencial teórico. ele será dividido em x partes.}
+Neste capítulo, faremos uma revisão dos conceitos e métodos utilizados nesta dissertação. Ele será organizado da seguinte forma: inicialmente, apresentaremos os conceitos relacionados a técnicas de processamento de sinais utilizados na dissertação. A seguir, apresentaremos métodos e trabalhos desenvolvidos que envolvem estas técnicas.
 
-\section{Detecção de bordas}
+\section{Processamento Digital de Imagens} \label{funt:proc}
+
+%o que é processamento digital de imagens
+Podemos definir uma imagem como uma função $i(x,y)$, onde $x$ e $y$ são coordenadas espaciais, que tem como resposta um valor ou conjunto de valores para cada ponto no espaço $x,y$. A imagem é considerada digital quando tanto $x$ quanto $y$ e os valores de $i(x,y)$ são finitos e discretos. Uma imagem digital é formada por um número finito de elementos, cada um com uma localização no espaço $x,y$ e um valor atribuído. Cada elemento é chamado \textit{pixel}.
+
+Processamento digital de imagens refere-se ao processamento de imagens por meio de um computador digital. É uma disciplina ampla, interligada com diversas áreas, tais como aprendizado de máquina, visão computacional e reconhecimento de padrões \cite{gonzales}.
+
+%quais as subdivisões de PDI?
+
+Embora não seja consenso, as técnicas de processamento digital de imagens geralmente são divididas em três categorias. As de chamado baixo nível são caracterizadas por ter imagens como entrada e saída. Entre elas podemos citar controle de contraste e filtragem para diminuir ruído ou para destacar bordas ou cores. As técnicas de médio nível têm como entrada imagens e como saída têm atributos extraídos das imagens, como bordas, linhas e regiões. Dentre estas técnicas podemos destacar a detecção de bordas, detecção de formas e segmentação. As técnicas de alto nível buscam analisar os atributos das imagens de forma a desempenhar funções cognitivas normalmente assosciadas à visão.
+%qual a subdivisão onde estão as técnicas que eu tou usando?
+
+%fala das técnicas/o que será falado.
+Nesta seção, os conceitos referentes a algumas destas técnicas serão apresentados. A detecção de borda é uma das técnicas que podem ser classificadas como de nível médio. Um detector de bordas tem como entrada uma imagem e dá como resposta a informação de borda dela, ou seja, um rótulo para cada pixel da imagem que indica se aquele pixel corresponde a uma borda ou não. A detecção de linhas pode ser encaixada na família de técnicas de alto nível, assim como a detecção de retângulos, visto que a detecção de linha utiliza as informações de borda para gerar como resposta uma lista das linhas presentes na imagem, assim como sua localização. A detecção de retângulos faz o mesmo, utilizando como entrada a informação de bordas ou de linhas para produzir uma lista com os retângulos presentes na imagem. Estas técnicas serão detalhadas a seguir.
+
+\subsection{Detecção de bordas} \label{funt:procborda}
 
 %Esta seção abordará os conceitos relacionados à detecção de bordas, assim como as técnicas de detecção utilizadas na literatura.
 
@@ -20,7 +36,7 @@ A detecção de bordas busca, portanto, identificar onde ocorre esta descontinui
 Em processamento de imagens, a detecção de bordas possui as mais diversas aplicações, como por exemplo detecção de tumores no cérebro \cite{detectumor}, estudos sobre o comportamento dos pombos \cite{pigeon} e navegação espacial \cite{navegespacial}.
 % LE ISSO http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=8F53C8A13258AFE7901EECFF8DFAC361?doi=10.1.1.27.1821&rep=rep1&type=pdf
 
-\subsection{Tipos de Detectores}
+\subsubsection{Tipos de Detectores}
 
 %metodos de deteccao
 Existem muitos métodos para detecção de bordas em imagens, mas a maioria deles pode ser dividida em dois grupos principais: os baseados no gradiente, ou primeira derivada, e os baseados no Laplaciano, ou segunda derivada \cite{tiposdetecborda}.
@@ -40,7 +56,7 @@ Eles se baseiam na ideia de que uma diferença aguda no valor de uma função, n
 
 As vantagens dos métodos que utilizam a primeira derivada são a simplicidade, possibilidade de obter o ângulo do gradiente, mas têm a desvantagem de ser suscetíveis a ruído \cite{comparaborda}, portanto fazendo necessário um esquema de suavização das imagens.
 
-\textcolor{red}{ESCREVE SOBRE OPERADORES E TÉCNICAS DE SUAVIZAÇÃO (FILTROS ETC)}
+%\textcolor{red}{ESCREVE SOBRE OPERADORES E TÉCNICAS DE SUAVIZAÇÃO (FILTROS ETC)}
 %http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.301.927&rep=rep1&type=pdf
 
 Os do segundo grupo encontram as bordas procurando onde a segunda derivada da imagem passa por zero. Dentre os detectores este grupo podemos destacar o operador de Marr-Hildreth \cite{marr} e Haralick \cite{haralick}.
@@ -63,7 +79,7 @@ A ideia deste segundo grupo de métodos é que uma borda em uma imagem gera uma 
 
 Dentre as vantagens deste grupo de detectores está a invariância à direção da borda, mas apresenta como desvantagem uma sensibilidade a ruído ainda maior do que nos detectores de primeira ordem \cite{comparaborda}.
 
-\section{Detecção de linhas}
+\subsection{Detecção de linhas} \label{funt:proclin}
 
 % SO LE AMIG http://physics.lbl.gov/patrecog/images/A_straight_line_detection_using_principal_component_analysis.pdf
 %Esta seção abordará o problema da detecção de linhas, seus conceitos principais, as principais técnicas utilizadas para este fim e um resumo sobre a transformada de Hough, base matemática para o detector utilizado nesta dissertação.
@@ -82,7 +98,7 @@ Por ser um dos problemas mais antigos da área, a detecção de linhas é base p
 
 %E AGORA NEGO? fala da transformada de Radon e da de Hough?
 
-\subsection{Técnicas de Detecção}
+\subsubsection{Técnicas de Detecção}
 
 Devido à importância da detecção de linhas, desde o início dos estudos de processamento de imagens são desenvolvidos métodos que ataquem este problema, como os baseados na transformada de Radon \cite{linhanavio,radon00} e modelos de contorno ativos \cite{contorno00,contorno01}.
 
@@ -90,7 +106,7 @@ Entretanto, desde que surgiu, a transformada de Hough tem se tornado um dos proc
 
 A teoria geral relacionada à transformada de Hough e seu caso específico para detecção de segmentos de linha serão abordados a seguir.
 
-\subsection{Transformada de Hough}
+\subsubsection{Transformada de Hough}
 
 A transformada de Hough foi criada por P.V.C Hough para detectar padrões complexos em imagens binárias. Para atingir este objetivo, são determinados parâmetros que caracterizam estes padrões. Assim, o problema de detectar um padrão em uma imagem binária é transformado no problema de detectar um valor no espaço paramétrico \cite{houghintro01}.
 
@@ -137,7 +153,7 @@ Assim, dado um pixel de borda, para cada possível reta que passe por ele, é co
   \label{houghlinhas}
 \end{figure}
 
-\section{Detecção de Retângulos}
+\subsection{Detecção de Retângulos} \label{funt:procret}
 
 %\subsection{Conceitos Iniciais}
 
@@ -154,7 +170,7 @@ A detecção de retângulos é um problema antigo do processamento de imagens e 
 %importância aplicacoes
 Assim como a detecção de bordas e de segmentos de linha, este também é um problema que, de tão geral, tem aplicações em campos diversos, tais como detecção de prédios em imagens de satélite \cite{prediosatelite,prediosatelite00}, detecção de placas de trânsito em tempo real \cite{placatransito} e detecção de partículas em imagens microscópicas \cite{detecparticulas}. %Building Detection in a Single Remotely Sensed Image with a Point Process of Rectangles
 
-\subsection{Técnicas de Detecção}
+\subsubsection{Técnicas de Detecção}
 
 %http://www.cs.utexas.edu/~bajaj/papers/2004/journal/sdarticle02.pdf
 %https://hal.archives-ouvertes.fr/hal-00422588/document
@@ -179,9 +195,12 @@ Um grupo de técnicas promissoras é baseado na ideia de que pode-se encarar o p
 
 \begin{comment}
 
-cara, o lance é que eu não sei se esta seção precisa entrar. eu acho importante falar da inspeção de monitores, mas não sei se vai ser nesse capítulo, já que trato dela no cap 5
+
 
 \section{Inspeção Automática de Monitores}
+%ou eu falo em detecção de erros em monitores e tvs????
+
+cara, o lance é que eu não sei se esta seção precisa entrar. eu acho importante falar da inspeção de monitores, mas não sei se vai ser nesse capítulo, já que trato dela no cap 5
 
 %http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5439135
 %http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4960847
